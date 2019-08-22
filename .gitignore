@@ -41,6 +41,7 @@
 *.su
 *.idb
 *.pdb
+*.tags
 
 # Kernel Module Compile Results
 *.mod*
