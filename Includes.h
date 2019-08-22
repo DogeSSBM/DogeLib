@@ -18,6 +18,6 @@
 #include "Graphics.h"
 #include "Timing.h"
 #include "Events.h"
-#include "DogeUtil.h"
 #include "Text.h"
 #include "Image.h"
+#include "DogeUtil.h"

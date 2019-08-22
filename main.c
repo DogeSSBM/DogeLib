@@ -2,9 +2,7 @@
 
 int main(int argc, char const *argv[])
 {
-	gfx_init(800, 600);
-	img_init();
-	text_init();
+	init_all(800, 600);
 	setColor(RED);
 	fillCircle(400, 300, 100);
 	draw();
