@@ -4,6 +4,10 @@ typedef unsigned int uint;
 typedef unsigned long ul;
 typedef unsigned long long ull;
 
+typedef FILE File;
+typedef time_t Time;
+// typedef void(*Callback)(void);
+
 typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
@@ -13,11 +17,6 @@ typedef int8_t i8;
 typedef int16_t i16;
 typedef int32_t i32;
 typedef int64_t i64;
-
-typedef SDL_Rect Rect;
-typedef SDL_Color Color;
-typedef SDL_Surface Img;
-typedef SDL_Keycode Key;
 
 #define I8MIN INT8_MIN
 #define I8MAX INT8_MAX
@@ -33,5 +32,7 @@ typedef SDL_Keycode Key;
 #define U32MAX UINT32_MAX
 #define U64MAX UINT64_MAX
 
-
-// typedef void(*Callback)(void);
+typedef SDL_Rect Rect;
+typedef SDL_Color Color;
+typedef SDL_Surface Img;
+typedef SDL_Keycode Key;
