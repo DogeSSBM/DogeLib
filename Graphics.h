@@ -17,6 +17,11 @@ typedef enum{
 	BLEND_MOD	= SDL_BLENDMODE_MOD
 }BlendMode;
 
+void setWindowSize(uint x, uint y)
+{
+	SDL_SetWindowSize(gfx.window, x, y);
+}
+
 void setBlend(BlendMode mode)
 {
 	SDL_SetRenderDrawBlendMode(gfx.renderer, mode);
