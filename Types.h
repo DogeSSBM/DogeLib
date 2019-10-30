@@ -32,7 +32,9 @@ typedef int64_t i64;
 #define U32MAX UINT32_MAX
 #define U64MAX UINT64_MAX
 
+#ifdef DOGE_GFX
 typedef SDL_Rect Rect;
 typedef SDL_Color Color;
 typedef SDL_Surface Img;
 typedef SDL_Keycode Key;
+#endif
