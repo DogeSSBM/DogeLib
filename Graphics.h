@@ -17,6 +17,17 @@ typedef enum{
 	BLEND_MOD	= SDL_BLENDMODE_MOD
 }BlendMode;
 
+typedef enum{
+	FULLSCREEN	= SDL_WINDOW_FULLSCREEN,
+	BORDERLESS	= SDL_WINDOW_FULLSCREEN_DESKTOP,
+	WINDOWED	= 0
+}WindowMode;
+
+void setWindowMode(const WindowMode mode)
+{
+	SDL_SetWindowFullscreen(gfx.window, mode);
+}
+
 void setWindowSize(uint x, uint y)
 {
 	SDL_SetWindowSize(gfx.window, x, y);
