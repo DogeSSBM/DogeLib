@@ -27,3 +27,6 @@
 #include "Image.h"
 #endif
 #include "DogeUtil.h"
+#ifdef DOGE_CLI
+#include "Cli.h"
+#endif

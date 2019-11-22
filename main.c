@@ -1,4 +1,5 @@
 #define DOGE_GFX
+#define DOGE_CLI
 #include "Includes.h"
 
 int main(int argc, char const *argv[])
