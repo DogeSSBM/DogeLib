@@ -4,6 +4,7 @@
 int main(int argc, char const *argv[])
 {
 	init(800, 600);
+	typeInfo();
 	setColor(RED);
 	fillCircle(400, 300, 100);
 	draw();
