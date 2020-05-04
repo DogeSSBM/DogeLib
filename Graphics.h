@@ -10,19 +10,6 @@ struct{
 	Color defaultColor;
 }gfx = {};
 
-typedef enum{
-	BLEND_NONE	= SDL_BLENDMODE_NONE,
-	BLEND_ALPHA	= SDL_BLENDMODE_BLEND,
-	BLEND_ADD	= SDL_BLENDMODE_ADD,
-	BLEND_MOD	= SDL_BLENDMODE_MOD
-}BlendMode;
-
-typedef enum{
-	FULLSCREEN	= SDL_WINDOW_FULLSCREEN,
-	BORDERLESS	= SDL_WINDOW_FULLSCREEN_DESKTOP,
-	WINDOWED	= 0
-}WindowMode;
-
 void setWindowMode(const WindowMode mode)
 {
 	SDL_SetWindowFullscreen(gfx.window, mode);
@@ -181,7 +168,6 @@ void gfx_quit(void)
 
 void gfx_init(uint winXlen, uint winYlen)
 {
-	srand(time(NULL));
 	if(SDL_Init(SDL_INIT_VIDEO)<0){
 		printf("SDL borked! Error: %s\n", SDL_GetError());
 		exit(0);
