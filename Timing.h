@@ -1,21 +1,8 @@
 #pragma once
+#define FPS		60
+#define TPF		(1000/FPS)
 
-clock_t ClockPerMs = CLOCKS_PER_SEC / 1000;
-
-clock_t refTime;
-
-void resetTime(void)
+Ticks getTicks(void)
 {
-	refTime = clock();
-}
-
-ull elapsedTime(void)
-{
-	return (ull)((clock() - refTime)/ClockPerMs);
-}
-
-void delay(uint ms)
-{
-	resetTime();
-	while(elapsedTime() < ms);
+	return SDL_GetTicks();
 }

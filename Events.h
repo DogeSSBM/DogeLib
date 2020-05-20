@@ -1,23 +1,70 @@
 #pragma once
 
-void events()
+void events(const Ticks frameEnd)
 {
-	static SDL_Event event;
-	while(SDL_PollEvent(&event)){
+	i32 ticksLeft = frameEnd - getTicks();
+	while(ticksLeft > 0){
+		Event event;
+		if(!SDL_WaitEventTimeout(&event, ticksLeft))
+			return;
 		switch(event.type){
-			case SDL_QUIT:
+		case SDL_QUIT:
+			printf("Quitting now!\n");
+			exit(0);
+			break;
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym) {
+			case SDLK_ESCAPE:
 				printf("Quitting now!\n");
 				exit(0);
+				break;
+			case SDLK_UP:
+
+				break;
+			case SDLK_RIGHT:
+
+				break;
+			case SDLK_DOWN:
+
+				break;
+			case SDLK_LEFT:
+
+				break;
+			}
 			break;
-			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE){
-					printf("Quitting now!\n");
-					exit(0);
-				}
+		case SDL_MOUSEMOTION:
+
 			break;
-			default:
-				// default
+		case SDL_MOUSEBUTTONDOWN:
+			switch (event.button.button) {
+			case SDL_BUTTON_LEFT:
+
+				break;
+			case SDL_BUTTON_RIGHT:
+
+				break;
+			case SDL_BUTTON_MIDDLE:
+
+				break;
+			}
+			break;
+		case SDL_MOUSEBUTTONUP:
+			switch (event.button.button) {
+			case SDL_BUTTON_LEFT:
+
+				break;
+			case SDL_BUTTON_RIGHT:
+
+				break;
+			case SDL_BUTTON_MIDDLE:
+
+				break;
+			}
+			break;
+		default:
+
 			break;
 		}
+		ticksLeft = frameEnd - getTicks();
 	}
 }

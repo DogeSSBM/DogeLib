@@ -35,6 +35,11 @@ void drawLine(uint x1, uint y1, uint x2, uint y2)
 	SDL_RenderDrawLine(gfx.renderer, x1, y1, x2, y2);
 }
 
+void drawLineCoords(const Coord pos1, const Coord pos2)
+{
+	SDL_RenderDrawLine(gfx.renderer, pos1.x, pos1.y, pos2.x, pos2.y);
+}
+
 void drawHLine(uint x, uint y, int len)
 {
 	SDL_RenderDrawLine(gfx.renderer, x, y, x+len, y);
@@ -114,6 +119,50 @@ void fillCircle(uint x, uint y, uint radius)
 	}
 }
 
+void drawCircleCoord(const Coord pos, const uint radius)
+{
+	uint rsq = radius*radius;
+	uint yoff = radius;
+	for(uint xoff = 0; xoff <= yoff; xoff++){
+		double yc = sqrt(rsq - (xoff+1)*(xoff+1));
+		double ym = (double)yoff - 0.5;
+		// 8 sections of circle
+		drawPixel(pos.x+xoff, pos.y+yoff);		// 1
+		drawPixel(pos.x-yoff, pos.y+xoff);		// 2
+		drawPixel(pos.x-xoff, pos.y-yoff);		// 3
+		drawPixel(pos.x+yoff, pos.y-xoff);		// 4
+
+		drawPixel(pos.x-xoff, pos.y+yoff);		// 5
+		drawPixel(pos.x-yoff, pos.y-xoff);		// 6
+		drawPixel(pos.x+xoff, pos.y-yoff);		// 7
+		drawPixel(pos.x+yoff, pos.y+xoff);		// 8
+		yoff -= yc <= ym;
+	}
+}
+
+void fillCircleCoord(const Coord pos, const uint radius)
+{
+	uint rsq = radius*radius;
+	uint yoff = radius;
+	for(uint xoff = 0; xoff <= yoff; xoff++){
+		double yc = sqrt(rsq - (xoff+1)*(xoff+1));
+		double ym = (double)yoff - 0.5;
+		// connecting 8 sections of circle
+		drawLine(pos.x+xoff, pos.y-yoff, pos.x+xoff, pos.y+yoff);// 7 to 1
+		drawLine(pos.x-yoff, pos.y+xoff, pos.x+yoff, pos.y+xoff);// 2 to 8
+		drawLine(pos.x-xoff, pos.y-yoff, pos.x-xoff, pos.y+yoff);// 3 to 5
+		drawLine(pos.x-yoff, pos.y-xoff, pos.x+yoff, pos.y-xoff);// 6 to 4
+		yoff -= yc <= ym;
+	}
+}
+
+Color getColor(void)
+{
+	Color c = {0};
+	SDL_GetRenderDrawColor(gfx.renderer, &c.r, &c.g, &c.b, &c.a);
+	return c;
+}
+
 void setColor(Color c)
 {
 	SDL_SetRenderDrawColor(gfx.renderer, c.r, c.g, c.b, c.a);
@@ -136,9 +185,11 @@ void fillScreen()
 
 void clear()
 {
+	Color c = getColor();
 	setColor(gfx.defaultColor);
 	SDL_RenderClear(gfx.renderer);
 	fillRect(0,0,gfx.xlen,gfx.ylen);
+	setColor(c);
 }
 
 void draw()
