@@ -1,7 +1,9 @@
 #pragma once
 typedef FILE			File;
+typedef time_t			Time;
 typedef unsigned int		Ticks;
 
+typedef long int			lint;
 typedef unsigned char		uchar;
 typedef unsigned int		uint;
 typedef unsigned long		ul;
@@ -31,10 +33,7 @@ typedef int64_t			i64;
 #define U32MAX			UINT32_MAX
 #define U64MAX			UINT64_MAX
 
-// evaluates to the absolute value of n
 #define ABS(n)			((n)<0? -(n):(n))
-
-// evaluates to n with a low bound of 0
 #define ZFLOOR(n)			((n)<0?    0:(n))
 
 typedef SDL_Event			Event;
@@ -60,16 +59,12 @@ typedef union{
 		int x;
 		int y;
 	};
-}Coord, Length;
+}Coord;
 
+static inline
 bool sameCoord(const Coord pos1, const Coord pos2)
 {
 	return pos1.x == pos2.x && pos1.y == pos2.y;
-}
-
-void printCoord(const Coord pos)
-{
-	printf("(%2d,%2d)", pos.x, pos.y);
 }
 
 typedef enum{
@@ -79,28 +74,18 @@ typedef enum{
 	DIR_L = 0b11
 }Direction;
 
-// evaluates to d rotated 90 degrees right (clockwise)
 #define dirROR(d)			(((d)+1)&0b11)
-
-// evaluates to d rotated 90 degrees left (counter-clockwise)
 #define dirROL(d)			(((d)-1)&0b11)
 
-// evaluates to the inverse of d (left<->right or up<->down)
+//#define dirROR(d)			(((d)&1)<<1^((d)^1))
+//#define dirROL(d)			(((d)^1)<<1^((d)^1))
 #define dirINV(d)			((d)^0b10)
+#define dirLR(d)			((d)&1)
+#define dirUD(d)			(!((d)&1))
+#define dirPOS(d)			((d)==DIR_R||(d)==DIR_D)
+#define dirNEG(d)			((d)==DIR_L||(d)==DIR_U)
 
-// evaluates true if d is left/right (horizontal)
-#define dirIsLR(d)		((d)&1)
-
-// evaluates true if d is up/down (vertical)
-#define dirIsUD(d)		(!((d)&1))
-
-// evaluates true if d is a positive direction (right/down)
-#define dirIsPOS(d)		((d)==DIR_R||(d)==DIR_D)
-
-// evaluates true if d is a negative direction (left/up)
-#define dirIsNEG(d)		((d)==DIR_L||(d)==DIR_U)
-
-// returns clamped the value of n between min (inclusive) and max (exclusive)
+static inline
 int clamp(const int n, const int min, const int max)
 {
 	if(n < min)
@@ -110,20 +95,27 @@ int clamp(const int n, const int min, const int max)
 	return n;
 }
 
-// true if n is between min (inclusive) and max (exclusive)
+static inline
 bool inBound(const int n, const int min, const int max)
 {
 	return n >= min && n < max;
 }
 
-// returns coord shifted n units in the direction of dir
-Coord coordShift(const Coord coord, const Direction dir, const int n)
+static inline
+Coord coordClamp(const Coord coord, const int min, const int max)
+{
+	const Coord ret = {clamp(coord.x, min, max), clamp(coord.y, min, max)};
+	return ret;
+}
+
+static inline
+Coord coordShift(const Coord coord, const Direction dir, const int units)
 {
 	Coord ret = coord;
-	if(dirIsUD(dir)){
-		ret.y += dirIsPOS(dir)? n : -n;
+	if(dirUD(dir)){
+		ret.y += dirPOS(dir)? units : -units;
 	}else{
-		ret.x += dirIsPOS(dir)? n : -n;
+		ret.x += dirPOS(dir)? units : -units;
 	}
 	return ret;
 }
