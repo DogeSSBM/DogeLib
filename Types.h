@@ -96,6 +96,7 @@ int clamp(const int n, const int min, const int max)
 	return n;
 }
 
+// Returns true if n is between min (inclusive) and max (exclusive)
 static inline
 bool inBound(const int n, const int min, const int max)
 {
