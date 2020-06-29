@@ -15,12 +15,10 @@ void printDebugKeymap(void)
 
 }
 
-void init(uint winXlen, uint winYlen)
+void init(const uint winXlen, const uint winYlen)
 {
 	srand(time(NULL));
 	gfx_init(winXlen, winYlen);
 	img_init();
 	text_init();
-	setFontColor(BLACK);
-	setFontSize(75/2);
 }

@@ -59,7 +59,15 @@ typedef union{
 		int x;
 		int y;
 	};
-}Coord;
+	struct{
+		int min;
+		int max;
+	};
+	struct{
+		int neg;
+		int pos;
+	};
+}Coord, Range, Length, Offset;
 
 static inline
 bool sameCoord(const Coord pos1, const Coord pos2)
@@ -108,13 +116,28 @@ int wrap(const int n, const int min, const int max)
 {
 	if(n < min)
 		return max - ABS(n-min);
-	return n % max;
+	if(n >= max)
+		return min + ABS(n-max);
+	return n;
 }
 
 static inline
-Coord coordClamp(const Coord coord, const int min, const int max)
+Coord coordWrap(const Coord coord, const Range x, const Range y)
 {
-	const Coord ret = {clamp(coord.x, min, max), clamp(coord.y, min, max)};
+	const Coord ret = {
+		wrap(coord.x, x.min, x.max),
+		wrap(coord.y, y.min, y.max)
+	};
+	return ret;
+}
+
+static inline
+Coord coordClamp(const Coord coord, const Range x, const Range y)
+{
+	const Coord ret = {
+		clamp(coord.x, x.min, x.max),
+		clamp(coord.y, y.min, y.max)
+	};
 	return ret;
 }
 
