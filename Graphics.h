@@ -73,6 +73,30 @@ void fillRect(uint x, uint y, uint xlen, uint ylen)
 }
 
 static inline
+void drawRectCoords(const Coord pos1, const Coord pos2)
+{
+	Rect r = {
+		pos1.x < pos2.x? pos1.x: pos2.x,
+		pos1.y < pos2.y? pos1.y: pos2.y,
+		ABS(pos1.x-pos2.x),
+		ABS(pos1.y-pos2.y)
+	};
+	SDL_RenderDrawRect(gfx.renderer, &r);
+}
+
+static inline
+void fillRectCoords(const Coord pos1, const Coord pos2)
+{
+	Rect r = {
+		pos1.x < pos2.x? pos1.x: pos2.x,
+		pos1.y < pos2.y? pos1.y: pos2.y,
+		ABS(pos1.x-pos2.x),
+		ABS(pos1.y-pos2.y)
+	};
+	SDL_RenderFillRect(gfx.renderer, &r);
+}
+
+static inline
 void drawSquare(uint x, uint y, uint len)
 {
 	Rect r = {x, y, len, len};
@@ -137,6 +161,45 @@ void fillCircle(uint x, uint y, uint radius)
 		drawLine(x-yoff, y+xoff, x+yoff, y+xoff);		// 2 to 8
 		drawLine(x-xoff, y-yoff, x-xoff, y+yoff);		// 3 to 5
 		drawLine(x-yoff, y-xoff, x+yoff, y-xoff);		// 6 to 4
+		yoff -= yc <= ym;
+	}
+}
+
+static inline
+void fillHCircle(const uint x, const uint y,
+const uint radius, const Direction dir)
+{
+	uint rsq = radius*radius;
+	uint yoff = radius;
+	for(uint xoff = 0; xoff <= yoff; xoff++){
+		double yc = sqrt(rsq - (xoff+1)*(xoff+1));
+		double ym = (double)yoff - 0.5;
+		// connecting 8 sections of circle
+		if(dir == DIR_R){
+			// 7 to 1
+			drawLine(x+xoff, y-yoff, x+xoff, y+yoff);
+			// 2 to 6
+			drawLine(x-yoff, y+xoff, x-yoff, y-xoff);
+		}
+		if(dir == DIR_D){
+			// 2 to 8
+			drawLine(x-yoff, y+xoff, x+yoff, y+xoff);
+			// 3 to 7
+			drawLine(x-xoff, y-yoff, x+xoff, y-yoff);
+		}
+		if(dir == DIR_L){
+			// 3 to 5
+			drawLine(x-xoff, y-yoff, x-xoff, y+yoff);
+			// 4 to 8
+			drawLine(x+yoff, y-xoff, x+yoff, y+xoff);
+		}
+		if(dir == DIR_U){
+			// 6 to 4
+			drawLine(x-yoff, y-xoff, x+yoff, y-xoff);
+			// 5 to 1
+			drawLine(x-xoff, y+yoff, x+xoff, y+yoff);
+		}
+
 		yoff -= yc <= ym;
 	}
 }
