@@ -12,6 +12,12 @@ void drawText(uint x, uint y, const char *text)
 	SDL_DestroyTexture(texture);
 }
 
+static inline
+void drawTextCoord(const Coord pos, const char *text)
+{
+	drawText(pos.x, pos.y, text);
+}
+
 void drawTextCentered(uint x, uint y, const char *text)
 {
 	Rect r;
@@ -24,6 +30,12 @@ void drawTextCentered(uint x, uint y, const char *text)
 	SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
 	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
+}
+
+static inline
+void drawTextCenteredCoord(const Coord pos, const char *text)
+{
+	drawTextCentered(pos.x, pos.y, text);
 }
 
 typedef struct{

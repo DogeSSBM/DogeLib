@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
 		Ticks frameStart = getTicks();
 		clear();
 
-		drawTextCentered(pos.x, pos.y, text);
+		drawTextCenteredCoord(pos, text);
 		Coord point = coordShift(pos,dir,128);
 		drawLineCoords(pos,point);
 		drawLineCoords(point,coordShift(coordShift(point, dirINV(dir), 32),dirROR(dir),32));
