@@ -47,6 +47,8 @@ typedef SDL_BlendMode		BlendMode;
 #define BLEND_ADD			SDL_BLENDMODE_ADD
 #define BLEND_MOD			SDL_BLENDMODE_MOD
 
+#define PI				M_PI
+
 typedef enum{
 	FULLSCREEN	=		SDL_WINDOW_FULLSCREEN,
 	BORDERLESS	=		SDL_WINDOW_FULLSCREEN_DESKTOP,
@@ -118,6 +120,20 @@ int wrap(const int n, const int min, const int max)
 }
 
 static inline
+Coord coordMul(const Coord coord, const int num)
+{
+	const Coord ret = {coord.x*num, coord.y*num};
+	return ret;
+}
+
+static inline
+Coord coordDiv(const Coord coord, const int num)
+{
+	const Coord ret = {coord.x/num, coord.y/num};
+	return ret;
+}
+
+static inline
 Coord coordWrap(const Coord coord, const Range x, const Range y)
 {
 	const Coord ret = {
@@ -146,5 +162,40 @@ Coord coordShift(const Coord coord, const Direction dir, const int units)
 	}else{
 		ret.x += dirPOS(dir)? units : -units;
 	}
+	return ret;
+}
+
+static inline
+Coord coordOffset(const Coord coord, const Offset off)
+{
+	return coordShift(
+		coordShift(
+			coord,
+			DIR_R,
+			off.x
+		),
+		DIR_D,
+		off.y
+	);
+}
+
+static inline
+Offset offsetRor(const Offset off)
+{
+	const Offset ret = {-off.y, off.x};
+	return ret;
+}
+
+static inline
+Offset offsetRol(const Offset off)
+{
+	const Offset ret = {off.y, -off.x};
+	return ret;
+}
+
+static inline
+Offset offsetFlip(const Offset off)
+{
+	const Offset ret = {-off.x, -off.y};
 	return ret;
 }

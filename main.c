@@ -2,31 +2,22 @@
 
 int main(int argc, char const *argv[])
 {
-	init(800, 800);
-	setFontSize(48);
+	const uint scale = 30;
+	init(scale*40, scale*30);
+	setFontSize(scale);
 	setFontColor(PINK);
-	setColor(RED);
-	const Range bounds = {4*48, 800-4*48};
 	const char *text = "Hewwo :3";
-	Coord pos = {bounds.min, bounds.min};
-	Direction dir = DIR_R;
+
+	Coord pos = {scale, scale};
+	const Length len = {scale*38, scale*28};
+	Direction dir = DIR_U;
 	while(1){
 		Ticks frameStart = getTicks();
 		clear();
 
 		drawTextCenteredCoord(pos, text);
-		Coord point = coordShift(pos,dir,128);
-		drawLineCoords(pos,point);
-		drawLineCoords(point,coordShift(coordShift(point, dirINV(dir), 32),dirROR(dir),32));
-		drawLineCoords(point,coordShift(coordShift(point, dirINV(dir), 32),dirROL(dir),32));
-
-		Coord new = coordShift(pos, dir, 4);
-		if(
-			!inBound(new.x, bounds.min, bounds.max) ||
-			!inBound(new.y, bounds.min, bounds.max)
-		){
+		if(!inBound(dirUD(dir)?pos.y:pos.x, scale+4, dirUD(dir)?len.y-4:len.x-4))
 			dir = dirROR(dir);
-		}
 		pos = coordShift(pos, dir, 4);
 
 		draw();
