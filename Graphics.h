@@ -35,6 +35,12 @@ void drawPixel(const uint x, const uint y)
 }
 
 static inline
+void drawPixelCoord(const Coord pos)
+{
+	SDL_RenderDrawPoint(gfx.renderer, pos.x, pos.y);
+}
+
+static inline
 void drawLine(uint x1, uint y1, uint x2, uint y2)
 {
 	SDL_RenderDrawLine(gfx.renderer, x1, y1, x2, y2);
