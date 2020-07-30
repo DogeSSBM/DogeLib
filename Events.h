@@ -1,6 +1,6 @@
 #pragma once
 
-void events(const Ticks frameEnd)
+void events(const Ticks frameEnd, Offset *zscale)
 {
 	i32 ticksLeft = frameEnd - getTicks();
 	while(ticksLeft > 0){
@@ -19,50 +19,18 @@ void events(const Ticks frameEnd)
 				exit(0);
 				break;
 			case SDLK_UP:
-
+				zscale->y++;
 				break;
 			case SDLK_RIGHT:
-
+				zscale->x--;
 				break;
 			case SDLK_DOWN:
-
+				zscale->y--;
 				break;
 			case SDLK_LEFT:
-
+				zscale->x++;
 				break;
 			}
-			break;
-		case SDL_MOUSEMOTION:
-
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			switch (event.button.button) {
-			case SDL_BUTTON_LEFT:
-
-				break;
-			case SDL_BUTTON_RIGHT:
-
-				break;
-			case SDL_BUTTON_MIDDLE:
-
-				break;
-			}
-			break;
-		case SDL_MOUSEBUTTONUP:
-			switch (event.button.button) {
-			case SDL_BUTTON_LEFT:
-
-				break;
-			case SDL_BUTTON_RIGHT:
-
-				break;
-			case SDL_BUTTON_MIDDLE:
-
-				break;
-			}
-			break;
-		default:
-
 			break;
 		}
 		ticksLeft = frameEnd - getTicks();

@@ -15,10 +15,10 @@ void printDebugKeymap(void)
 
 }
 
-void init(const uint winXlen, const uint winYlen)
+void init(const Range win)
 {
 	srand(time(NULL));
-	gfx_init(winXlen, winYlen);
+	gfx_init(win.x, win.y);
 	img_init();
 	text_init();
 }
