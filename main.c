@@ -3,7 +3,7 @@
 void drawAll(const Range win, const int scale, const Offset zscale)
 {
 	for(int x = -4; x <= 4; x++){
-		for(int y = -4; y <= 4; y++){
+		for(int y = -4; y <= 4; y ++){
 			for(int z = -4; z <= 4; z++){
 				Coord3 c3 = {x*scale, y*scale, z*scale};
 				Coord sq[4];
@@ -12,11 +12,13 @@ void drawAll(const Range win, const int scale, const Offset zscale)
 				sq[2] = coordShift(sq[0], DIR_D, scale);
 				sq[3] = coordShift(sq[2], DIR_R, scale);
 
+				setColor(CYAN);
 				drawLineCoords(sq[0], sq[1]);
 				drawLineCoords(sq[0], sq[2]);
 				drawLineCoords(sq[1], sq[3]);
 				drawLineCoords(sq[2], sq[3]);
 
+				setColor(YELLOW);
 				for(uint i = 0; i < 4; i++){
 					drawLineCoords(
 						sq[i],
@@ -25,6 +27,7 @@ void drawAll(const Range win, const int scale, const Offset zscale)
 					sq[i] = coordOffset(sq[i], zscale);
 				}
 
+				setColor(MAGENTA);
 				drawLineCoords(sq[0], sq[1]);
 				drawLineCoords(sq[0], sq[2]);
 				drawLineCoords(sq[1], sq[3]);

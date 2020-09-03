@@ -133,6 +133,15 @@ void fillBorder(uint x, uint y, uint xlen, uint ylen, int b)
 }
 
 static inline
+void fillBorderCoords(const Coord pos, const Length len, const int b)
+{
+	fillRect(pos.x-b,		pos.y-b,		len.x+2*b,	b);
+	fillRect(pos.x-b,		pos.y+len.y,	len.x+2*b,	b);
+	fillRect(pos.x-b,		pos.y,		b,		len.y);
+	fillRect(pos.x+len.x,	pos.y,		b,		len.y);
+}
+
+static inline
 void drawCircle(uint x, uint y, uint radius)
 {
 	uint rsq = radius*radius;
