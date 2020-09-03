@@ -116,7 +116,11 @@ bool inBound(const int n, const int min, const int max)
 static inline
 int wrap(const int n, const int min, const int max)
 {
-	return (n-min)%(max-min)+min;
+	if(n < min)
+		return max-1;
+	if(n >= max)
+		return min;
+	return n;
 }
 
 static inline
