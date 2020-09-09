@@ -39,7 +39,7 @@ void drawAll(const Range win, const int scale, const Offset zscale)
 
 int main(int argc, char const *argv[])
 {
-	const Range win = {1000, 1000};
+	const Range win = {800, 800};
 	const int scale = 10;
 	Offset zscale = {3, -3};
 	init(win);
@@ -51,8 +51,8 @@ int main(int argc, char const *argv[])
 			setColor(axisc[i]);
 			Coord3 c3 = {0};
 			drawLineCoord3(
-				dimensionShift(c3, i,  500),
-				dimensionShift(c3, i, -500),
+				dimensionShift(c3, i,  400),
+				dimensionShift(c3, i, -400),
 				win,
 				zscale
 			);
