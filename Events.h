@@ -3,7 +3,7 @@
 void events(const Ticks frameEnd, Offset *zscale)
 {
 	i32 ticksLeft = frameEnd - getTicks();
-	while(ticksLeft > 0){
+	do{
 		Event event;
 		if(!SDL_WaitEventTimeout(&event, ticksLeft))
 			return;
@@ -34,5 +34,5 @@ void events(const Ticks frameEnd, Offset *zscale)
 			break;
 		}
 		ticksLeft = frameEnd - getTicks();
-	}
+	}while(ticksLeft > 0);
 }
