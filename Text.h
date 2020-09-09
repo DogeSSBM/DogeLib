@@ -12,10 +12,32 @@ void drawText(uint x, uint y, const char *text)
 	SDL_DestroyTexture(texture);
 }
 
-static inline
-void drawTextCoord(const Coord pos, const char *text)
+Coord drawTextCoord(const Coord pos, const char *text)
 {
-	drawText(pos.x, pos.y, text);
+	Rect r;
+	r.x = pos.x; r.y = pos.y;
+	SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
+	SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
+	SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
+	const Coord ret = {pos.x+r.w, pos.y};
+	return ret;
+}
+
+Coord drawTextLineCoord(const Coord pos, const char *text)
+{
+	Rect r;
+	r.x = pos.x; r.y = pos.y;
+	SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
+	SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
+	SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
+	const Coord ret = {pos.x, pos.y+r.h};
+	return ret;
 }
 
 void drawTextCentered(uint x, uint y, const char *text)
@@ -129,7 +151,7 @@ void text_init(void)
 
 	}
 	gfx.fontColor = WHITE;
-	setFontSize(16);
+	setFontSize(32);
 	if(!gfx.font){
 		printf("Unable to open font or set font size!\n", TTF_GetError());
 		exit(0);

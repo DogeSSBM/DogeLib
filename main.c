@@ -59,6 +59,12 @@ int main(int argc, char const *argv[])
 		}
 		setColor(WHITE);
 		drawAll(win, scale, zscale);
+		Coord pos = {100, 100};
+		pos = drawTextCoord(pos, "Doge");
+		pos = drawTextCoord(pos, "Lib");
+		pos = drawTextLineCoord(pos, "!");
+		pos.x = 100;
+		drawTextCoord(pos, "DogeLib!");
 		draw();
 		events(frameStart + TPF, &zscale);
 	}
