@@ -272,6 +272,46 @@ void setColor(const Color c)
 	SDL_SetRenderDrawColor(gfx.renderer, c.r, c.g, c.b, c.a);
 }
 
+u32 colorToU32(const Color c)
+{
+	u32 ret = 0;
+	ret |= c.r;
+	ret <<= 8;
+
+	ret |= c.g;
+	ret <<= 8;
+
+	ret |= c.b;
+	ret <<= 8;
+
+	ret |= 0xFF;
+	return ret;
+}
+
+static inline
+void drawTri(const Coord pos1, const Coord pos2, const Coord pos3)
+{
+	trigonColor(
+		gfx.renderer,
+		pos1.x, pos1.y,
+		pos2.x, pos2.y,
+		pos3.x, pos3.y,
+		colorToU32(getColor())
+	);
+}
+
+static inline
+void fillTri(const Coord pos1, const Coord pos2, const Coord pos3)
+{
+	filledTrigonColor(
+		gfx.renderer,
+		pos1.x, pos1.y,
+		pos2.x, pos2.y,
+		pos3.x, pos3.y,
+		colorToU32(getColor())
+	);
+}
+
 static inline
 void setRGB(u8 r, u8 g, u8 b)
 {
