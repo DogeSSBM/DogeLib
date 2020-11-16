@@ -1,6 +1,6 @@
 #pragma once
 
-void events(const Ticks frameEnd, Offset *zscale)
+void events(const Ticks frameEnd)
 {
 	i32 ticksLeft = frameEnd - getTicks();
 	do{
@@ -17,18 +17,6 @@ void events(const Ticks frameEnd, Offset *zscale)
 			case SDLK_ESCAPE:
 				printf("Quitting now!\n");
 				exit(0);
-				break;
-			case SDLK_UP:
-				zscale->y++;
-				break;
-			case SDLK_RIGHT:
-				zscale->x--;
-				break;
-			case SDLK_DOWN:
-				zscale->y--;
-				break;
-			case SDLK_LEFT:
-				zscale->x++;
 				break;
 			}
 			break;

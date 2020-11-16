@@ -1,72 +1,15 @@
 #include "Includes.h"
 
-void drawAll(const Range win, const int scale, const Offset zscale)
-{
-	for(int x = -4; x <= 4; x++){
-		for(int y = -4; y <= 4; y ++){
-			for(int z = -4; z <= 4; z++){
-				Coord3 c3 = {x*scale, y*scale, z*scale};
-				Coord sq[4];
-				sq[0] = coord3Project(c3, win, zscale);
-				sq[1] = coordShift(sq[0], DIR_R, scale);
-				sq[2] = coordShift(sq[0], DIR_D, scale);
-				sq[3] = coordShift(sq[2], DIR_R, scale);
-
-				setColor(CYAN);
-				drawLineCoords(sq[0], sq[1]);
-				drawLineCoords(sq[0], sq[2]);
-				drawLineCoords(sq[1], sq[3]);
-				drawLineCoords(sq[2], sq[3]);
-
-				setColor(YELLOW);
-				for(uint i = 0; i < 4; i++){
-					drawLineCoords(
-						sq[i],
-						coordOffset(sq[i], zscale)
-					);
-					sq[i] = coordOffset(sq[i], zscale);
-				}
-
-				setColor(MAGENTA);
-				drawLineCoords(sq[0], sq[1]);
-				drawLineCoords(sq[0], sq[2]);
-				drawLineCoords(sq[1], sq[3]);
-				drawLineCoords(sq[2], sq[3]);
-			}
-		}
-	}
-}
-
 int main(int argc, char const *argv[])
 {
-	const Range win = {800, 800};
-	const int scale = 10;
-	Offset zscale = {3, -3};
-	init(win);
-	const Color axisc[3] = {RED, GREEN, BLUE};
+	const Length window = {800, 600};
+	init(window);
 	while(1){
 		Ticks frameStart = getTicks();
 		clear();
-		for(uint i = 0; i < 3; i++){
-			setColor(axisc[i]);
-			Coord3 c3 = {0};
-			drawLineCoord3(
-				dimensionShift(c3, i,  400),
-				dimensionShift(c3, i, -400),
-				win,
-				zscale
-			);
-		}
-		setColor(WHITE);
-		drawAll(win, scale, zscale);
-		Coord pos = {100, 100};
-		pos = drawTextCoord(pos, "Doge");
-		pos = drawTextCoord(pos, "Lib");
-		pos = drawTextLineCoord(pos, "!");
-		pos.x = 100;
-		drawTextCoord(pos, "DogeLib!");
+
 		draw();
-		events(frameStart + TPF, &zscale);
+		events(frameStart + TPF);
 	}
 	return 0;
 }
