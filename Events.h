@@ -18,7 +18,28 @@ void events(const Ticks frameEnd)
 				printf("Quitting now!\n");
 				exit(0);
 				break;
+			case SDLK_UP:
+
+				break;
+			case SDLK_DOWN:
+
+				break;
+			case SDLK_LEFT:
+
+				break;
+			case SDLK_RIGHT:
+
+				break;
 			}
+			break;
+		case SDL_MOUSEMOTION:
+
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+
+			break;
+		case SDL_MOUSEBUTTONUP:
+
 			break;
 		}
 		ticksLeft = frameEnd - getTicks();

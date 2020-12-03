@@ -1,2 +1,3 @@
-#!/bin/bash
+#!/bin/sh
+set -ex
 git pull

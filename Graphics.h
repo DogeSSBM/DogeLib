@@ -41,7 +41,7 @@ void drawPixelCoord(const Coord pos)
 }
 
 static inline
-void drawLine(uint x1, uint y1, uint x2, uint y2)
+void drawLine(const uint x1, const uint y1, const uint x2, const uint y2)
 {
 	SDL_RenderDrawLine(gfx.renderer, x1, y1, x2, y2);
 }
@@ -53,26 +53,26 @@ void drawLineCoords(const Coord pos1, const Coord pos2)
 }
 
 static inline
-void drawHLine(uint x, uint y, int len)
+void drawHLine(const uint x, const uint y, int len)
 {
 	SDL_RenderDrawLine(gfx.renderer, x, y, x+len, y);
 }
 
 static inline
-void drawVLine(uint x, uint y, int len)
+void drawVLine(const uint x, const uint y, int len)
 {
 	SDL_RenderDrawLine(gfx.renderer, x, y, x, y+len);
 }
 
 static inline
-void drawRect(uint x, uint y, uint xlen, uint ylen)
+void drawRect(const uint x, const uint y, const uint xlen, const uint ylen)
 {
 	Rect r = {x, y, xlen, ylen};
 	SDL_RenderDrawRect(gfx.renderer, &r);
 }
 
 static inline
-void fillRect(uint x, uint y, uint xlen, uint ylen)
+void fillRect(const uint x, const uint y, const uint xlen, const uint ylen)
 {
 	Rect r = {x, y, xlen, ylen};
 	SDL_RenderFillRect(gfx.renderer, &r);
@@ -103,14 +103,21 @@ void fillRectCoords(const Coord pos1, const Coord pos2)
 }
 
 static inline
-void drawSquare(uint x, uint y, uint len)
+void drawSquareCoord(const Coord pos, const uint len)
+{
+	Rect r = {pos.x, pos.y, len, len};
+	SDL_RenderDrawRect(gfx.renderer, &r);
+}
+
+static inline
+void drawSquare(const uint x, const uint y, const uint len)
 {
 	Rect r = {x, y, len, len};
 	SDL_RenderDrawRect(gfx.renderer, &r);
 }
 
 static inline
-void fillSquare(uint x, uint y, uint len)
+void fillSquare(const uint x, const uint y, const uint len)
 {
 	Rect r = {x, y, len, len};
 	SDL_RenderFillRect(gfx.renderer, &r);
@@ -142,7 +149,7 @@ void fillBorderCoords(const Coord pos, const Length len, const int b)
 }
 
 static inline
-void drawCircle(uint x, uint y, uint radius)
+void drawCircle(const uint x, const uint y, const uint radius)
 {
 	uint rsq = radius*radius;
 	uint yoff = radius;
@@ -164,7 +171,7 @@ void drawCircle(uint x, uint y, uint radius)
 }
 
 static inline
-void fillCircle(uint x, uint y, uint radius)
+void fillCircle(const uint x, const uint y, const uint radius)
 {
 	uint rsq = radius*radius;
 	uint yoff = radius;
@@ -312,26 +319,59 @@ void fillTri(const Coord pos1, const Coord pos2, const Coord pos3)
 	);
 }
 
+void drawPoly(Coord *pos, const uint num)
+{
+	i16 posx[num];
+	i16 posy[num];
+	for(uint i = 0; i < num; i++){
+		posx[i] = pos[i].x;
+		posy[i] = pos[i].y;
+	}
+	polygonColor(gfx.renderer, posx, posy, num, colorToU32(getColor()));
+}
+
+void fillPoly(Coord *pos, const uint num)
+{
+	i16 posx[num];
+	i16 posy[num];
+	for(uint i = 0; i < num; i++){
+		posx[i] = pos[i].x;
+		posy[i] = pos[i].y;
+	}
+	filledPolygonColor(gfx.renderer, posx, posy, num, colorToU32(getColor()));
+}
+
+void bezier(const Coord *pos, const uint numc, const uint nums)
+{
+	i16 posx[numc];
+	i16 posy[numc];
+	for(uint i = 0; i < numc; i++){
+		posx[i] = pos[i].x;
+		posy[i] = pos[i].y;
+	}
+	bezierColor(gfx.renderer, posx, posy, numc, nums, colorToU32(getColor()));
+}
+
 static inline
-void setRGB(u8 r, u8 g, u8 b)
+void setRGB(const u8 r, const u8 g, const u8 b)
 {
 	SDL_SetRenderDrawColor(gfx.renderer, r, g, b, 255);
 }
 
 static inline
-void setRGBA(u8 r, u8 g, u8 b, u8 a)
+void setRGBA(const u8 r, const u8 g, const u8 b, const u8 a)
 {
 	SDL_SetRenderDrawColor(gfx.renderer, r, g, b, a);
 }
 
 static inline
-void fillScreen()
+void fillScreen(void)
 {
 	fillRect(0,0,gfx.xlen,gfx.ylen);
 }
 
 static inline
-void clear()
+void clear(void)
 {
 	Color c = getColor();
 	setColor(gfx.defaultColor);
@@ -341,7 +381,7 @@ void clear()
 }
 
 static inline
-void draw()
+void draw(void)
 {
 	SDL_RenderPresent(gfx.renderer);
 }
@@ -369,7 +409,7 @@ void gfx_quit(void)
 }
 
 static inline
-void gfx_init(uint winXlen, uint winYlen)
+void gfx_init(const uint winXlen, const uint winYlen)
 {
 	if(SDL_Init(SDL_INIT_VIDEO)<0){
 		printf("SDL borked! Error: %s\n", SDL_GetError());

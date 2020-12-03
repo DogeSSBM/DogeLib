@@ -2,24 +2,28 @@
 
 int main(int argc, char const *argv[])
 {
-	const Length window = {800, 600};
+	const Length window = {1200, 900};
+	const RangePair box = {
+		.x = {200, 1000},
+		.y = {200, 700}
+	};
 	init(window);
 
-	const Coord p1 = {300, 300};
-	const Coord p2 = {500, 300};
-	Coord p3 = {400, 200};
-	int speed = 2;
-
-	setColor(RED);
+	setFontSize(48);
+	setFontColor(PINK);
+	const char* text = "DogeLib :3";
+	Coord pos = {box.x.min, box.y.min};
+	Direction dir = DIR_R;
+	const uint speed = 4;
 
 	while(1){
 		Ticks frameStart = getTicks();
 		clear();
 
-		fillTri(p1, p2, p3);
-		if(!inBound(p3.y+speed, 150, 450))
-			speed = -speed;
-		p3.y+=speed;
+		drawTextCenteredCoord(pos, text);
+		if(!coordInRangePair(coordShift(pos, dir, speed), box))
+			dir = dirROR(dir);
+		pos = coordShift(pos, dir, speed);
 
 		draw();
 		events(frameStart + TPF);
