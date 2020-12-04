@@ -127,9 +127,21 @@ Coordf coordfOffsetMul(const Coordf coord1, const Coordf coord2)
 }
 
 static inline
-Coord coordDistVec(const Coord coord1, const Coord coord2)
+Coord coordInv(const Coord coord)
 {
-	return (Coord){coord2.x-coord1.x,coord2.y-coord1.y};
+	return (Coord){-coord.x, -coord.y};
+}
+
+static inline
+Coord coordAdd(const Coord coord1, const Coord coord2)
+{
+	return (Coord){coord1.x+coord2.x,coord1.y+coord2.y};
+}
+
+static inline
+Coord coordSub(const Coord coord1, const Coord coord2)
+{
+	return (Offset){coord1.x-coord2.x,coord1.y-coord2.y};
 }
 
 static inline
@@ -154,7 +166,7 @@ Coordf coordfNormalize(const Coordf coord)
 static inline
 uint coordDistSq(const Coord coord1, const Coord coord2)
 {
-	Coord distvec = coordDistVec(coord1, coord2);
+	Coord distvec = coordSub(coord2, coord1);
 	distvec = coordOffsetMul(distvec, distvec);
 	return distvec.x + distvec.y;
 }

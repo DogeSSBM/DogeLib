@@ -7,41 +7,16 @@ void events(const Ticks frameEnd)
 		Event event;
 		if(!SDL_WaitEventTimeout(&event, ticksLeft))
 			return;
-		switch(event.type){
-		case SDL_QUIT:
+		if(event.type == SDL_QUIT){
 			printf("Quitting now!\n");
 			exit(0);
-			break;
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym) {
-			case SDLK_ESCAPE:
-				printf("Quitting now!\n");
-				exit(0);
-				break;
-			case SDLK_UP:
-
-				break;
-			case SDLK_DOWN:
-
-				break;
-			case SDLK_LEFT:
-
-				break;
-			case SDLK_RIGHT:
-
-				break;
-			}
-			break;
-		case SDL_MOUSEMOTION:
-
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-
-			break;
-		case SDL_MOUSEBUTTONUP:
-
-			break;
 		}
 		ticksLeft = frameEnd - getTicks();
 	}while(ticksLeft > 0);
+	memcpy(keys.prev, keys.key, SDL_NUM_SCANCODES);
+	memcpy(keys.key, SDL_GetKeyboardState(NULL), SDL_NUM_SCANCODES);
+	mouse.prev.state = mouse.state;
+	mouse.prev.pos = mouse.pos;
+	mouse.state = SDL_GetMouseState(&mouse.pos.x, &mouse.pos.y);
+	SDL_GetRelativeMouseState(&mouse.relative.x, &mouse.relative.y);
 }
