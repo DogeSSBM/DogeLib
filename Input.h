@@ -8,12 +8,12 @@ struct{
 		Coord pos;
 		u32 state;
 	}prev;
-}mouse;
+}mouse = {0};
 
 struct{
 	u8 key[SDL_NUM_SCANCODES];
 	u8 prev[SDL_NUM_SCANCODES];
-}keys;
+}keys = {0};
 
 bool keyState(const SDL_Scancode key)
 {

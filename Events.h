@@ -5,9 +5,7 @@ void events(const Ticks frameEnd)
 	i32 ticksLeft = frameEnd - getTicks();
 	do{
 		Event event;
-		if(!SDL_WaitEventTimeout(&event, ticksLeft))
-			return;
-		if(event.type == SDL_QUIT){
+		if(SDL_WaitEventTimeout(&event, ticksLeft) && event.type == SDL_QUIT){
 			printf("Quitting now!\n");
 			exit(0);
 		}
