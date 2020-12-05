@@ -16,5 +16,5 @@ void events(const Ticks frameEnd)
 	mouse.prev.state = mouse.state;
 	mouse.prev.pos = mouse.pos;
 	mouse.state = SDL_GetMouseState(&mouse.pos.x, &mouse.pos.y);
-	SDL_GetRelativeMouseState(&mouse.relative.x, &mouse.relative.y);
+	SDL_GetRelativeMouseState(&mouse.vec.x, &mouse.vec.y);
 }

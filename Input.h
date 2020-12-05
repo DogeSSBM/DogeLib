@@ -1,7 +1,7 @@
 #pragma once
 
 struct{
-	Offset relative;
+	Offset vec;
 	Coord pos;
 	u32 state;
 	struct{

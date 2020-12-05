@@ -21,8 +21,8 @@ Coord move(Coord pos, const Length window)
 
 void trackMouse(void)
 {
-	const Coord mnxt = coordAdd(mouse.pos, mouse.relative);
-	const Coord mprv = coordSub(mouse.pos, mouse.relative);
+	const Coord mnxt = coordAdd(mouse.pos, mouse.vec);
+	const Coord mprv = coordSub(mouse.pos, mouse.vec);
 	setColor(BLUE);
 	drawLineCoords(mouse.pos, mnxt);
 	setColor(RED);
