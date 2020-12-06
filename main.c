@@ -10,7 +10,7 @@ Coord move(Coord pos, const Length window)
 	};
 	for(Direction i = DIR_U; i <= DIR_L; i++)
 		if(dirs[i] && !dirs[dirINV(i)])
-				coordShift(pos,i,4)
+				pos = coordShift(pos,i,4);
 	return coordWrap(pos, (Range){0,window.x}, (Range){0,window.y});
 }
 
@@ -24,9 +24,24 @@ void trackMouse(void)
 	drawPixelCoord(mouse.pos);
 }
 
+void wrapText(const Coord pos, const Coord window, const char *text)
+{
+	const Length textBound = {(gfx.fontSize*strlen(text))/2, gfx.fontSize};
+	for(Direction i = DIR_U; i <= DIR_L; i++){
+		if(coordInRangePair(
+		coordShift(pos,i,dirUD(i)?textBound.y:textBound.x),
+		(RangePair){(Range){0,window.x},(Range){0,window.y}}))
+			continue;
+		drawTextCenteredCoord(coordShift(
+			pos,dirINV(i),dirUD(i)?window.y:window.x),text
+		);
+	}
+
+}
+
 int main(int argc, char const *argv[])
 {
-	const Length window = {1200, 900};
+	const Length window = {800, 600};
 	init(window);
 	setFontSize(48);
 	setFontColor(PINK);
@@ -40,6 +55,7 @@ int main(int argc, char const *argv[])
 		pos = move(pos, window);
 		trackMouse();
 		drawTextCenteredCoord(pos, text);
+		wrapText(pos, window, text);
 
 		draw();
 		events(frameStart + TPF);
