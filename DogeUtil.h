@@ -10,11 +10,6 @@ float randRange(float a, float b)
 	return ((b-a)*((float)rand()/RAND_MAX))+a;
 }
 
-void printDebugKeymap(void)
-{
-
-}
-
 void init(const Range win)
 {
 	srand(time(NULL));
