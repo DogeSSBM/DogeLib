@@ -53,6 +53,12 @@ void drawLineCoords(const Coord pos1, const Coord pos2)
 }
 
 static inline
+void thickLineCoords(const Coord pos1, const Coord pos2, const uint width)
+{
+	thickLineColor(gfx.renderer, i16(pos1.x), i16(pos1.y), i16(pos2.x), i16(pos2.y), colorToU32(getColor()));
+}
+
+static inline
 void drawHLine(const uint x, const uint y, int len)
 {
 	SDL_RenderDrawLine(gfx.renderer, x, y, x+len, y);
