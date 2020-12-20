@@ -1,7 +1,5 @@
 #include "Includes.h"
 
-
-
 int main(int argc, char const *argv[])
 {
 	const Length window = {800, 600};
@@ -11,8 +9,6 @@ int main(int argc, char const *argv[])
 	while(1){
 		Ticks frameStart = getTicks();
 		clear();
-
-		if(keyState(Key))
 
 		draw();
 		events(frameStart + TPF);
