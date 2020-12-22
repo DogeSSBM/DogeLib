@@ -1,15 +1,52 @@
 #pragma once
 
-#define dirROR(d)			(((d)+1)&0b11)
-#define dirROL(d)			(((d)-1)&0b11)
+static inline
+Direction dirROR(const Direction dir)
+{
+	return (dir+1)&0b11;
+}
 
-//#define dirROR(d)			(((d)&1)<<1^((d)^1))
-//#define dirROL(d)			(((d)^1)<<1^((d)^1))
-#define dirINV(d)			((d)^0b10)
-#define dirLR(d)			((d)&1)
-#define dirUD(d)			(!((d)&1))
-#define dirPOS(d)			((d)==DIR_R||(d)==DIR_D)
-#define dirNEG(d)			((d)==DIR_L||(d)==DIR_U)
+static inline
+Direction dirROL(const Direction dir)
+{
+	return (dir-1)&0b11;
+}
+
+static inline
+Direction dirINV(const Direction dir)
+{
+	return dir^0b10;
+}
+
+static inline
+Direction dirLR(const Direction dir)
+{
+	return dir&1;
+}
+
+static inline
+Direction dirUD(const Direction dir)
+{
+	return !(dir&1);
+}
+
+static inline
+bool dirAXA(const Direction dir1, const Direction dir2)
+{
+	return dirUD(dir1) == dirUD(dir2);
+}
+
+static inline
+Direction dirPOS(const Direction dir)
+{
+	return dir==DIR_R||dir==DIR_D;
+}
+
+static inline
+Direction dirNEG(const Direction dir)
+{
+	return dir==DIR_L||dir==DIR_U;
+}
 
 static inline
 int coordMin(const Coord coord)
@@ -133,9 +170,9 @@ Coord coordInv(const Coord coord)
 }
 
 static inline
-Coord coordAdd(const Coord coord1, const Coord coord2)
+Coord coordAdd(const Coord coord1, const uint num)
 {
-	return (Coord){coord1.x+coord2.x,coord1.y+coord2.y};
+	return (Coord){coord1.x+num,coord1.y+num};
 }
 
 static inline
