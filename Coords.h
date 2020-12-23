@@ -66,7 +66,6 @@ bool coordSame(const Coord pos1, const Coord pos2)
 	return pos1.x == pos2.x && pos1.y == pos2.y;
 }
 
-// Bounds n between min (inclusive) and max (exclusive)
 static inline
 int clamp(const int n, const int min, const int max)
 {
@@ -77,14 +76,12 @@ int clamp(const int n, const int min, const int max)
 	return n;
 }
 
-// Returns true if n is between min (inclusive) and max (exclusive)
 static inline
 bool inBound(const int n, const int min, const int max)
 {
-	return n >= min && n < max;
+	return !(n < min || n >= max);
 }
 
-// Returns true if n is in range
 static inline
 bool inRange(const int n, const Range range)
 {
@@ -94,10 +91,11 @@ bool inRange(const int n, const Range range)
 static inline
 int wrap(const int n, const int min, const int max)
 {
+	const uint size = max-min;
 	if(n < min)
-		return max-1;
+		return max-abs(n);
 	if(n >= max)
-		return min;
+		return min+(n%size);
 	return n;
 }
 
