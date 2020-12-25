@@ -193,6 +193,12 @@ Coordf coordfDiv(const Coordf coord, const float num)
 }
 
 static inline
+Coord coordMod(const Coord coord, const int num)
+{
+	return (Coord){coord.x%num, coord.y%num};
+}
+
+static inline
 Coordf coordfNormalize(const Coordf coord)
 {
 	return coordfDiv(coord, coordfDist((Coordf){0.0f,0.0f}, coord));
