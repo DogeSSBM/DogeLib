@@ -14,25 +14,20 @@ Coord move(Coord pos, const Length window)
 	return coordWrap(pos, (Range){0,window.x}, (Range){0,window.y});
 }
 
-void trackMouse(void)
+void trackMouse(const Color color)
 {
-	setColor(BLUE);
+	setColor(color);
 	drawLineCoords(mouse.pos, coordOffset(mouse.pos, mouse.vec));
 	setColor(WHITE);
-	drawPixelCoord(mouse.pos);
+	fillCircleCoord(mouse.pos, 3);
 }
 
-void wrapText(const Coord pos, const Coord window, const char *text)
+void showText(const Coord pos, const Color color, const Coord window, const char *text)
 {
-	const Length textBound = {(gfx.fontSize*strlen(text))/2, gfx.fontSize};
+	setFontColor(color);
+	drawTextCenteredCoord(pos, text);
 	for(Direction i = DIR_U; i <= DIR_L; i++){
-		if(coordInRangePair(
-		coordShift(pos,i,dirUD(i)?textBound.y:textBound.x),
-		(RangePair){(Range){0,window.x},(Range){0,window.y}}))
-			continue;
-		drawTextCenteredCoord(coordShift(
-			pos,dirINV(i),dirUD(i)?window.y:window.x),text
-		);
+		drawTextCenteredCoord(coordShift(pos, i, dirLR(i)?window.x:window.y), text);
 	}
 
 }
@@ -42,7 +37,6 @@ int main(int argc, char const *argv[])
 	const Length window = {800, 600};
 	init(window);
 	setFontSize(48);
-	setFontColor(PINK);
 	const char* text = "DogeLib :3";
 	Coord pos = coordDiv(window, 2);
 
@@ -50,10 +44,12 @@ int main(int argc, char const *argv[])
 		Ticks frameStart = getTicks();
 		clear();
 
+		const Color color = mouseBtnState(MOUSE_L)?BLUE:RED;
 		pos = move(pos, window);
-		trackMouse();
-		drawTextCenteredCoord(pos, text);
-		wrapText(pos, window, text);
+		trackMouse(color);
+		showText(pos, color, window, text);
+
+
 
 		draw();
 		events(frameStart + TPF);

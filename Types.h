@@ -82,6 +82,10 @@ typedef union{
 		Coord c2;
 	};
 	struct{
+		Coord pos1;
+		Coord pos2;
+	};
+	struct{
 		Coord x;
 		Coord y;
 	};

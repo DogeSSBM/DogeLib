@@ -46,6 +46,14 @@ void drawTextCenteredCoord(const Coord pos, const char *text)
 	drawTextCentered(pos.x, pos.y, text);
 }
 
+static inline
+Length getTextLength(const char *text)
+{
+	Length len = {0};
+	TTF_SizeText(gfx.font, text, &len.x, &len.y);
+	return len;
+}
+
 typedef struct{
 	char* text;
 	Rect r;

@@ -53,6 +53,12 @@ void drawLineCoords(const Coord pos1, const Coord pos2)
 }
 
 static inline
+void drawLineCoordPair(const CoordPair pair)
+{
+	SDL_RenderDrawLine(gfx.renderer, pair.pos1.x, pair.pos1.y, pair.pos2.x, pair.pos2.y);
+}
+
+static inline
 void drawHLine(const uint x, const uint y, int len)
 {
 	SDL_RenderDrawLine(gfx.renderer, x, y, x+len, y);
