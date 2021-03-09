@@ -44,6 +44,9 @@ int main(int argc, char const *argv[])
 		Ticks frameStart = getTicks();
 		clear();
 
+		setColor(mouseBtnState(MOUSE_L)?MAGENTA:CYAN);
+		drawCircleCoord(mouse.pos, 10);
+
 		setColor(mouseBtnState(MOUSE_L)?CYAN:MAGENTA);
 		Coord vx[8] = {0};
 		for(uint i = 0; i < 4; i++){
