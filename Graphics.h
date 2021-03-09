@@ -287,18 +287,7 @@ void setColor(const Color c)
 
 u32 colorToU32(const Color c)
 {
-	u32 ret = 0;
-	ret |= c.r;
-	ret <<= 8;
-
-	ret |= c.g;
-	ret <<= 8;
-
-	ret |= c.b;
-	ret <<= 8;
-
-	ret |= 0xFF;
-	return ret;
+	return *((u32*)&c);
 }
 
 static inline

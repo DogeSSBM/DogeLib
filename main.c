@@ -44,12 +44,18 @@ int main(int argc, char const *argv[])
 		Ticks frameStart = getTicks();
 		clear();
 
+		setColor(mouseBtnState(MOUSE_L)?CYAN:MAGENTA);
+		Coord vx[8] = {0};
+		for(uint i = 0; i < 4; i++){
+			vx[i*2] = coordShift(mouse.pos, i, 80);
+			vx[i*2+1] = coordShift(coordShift(mouse.pos, i, 60), dirROR(i), 60);
+		}
+		drawPoly(vx, 8);
+
 		const Color color = mouseBtnState(MOUSE_L)?BLUE:RED;
 		pos = move(pos, window);
 		trackMouse(color);
 		showText(pos, color, window, text);
-
-
 
 		draw();
 		events(frameStart + TPF);
