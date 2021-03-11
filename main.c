@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
 		Coord vx[8] = {0};
 		for(uint i = 0; i < 4; i++){
 			vx[i*2] = coordShift(mouse.pos, i, 80);
-			vx[i*2+1] = coordShift(coordShift(mouse.pos, i, 60), dirROR(i), 60);
+			vx[i*2+1] = coordShift(coordShift(mouse.pos, dirINV(i), 60), dirROR(dirINV(i)), 60);
 		}
 		drawPoly(vx, 8);
 
