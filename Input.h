@@ -42,6 +42,7 @@ struct{
 	u32 state;
 	u32 wheel;
 	struct{
+		Offset vec;
 		Coord pos;
 		u32 state;
 		u32 wheel;

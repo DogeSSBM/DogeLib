@@ -285,9 +285,16 @@ void setColor(const Color c)
 	SDL_SetRenderDrawColor(gfx.renderer, c.r, c.g, c.b, c.a);
 }
 
+static inline
 u32 colorToU32(const Color c)
 {
 	return *((u32*)&c);
+}
+
+static inline
+Color u32ToColor(const u32 u)
+{
+	return (Color){u&0xff, (u>>8)&0xff, (u>>16)&0xff};
 }
 
 static inline

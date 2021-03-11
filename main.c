@@ -16,8 +16,8 @@ Coord move(Coord pos, const Length window)
 
 void trackMouse(const Color color)
 {
-	setColor(color);
-	drawLineCoords(mouse.pos, coordOffset(mouse.pos, mouse.vec));
+	setColor(u32ToColor(~colorToU32(color)));
+	drawLineCoords(mouse.pos, coordOffset(mouse.pos, coordMul(mouse.vec, 3)));
 	setColor(WHITE);
 	fillCircleCoord(mouse.pos, 3);
 }
