@@ -46,7 +46,6 @@ int main(int argc, char const *argv[])
 	const char* text = "DogeLib :3";
 	Coord pos = coordDiv(window, 2);
 
-
 	Particle part[10];
 	for(uint i = 0; i < 10; i++){
 		part[i].pos = CCf(coordDiv(window, 2));
