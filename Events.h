@@ -7,7 +7,7 @@ void events(const Ticks frameEnd)
 	mouse.wheel = 0;
 	do{
 		Event event;
-		if(SDL_WaitEventTimeout(&event, ticksLeft)){
+		if(SDL_WaitEventTimeout(&event, ticksLeft>0?ticksLeft:1)){
 			switch(event.type)
 			{
 			case SDL_QUIT:
