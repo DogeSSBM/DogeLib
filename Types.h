@@ -105,15 +105,7 @@ typedef union{
 		float x;
 		float y;
 	};
-	struct{
-		float min;
-		float max;
-	};
-	struct{
-		float neg;
-		float pos;
-	};
-}Coordf, Rangef, Lengthf, Offsetf;
+}Coordf, Vectorf, Rangef, Lengthf, Offsetf;
 
 typedef enum{
 	DIR_U = 0b00,
