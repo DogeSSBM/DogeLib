@@ -12,6 +12,12 @@ Color rgbaToColor(const uint R, const uint G, const uint B, const uint A)
 	return (Color){R, G, B, A};
 }
 
+static inline
+Color randColor(void)
+{
+	return (Color){rand()%255, rand()%255, rand()%255, 255};
+}
+
 const Color WHITE		= {0xFF, 0xFF, 0xFF, 0xFF};
 const Color PINK		= {0xFF, 0xC0, 0xCB, 0xFF};
 const Color CYAN		= {0x00, 0xFF, 0xFF, 0xFF};

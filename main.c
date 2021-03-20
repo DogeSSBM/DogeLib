@@ -55,7 +55,9 @@ int main(int argc, char const *argv[])
 
 		setColor(GREY);
 		drawPoly(example, num);
+		setColor(randColor());
 		tri(window);
+		setColor(randColor());
 		particles(window);
 
 		setColor(mouseBtnState(MOUSE_L)?MAGENTA:CYAN);

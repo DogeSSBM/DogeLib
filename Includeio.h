@@ -19,7 +19,6 @@ void particles(const Length window)
 		}
 	}
 
-	setColor(RED);
 	for(uint i = 0; i < 10; i++){
 		fillCircleCoord(CfC(part[i].pos), 8);
 		part[i].ang += degToRad(randRange(-8.0f, 8.0f));
@@ -65,7 +64,6 @@ void tri(const Length window)
 		}
 	}
 
-	setRGB(128, 0, 255);
 	for(uint i = 0; i < 10; i++){
 		for(uint j = 0; j < 3; j++){
 			Coord c[3] = {CfC(tri[i].pos[0]), CfC(tri[i].pos[1]), CfC(tri[i].pos[2])};
