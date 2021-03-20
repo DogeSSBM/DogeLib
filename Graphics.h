@@ -23,6 +23,26 @@ void setWindowSize(const uint x, const uint y)
 }
 
 static inline
+void setWindowResizable(const bool resizable)
+{
+	SDL_SetWindowResizable(gfx.window, resizable);
+}
+
+static inline
+void setWindowLen(const Length len)
+{
+	SDL_SetWindowSize(gfx.window, len.x, len.y);
+}
+
+static inline
+Length getWindowLen(void)
+{
+	Length ret = {0, 0};
+	SDL_GetRendererOutputSize(gfx.renderer, &ret.x, &ret.y);
+	return ret;
+}
+
+static inline
 void setBlend(const BlendMode mode)
 {
 	SDL_SetRenderDrawBlendMode(gfx.renderer, mode);

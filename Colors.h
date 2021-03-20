@@ -1,15 +1,15 @@
 #pragma once
 
+static inline
 Color rgbToColor(const uint R, const uint G, const uint B)
 {
-	Color C = {R, G, B, 0xFF};
-	return C;
+	return (Color){R, G, B, 0xFF};
 }
 
+static inline
 Color rgbaToColor(const uint R, const uint G, const uint B, const uint A)
 {
-	Color C = {R, G, B, A};
-	return C;
+	return (Color){R, G, B, A};
 }
 
 const Color WHITE		= {0xFF, 0xFF, 0xFF, 0xFF};

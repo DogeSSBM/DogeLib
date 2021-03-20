@@ -73,7 +73,7 @@ typedef union{
 		int neg;
 		int pos;
 	};
-}Coord, Range, Length, Offset;
+}Coord, Range, Length, Offset, Ratio;
 
 typedef union{
 	Coord arr[2];
@@ -123,3 +123,9 @@ typedef enum{
 }Direction;
 
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
+
+int gcd(const int a, const int b) {
+	if (!b)
+		return a;
+	return gcd(b, a % b);
+}

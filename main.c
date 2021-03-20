@@ -36,6 +36,7 @@ int main(int argc, char const *argv[])
 {
 	const Length window = {800, 600};
 	init(window);
+	setWindowResizable(true);
 	setFontSize(48);
 	const char* text = "DogeLib :3";
 	Coord pos = coordDiv(window, 2);
