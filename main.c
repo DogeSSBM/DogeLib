@@ -55,8 +55,10 @@ int main(int argc, char const *argv[])
 
 		setColor(GREY);
 		drawPoly(example, num);
+
 		setColor(randColor());
 		tri(window);
+
 		setColor(randColor());
 		particles(window);
 
