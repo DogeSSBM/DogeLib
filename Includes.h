@@ -30,3 +30,4 @@
 #include "Input.h"
 #include "Events.h"
 #include "DogeUtil.h"
+#include "Examples.h"

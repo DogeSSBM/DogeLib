@@ -1,5 +1,4 @@
 #include "Includes.h"
-#include "Includeio.h"
 
 Coord move(Coord pos, const Length window)
 {
@@ -32,7 +31,6 @@ void showText(const Coord pos, const Color color, const Coord window, const char
 	}
 
 }
-
 
 int main(int argc, char const *argv[])
 {
