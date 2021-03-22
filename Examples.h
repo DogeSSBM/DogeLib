@@ -20,7 +20,7 @@ void particles(const Length window)
 	}
 
 	for(uint i = 0; i < 10; i++){
-		fillCircleCoord(CfC(part[i].pos), 8);
+		fillCircleCoord(CfC(part[i].pos), 16);
 		part[i].ang += degToRad(randRange(-8.0f, 8.0f));
 		part[i].mag = fclamp(part[i].mag+randRange(-2.0f, 2.0f), -20.0f, 20.0f);
 		Coordf cf = radMagToCf(part[i].ang, part[i].mag);
@@ -44,48 +44,53 @@ void particles(const Length window)
 }
 
 typedef struct{
-	Coordf pos[3];
-	float ang[3];
-	float mag[3];
-}Triangle;
+	Coordf pos[POLY_SIDES];
+	float ang[POLY_SIDES];
+	float mag[POLY_SIDES];
+}Poly;
 
-void tri(const Length window)
+void polyDraw(const Length window)
 {
 	static bool initialized = false;
-	static Triangle tri[10];
+	static Poly poly[10];
 	if(!initialized){
 		initialized = true;
 		for(uint i = 0; i < 10; i++){
-			for(uint j = 0; j < 3; j++){
-				tri[i].pos[j] = CCf(coordDiv(window, 2));
-				tri[i].ang[j] = degToRad(randRange(-180.0f, 180.0f));
-				tri[i].mag[j] = randRange(0.0f, 4.0f);
+			for(uint j = 0; j < POLY_SIDES; j++){
+				poly[i].pos[j] = (Coordf){
+					randRange(0.0f,(float)window.x), randRange(0.0f, (float)window.x)
+				};
+				poly[i].ang[j] = degToRad(randRange(-180.0f, 180.0f));
+				poly[i].mag[j] = randRange(0.0f, 4.0f);
 			}
 		}
 	}
 
 	for(uint i = 0; i < 10; i++){
-		for(uint j = 0; j < 3; j++){
-			Coord c[3] = {CfC(tri[i].pos[0]), CfC(tri[i].pos[1]), CfC(tri[i].pos[2])};
-			fillPoly(c, 3);
-			tri[i].ang[j] += degToRad(randRange(-8.0f, 8.0f));
-			tri[i].mag[j] = fclamp(tri[i].mag[j]+randRange(-2.0f, 2.0f), -20.0f, 20.0f);
-			Coordf cf = radMagToCf(tri[i].ang[j], tri[i].mag[j]);
-			Coordf new = cfTranslate(tri[i].pos[j], cf);
+		for(uint j = 0; j < POLY_SIDES; j++){
+			Coord c[POLY_SIDES];
+			for(uint k = 0; k < POLY_SIDES; k++){
+				c[k] = CfC(poly[i].pos[k]);
+			}
+			drawPoly(c, POLY_SIDES);
+			poly[i].ang[j] += degToRad(randRange(-8.0f, 8.0f));
+			poly[i].mag[j] = fclamp(poly[i].mag[j]+randRange(-2.0f, 2.0f), -20.0f, 20.0f);
+			Coordf cf = radMagToCf(poly[i].ang[j], poly[i].mag[j]);
+			Coordf new = cfTranslate(poly[i].pos[j], cf);
 			if(!finBound(new.x,0.0f,(float)window.x)){
 				cf.x = -cf.x;
-				new = cfTranslate(tri[i].pos[j], cf);
-				tri[i].ang[j] = cfToRad(cf);
-				tri[i].mag[j] = cfMag(cf);
+				new = cfTranslate(poly[i].pos[j], cf);
+				poly[i].ang[j] = cfToRad(cf);
+				poly[i].mag[j] = cfMag(cf);
 			}
 
 			if(!finBound(new.y,0.0f,(float)window.y)){
 				cf.y = -cf.y;
-				new = cfTranslate(tri[i].pos[j], cf);
-				tri[i].ang[j] = cfToRad(cf);
-				tri[i].mag[j] = cfMag(cf);
+				new = cfTranslate(poly[i].pos[j], cf);
+				poly[i].ang[j] = cfToRad(cf);
+				poly[i].mag[j] = cfMag(cf);
 			}
-			tri[i].pos[j] = new;
+			poly[i].pos[j] = new;
 		}
 	}
 }
