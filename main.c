@@ -10,7 +10,6 @@ int main(int argc, char const *argv[])
 		Ticks frameStart = getTicks();
 		clear();
 
-		setColor(PINK);
 		polyDraw(window);
 
 		draw();

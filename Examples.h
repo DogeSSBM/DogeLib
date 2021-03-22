@@ -72,6 +72,7 @@ void polyDraw(const Length window)
 			for(uint k = 0; k < POLY_SIDES; k++){
 				c[k] = CfC(poly[i].pos[k]);
 			}
+			setColor(randColor());
 			drawPoly(c, POLY_SIDES);
 			poly[i].ang[j] += degToRad(randRange(-8.0f, 8.0f));
 			poly[i].mag[j] = fclamp(poly[i].mag[j]+randRange(-2.0f, 2.0f), -20.0f, 20.0f);
