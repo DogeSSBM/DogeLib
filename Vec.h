@@ -84,11 +84,11 @@ float cfMag(const Coordf coord)
 	return sqrtf(coord.x*coord.x+coord.y*coord.y);
 }
 
+static inline
 Coordf radMagToCf(const float rad, const float mag)
 {
 	return cfMul(radToCf(rad), mag);
 }
-
 
 static inline
 Coordf cfNormalize(const Coordf coord)

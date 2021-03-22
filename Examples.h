@@ -58,7 +58,7 @@ void polyDraw(const Length window)
 		for(uint i = 0; i < 10; i++){
 			for(uint j = 0; j < POLY_SIDES; j++){
 				poly[i].pos[j] = (Coordf){
-					randRange(0.0f,(float)window.x), randRange(0.0f, (float)window.x)
+					randRange(0.0f,(float)window.x), randRange(0.0f, (float)window.y)
 				};
 				poly[i].ang[j] = degToRad(randRange(-180.0f, 180.0f));
 				poly[i].mag[j] = randRange(0.0f, 4.0f);
@@ -68,12 +68,13 @@ void polyDraw(const Length window)
 
 	for(uint i = 0; i < 10; i++){
 		for(uint j = 0; j < POLY_SIDES; j++){
-			Coord c[POLY_SIDES];
+			Coord c[POLY_SIDES+1];
 			for(uint k = 0; k < POLY_SIDES; k++){
 				c[k] = CfC(poly[i].pos[k]);
 			}
+			c[POLY_SIDES] = mouse.pos;
 			setColor(randColor());
-			drawPoly(c, POLY_SIDES);
+			drawPoly(c, POLY_SIDES+1);
 			poly[i].ang[j] += degToRad(randRange(-8.0f, 8.0f));
 			poly[i].mag[j] = fclamp(poly[i].mag[j]+randRange(-2.0f, 2.0f), -20.0f, 20.0f);
 			Coordf cf = radMagToCf(poly[i].ang[j], poly[i].mag[j]);

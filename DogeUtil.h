@@ -16,4 +16,5 @@ void init(const Range win)
 	gfx_init(win.x, win.y);
 	img_init();
 	text_init();
+	input_init(win);
 }
