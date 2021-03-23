@@ -107,3 +107,55 @@ bool fSameSign(const float num1, const float num2)
 {
 	return (num1<0.0f&&num2<0.0f)||(num1>=0.0f&&num2>=0.0f);
 }
+
+static inline
+Coordf cfNeg(const Coordf coord)
+{
+	return (Coordf){-coord.x, -coord.y};
+}
+
+static inline
+Coordf cfAbs(const Coordf coord)
+{
+	return (Coordf){abs(coord.x), abs(coord.y)};
+}
+
+static inline
+float cfCfToRad(const Coordf pos1, const Coordf pos2)
+{
+	return cfToRad(cfTranslate(pos2, cfNeg(pos1)));
+}
+
+static inline
+float cfCfToDeg(const Coordf pos1, const Coordf pos2)
+{
+	return cfToDeg(cfTranslate(cfNeg(pos1), pos2));
+}
+
+static inline
+float degReduce(const float deg)
+{
+	if(abs(fmod(deg, 360.0f))>180.0f)
+		return -360.0f+fmod(deg, 360.0f);
+	return deg;
+}
+
+static inline
+float degInv(const float deg)
+{
+	return -360.0f+deg;
+}
+
+// takes a vertex and returns the angle between the 2 other points
+static inline
+float cf3Rad(const Coordf vtx, const Coordf pos1, const Coordf pos2)
+{
+	return abs(cfCfToRad(vtx, pos1)) + abs(cfCfToRad(vtx, pos2));
+}
+
+// takes a vertex and returns the angle between the 2 other points
+static inline
+float cf3Deg(const Coordf vtx, const Coordf pos1, const Coordf pos2)
+{
+	return abs(degReduce(cfCfToDeg(vtx, pos1) - cfCfToDeg(vtx, pos2)));
+}

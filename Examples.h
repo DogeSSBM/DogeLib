@@ -1,9 +1,11 @@
 #pragma once
+#define POLY_SIDES	4
 
 typedef struct{
 	Coordf pos;
 	float ang;
 	float mag;
+	float mass;
 }Particle;
 
 void particles(const Length window)
@@ -67,7 +69,7 @@ void polyDraw(const Length window)
 	}
 
 	for(uint i = 0; i < 10; i++){
-		for(uint j = 0; j < POLY_SIDES; j++){
+		for(int j = 0; j < POLY_SIDES; j++){
 			Coord c[POLY_SIDES+1];
 			for(uint k = 0; k < POLY_SIDES; k++){
 				c[k] = CfC(poly[i].pos[k]);
@@ -76,6 +78,7 @@ void polyDraw(const Length window)
 			setColor(randColor());
 			drawPoly(c, POLY_SIDES+1);
 			poly[i].ang[j] += degToRad(randRange(-8.0f, 8.0f));
+
 			poly[i].mag[j] = fclamp(poly[i].mag[j]+randRange(-2.0f, 2.0f), -20.0f, 20.0f);
 			Coordf cf = radMagToCf(poly[i].ang[j], poly[i].mag[j]);
 			Coordf new = cfTranslate(poly[i].pos[j], cf);

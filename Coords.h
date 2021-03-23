@@ -106,6 +106,20 @@ bool coordInRange(const Coord coord, const Range range)
 	return inRange(coord.x, range) && inRange(coord.y, range);
 }
 
+// Returns true if each part of pos1 is less than their counterpart in pos2
+static inline
+bool coordMaxCoord(const Coord pos1, const Coord pos2)
+{
+	return pos1.x < pos2.x && pos1.y < pos2.y;
+}
+
+// Returns true if each part of pos1 is greater than or equal to their counterpart in pos2
+static inline
+bool coordMinCoord(const Coord pos1, const Coord pos2)
+{
+	return pos1.x >= pos2.x && pos1.y >= pos2.y;
+}
+
 // Returns true if coord is in RangePair
 static inline
 bool coordInRangePair(const Coord coord, const RangePair range)
