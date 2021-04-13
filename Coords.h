@@ -55,9 +55,21 @@ int coordMin(const Coord coord)
 }
 
 static inline
+Coord coordLeast(const Coord pos1, const Coord pos2)
+{
+	return (Coord){pos1.x<pos2.x?pos1.x:pos2.x, pos1.y<pos2.y?pos1.y:pos2.y};;
+}
+
+static inline
 int coordMax(const Coord coord)
 {
 	return coord.c1 > coord.c2 ? coord.c1 : coord.c2;
+}
+
+static inline
+Coord coordMost(const Coord pos1, const Coord pos2)
+{
+	return (Coord){pos1.x>pos2.x?pos1.x:pos2.x, pos1.y>pos2.y?pos1.y:pos2.y};;
 }
 
 static inline
