@@ -30,4 +30,5 @@
 #include "Input.h"
 #include "Events.h"
 #include "DogeUtil.h"
+#include "Poly.h"
 #include "Examples.h"

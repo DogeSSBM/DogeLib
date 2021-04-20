@@ -25,11 +25,11 @@ bool keyReleased(const SDL_Scancode key)
 	return !keys.key[key] && keys.prev[key];
 }
 
-#define MOUSE_L		SDL_BUTTON_LEFT
-#define MOUSE_M		SDL_BUTTON_MIDDLE
-#define MOUSE_R		SDL_BUTTON_RIGHT
-#define MOUSE_F		SDL_BUTTON_X1
-#define MOUSE_B		SDL_BUTTON_X2
+#define MOUSE_L		(SDL_BUTTON(SDL_BUTTON_LEFT))
+#define MOUSE_M		(SDL_BUTTON(SDL_BUTTON_MIDDLE))
+#define MOUSE_R		(SDL_BUTTON(SDL_BUTTON_RIGHT))
+#define MOUSE_F		(SDL_BUTTON(SDL_BUTTON_X1))
+#define MOUSE_B		(SDL_BUTTON(SDL_BUTTON_X2))
 
 #define MW_U		1u
 #define MW_R		(1u<<1)
@@ -73,7 +73,6 @@ bool mouseScrolled(const u32 mouseWheel)
 {
 	return mouse.wheel & mouseWheel;
 }
-
 
 void input_init(const Length window)
 {
