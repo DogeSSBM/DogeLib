@@ -171,8 +171,7 @@ bool coordNz(const Coord coord)
 static inline
 Coord coordMul(const Coord coord, const int num)
 {
-	const Coord ret = {coord.x*num, coord.y*num};
-	return ret;
+	return (Coord){coord.x*num, coord.y*num};
 }
 
 static inline
@@ -214,8 +213,7 @@ float coordfDist(const Coordf coord1, const Coordf coord2)
 static inline
 Coordf coordfDiv(const Coordf coord, const float num)
 {
-	const Coordf ret = {coord.x/num, coord.y/num};
-	return ret;
+	return (Coordf){coord.x/num, coord.y/num};
 }
 
 static inline
@@ -241,73 +239,37 @@ uint coordDistSq(const Coord coord1, const Coord coord2)
 static inline
 Coord coordDiv(const Coord coord, const int num)
 {
-	const Coord ret = {coord.x/num, coord.y/num};
-	return ret;
+	return (Coord){coord.x/num, coord.y/num};
 }
 
 static inline
 Coord coordWrap(const Coord coord, const Range x, const Range y)
 {
-	const Coord ret = {
+	return (Coord){
 		wrap(coord.x, x.min, x.max),
 		wrap(coord.y, y.min, y.max)
 	};
-	return ret;
 }
 
 static inline
 Coord coordClamp(const Coord coord, const Range x, const Range y)
 {
-	const Coord ret = {
+	return (Coord){
 		clamp(coord.x, x.min, x.max),
 		clamp(coord.y, y.min, y.max)
 	};
-	return ret;
 }
 
 static inline
 Coord coordShift(const Coord coord, const Direction dir, const int units)
 {
-	Coord ret = coord;
-	if(dirUD(dir)){
-		ret.y += dirPOS(dir)? units : -units;
-	}else{
-		ret.x += dirPOS(dir)? units : -units;
-	}
-	return ret;
+	if(dirUD(dir))
+		return (Coord){coord.x, dirPOS(dir)? coord.y+units : coord.y-units};
+	return (Coord){dirPOS(dir)? coord.x+units : coord.x-units, coord.y};
 }
 
 static inline
 Coord coordOffset(const Coord coord, const Offset off)
 {
-	return coordShift(
-		coordShift(
-			coord,
-			DIR_R,
-			off.x
-		),
-		DIR_D,
-		off.y
-	);
-}
-
-static inline
-Offset offsetRor(const Offset off)
-{
-	const Offset ret = {-off.y, off.x};
-	return ret;
-}
-
-static inline
-Offset offsetRol(const Offset off)
-{
-	const Offset ret = {off.y, -off.x};
-	return ret;
-}
-
-static inline
-Offset offsetFlip(const Offset off)
-{
-	const Offset ret = {-off.x, -off.y};
-	return ret;
+	return (Coord){coord.x+off.x, coord.y+off.y};
 }
