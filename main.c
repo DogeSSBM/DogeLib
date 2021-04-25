@@ -66,7 +66,7 @@ void drawState(Block **const state, const Length len)
 		for(uint x = 0; x < len.x; x++){
 			const Coord wpos = coordMul((Coord){x, y}, SCALE);
 			if(state[x][y].type == B_SOLID){
-				setColor(GREY4);
+				setColor(GREY);
 				fillSquareCoord(wpos, SCALE);
 				setColor(GREY3);
 				drawSquareCoord(wpos, SCALE);
