@@ -1,6 +1,7 @@
 #pragma once
 
 typedef struct{
+	Color color;
 	uint numVertex;
 	Coord *vertex;
 }Poly;
@@ -15,11 +16,10 @@ Poly polyCreate(const uint numVertex, ...)
 	};
 
 	for(uint i = 0; i < numVertex; i++){
-		p.vertex[i] = va_arg(vlist, i);
+		p.vertex[i] = va_arg(vlist, Coord);
 	}
+	return p;
 }
-
-
 
 void polyDestroy(const Poly p)
 {
@@ -41,12 +41,12 @@ Rect polyBbRect(const Poly p)
 CoordPair polyBbMinMax(const Poly p)
 {
 	CoordPair ret = {
-		.min = {I32MAX, I32MAX};
+		.min = {I32MAX, I32MAX},
 		.max = {0, 0}
 	};
-	for(uint i = 0; i < p->numVertex; i++){
-		ret.min = coordLeast(min, p->vertex[i]);
-		ret.max = coordMost(max, p->vertex[i]);
+	for(uint i = 0; i < p.numVertex; i++){
+		ret.min = coordLeast(ret.min, p.vertex[i]);
+		ret.max = coordMost(ret.max, p.vertex[i]);
 	}
 	return ret;
 }

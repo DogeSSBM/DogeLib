@@ -314,7 +314,7 @@ u32 colorToU32(const Color c)
 static inline
 Color u32ToColor(const u32 u)
 {
-	return (Color){u&0xff, (u>>8)&0xff, (u>>16)&0xff};
+	return (Color){u&0xff, (u>>8)&0xff, (u>>16)&0xff, 0xff};
 }
 
 static inline
