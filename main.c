@@ -97,20 +97,6 @@ void drawPause(const Length window)
 	drawRectCoords(pos2a, pos2b);
 }
 
-/*
-0000000 0000000     0000000
-0008000 0007000     0000000
-00000#0 00010#0     00080#0
-00####0 00####0     00####0
-0000000 0000000 ... 0000000
-
-0000000 0000000
-0000000 0000000
-00080#0 00080#0
-00####0 00####0
-0000000 0000000
-*/
-
 void flowState(Block **const state, const Length len)
 {
 	for(uint y = len.y-2; y > 1; y--){

@@ -33,8 +33,8 @@ typedef int64_t			i64;
 #define U32MAX			UINT32_MAX
 #define U64MAX			UINT64_MAX
 
-#define ABS(n)			((n)<0? -(n):(n))
-#define ZFLOOR(n)			((n)<0?    0:(n))
+// #define ABS(n)			((n)<0? -(n):(n))
+// #define ZFLOOR(n)			((n)<0?    0:(n))
 
 typedef SDL_Event			Event;
 typedef SDL_Rect 			Rect;
@@ -75,6 +75,12 @@ typedef union{
 	};
 }Coord, Range, Length, Offset, Ratio;
 
+static inline
+Coord iC(const int x, const int y)
+{
+	return (Coord){x,y};
+}
+
 typedef union{
 	Coord arr[2];
 	struct{
@@ -99,6 +105,18 @@ typedef union{
 	};
 }CoordPair, RangePair, LengthPair, OffsetPair;
 
+static inline
+CoordPair iCp(const int x1, const int y1, const int x2, const int y2)
+{
+	return (CoordPair){(Coord){x1, y1}, (Coord){x2, y2}};
+}
+
+static inline
+CoordPair CCp(const Coord pos1, const Coord pos2)
+{
+	return (CoordPair){pos1, pos2};
+}
+
 typedef union{
 	float arr[2];
 	struct{
@@ -115,6 +133,18 @@ typedef enum{
 }Direction;
 
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
+
+static inline
+int lbound(const int n, const int l)
+{
+	return n<l?l:n;
+}
+
+static inline
+int ubound(const int n, const int u)
+{
+	return n>=u?u-1:n;
+}
 
 int gcd(const int a, const int b) {
 	if (!b)
