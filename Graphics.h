@@ -164,6 +164,17 @@ void fillSquare(const uint x, const uint y, const uint len)
 }
 
 static inline
+void fillSquareResize(const uint x, const uint y, const uint len, const int resize)
+{
+	SDL_RenderFillRect(
+		gfx.renderer,
+		&(const Rect){
+			x-resize, y-resize, len+resize*2, len+resize*2
+		}
+	);
+}
+
+static inline
 void fillSquareCoord(const Coord pos, const uint len)
 {
 	SDL_RenderFillRect(
