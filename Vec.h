@@ -31,6 +31,12 @@ Coordf radToCf(const float rad)
 }
 
 static inline
+Coordf degToCf(const float deg)
+{
+	return radToCf(degToRad(deg));
+}
+
+static inline
 Coordf CCf(const Coord coord)
 {
 	return (Coordf){(float)coord.x,(float)coord.y};
@@ -56,6 +62,17 @@ static inline
 bool finBound(const float n, const float min, const float max)
 {
 	return !(n < min || n >= max);
+}
+
+static inline
+float fwrap(const float n, const float min, const float max)
+{
+	const float size = max-min;
+	if(n < min)
+		return max-fabs(n);
+	if(n >= max)
+		return min+(float)((int)n%(int)size);
+	return n;
 }
 
 static inline
