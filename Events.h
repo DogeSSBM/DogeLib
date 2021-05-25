@@ -13,11 +13,24 @@ void events(const Ticks frameEnd)
 			case SDL_QUIT:
 				printf("Quitting now!\n");
 				exit(0);
+				break;
 			case SDL_MOUSEWHEEL:
 				if(event.wheel.x)
 					mouse.wheel |= event.wheel.x>0?MW_R:MW_L;
 				if(event.wheel.y)
 					mouse.wheel |= event.wheel.y>0?MW_D:MW_U;
+				break;
+			case SDL_WINDOWEVENT:
+				if(getWindowResizable() && event.window.event == SDL_WINDOWEVENT_RESIZED){
+					printf(
+						"Resized (%4i, %4i)\n",
+						event.window.data1,
+						event.window.data2
+					);
+					setWindowLen((Length){event.window.data1, event.window.data2});
+				}
+				break;
+			default:
 				break;
 			}
 		}

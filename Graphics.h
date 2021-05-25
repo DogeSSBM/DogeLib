@@ -1,13 +1,15 @@
 #pragma once
+#define DEFAULT_WINDOW_XLEN	800
+#define DEFAULT_WINDOW_YLEN	600
 
 struct{
-	uint xlen, ylen;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	TTF_Font* font;
 	int fontSize;
 	Color fontColor;
 	Color defaultColor;
+	Length restoreLen;
 }gfx = {};
 
 static inline
@@ -17,15 +19,15 @@ void setWindowMode(const WindowMode mode)
 }
 
 static inline
-void setWindowSize(const uint x, const uint y)
-{
-	SDL_SetWindowSize(gfx.window, x, y);
-}
-
-static inline
 void setWindowResizable(const bool resizable)
 {
 	SDL_SetWindowResizable(gfx.window, resizable);
+}
+
+static inline
+bool getWindowResizable(void)
+{
+	return SDL_WINDOW_RESIZABLE & SDL_GetWindowFlags(gfx.window);
 }
 
 static inline
@@ -40,6 +42,31 @@ Length getWindowLen(void)
 	Length ret = {0, 0};
 	SDL_GetRendererOutputSize(gfx.renderer, &ret.x, &ret.y);
 	return ret;
+}
+
+static inline
+Length maximizeWindow(void)
+{
+	Length len = {0};
+	gfx.restoreLen = getWindowLen();
+	SDL_MaximizeWindow(gfx.window);
+	SDL_GetWindowSize(gfx.window, &len.x, &len.y);
+	return len;
+}
+
+static inline
+Length restoreWindow(void)
+{
+	SDL_RestoreWindow(gfx.window);
+	if(getWindowResizable())
+		SDL_SetWindowSize(gfx.window, gfx.restoreLen.x, gfx.restoreLen.y);
+	return gfx.restoreLen;
+}
+
+static inline
+void setWindowSize(const uint x, const uint y)
+{
+	SDL_SetWindowSize(gfx.window, x, y);
 }
 
 static inline
@@ -388,7 +415,7 @@ void setRGBA(const u8 r, const u8 g, const u8 b, const u8 a)
 static inline
 void fillScreen(void)
 {
-	fillRect(0,0,gfx.xlen,gfx.ylen);
+	SDL_RenderClear(gfx.renderer);
 }
 
 static inline
@@ -397,7 +424,6 @@ void clear(void)
 	const Color c = getColor();
 	setColor(gfx.defaultColor);
 	SDL_RenderClear(gfx.renderer);
-	fillScreen();
 	setColor(c);
 }
 
@@ -405,17 +431,6 @@ static inline
 void draw(void)
 {
 	SDL_RenderPresent(gfx.renderer);
-}
-
-static inline
-void saveScreenshot(const char* file_name)
-{
-	SDL_Surface *sshot = SDL_CreateRGBSurface(0, gfx.xlen, gfx.ylen, 32,
-		0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-	SDL_RenderReadPixels(gfx.renderer, NULL, SDL_PIXELFORMAT_ARGB8888,
-		sshot->pixels, sshot->pitch);
-	SDL_SaveBMP(sshot, file_name);
-	//SDL_FreeSurface(sshot);
 }
 
 static inline
@@ -427,7 +442,7 @@ void gfx_quit(void)
 }
 
 static inline
-void gfx_init(const uint winXlen, const uint winYlen)
+void gfx_init(void)
 {
 	if(SDL_Init(SDL_INIT_VIDEO)<0){
 		printf("SDL borked! Error: %s\n", SDL_GetError());
@@ -435,14 +450,15 @@ void gfx_init(const uint winXlen, const uint winYlen)
 	}
 	else{
 		//Create window
-		SDL_CreateWindowAndRenderer(winXlen, winYlen, 0,
-			&(gfx.window), &(gfx.renderer));
+		SDL_CreateWindowAndRenderer(DEFAULT_WINDOW_XLEN, DEFAULT_WINDOW_YLEN, SDL_WINDOW_RESIZABLE,
+			&gfx.window, &gfx.renderer);
 		printf("Adding gfx_quit to atexit()\n");
 		atexit(gfx_quit);
-		gfx.xlen = winXlen;
-		gfx.ylen = winYlen;
 		gfx.defaultColor = BLACK;
 		SDL_SetRenderDrawBlendMode(gfx.renderer, BLEND_NONE);
+		gfx.restoreLen.x = DEFAULT_WINDOW_XLEN;
+		gfx.restoreLen.y = DEFAULT_WINDOW_YLEN;
+		setWindowResizable(true);
 		clear();
 		draw();
 		clear();

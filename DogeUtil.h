@@ -10,11 +10,11 @@ float randRange(float a, float b)
 	return ((b-a)*((float)rand()/RAND_MAX))+a;
 }
 
-void init(const Range win)
+void init(void)
 {
 	srand(time(NULL));
-	gfx_init(win.x, win.y);
+	gfx_init();
 	img_init();
 	text_init();
-	input_init(win);
+	input_init();
 }

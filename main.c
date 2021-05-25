@@ -7,10 +7,25 @@ typedef struct{
 	uint size;
 }Thing;
 
+Thing bounceThing(Thing t, const Length window)
+{
+	const Vectorf prev = t.pos;
+	t.pos = cfTranslate(t.pos, t.vec);
+	if(t.pos.x < 0.0f || t.pos.x >= (float)window.x){
+		t.vec.x = -t.vec.x;
+	}
+	if(t.pos.y < 0.0f || t.pos.y >= (float)window.y){
+		t.vec.y = -t.vec.y;
+	}
+	t.pos = cfTranslate(t.vec, prev);
+	return t;
+}
+
 int main(int argc, char const *argv[])
 {
-	const Length window = {800, 600};
-	init(window);
+	Length window = {800, 600};
+	init();
+	setWindowLen(window);
 
 	Thing t[6] = {0};
 
@@ -33,7 +48,9 @@ int main(int argc, char const *argv[])
 		clear();
 
 		for(uint i = 0; i < 6; i++){
-			t[i].pos = cfTranslate(t[i].pos, t[i].vec);
+			t[i] = bounceThing(t[i], getWindowLen());
+
+
 			t[i].vec = degToCf(wrap(cfToDeg(t[i].vec)+randRange(-5.0f, 5.0f),0.0f,360.0f));
 			t[i].size = clamp(t[i].size+rand()%3-1, 0, 20);
 			setColor(t[i].color);
