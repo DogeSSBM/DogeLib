@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
 
 			t[i].vec = degToCf(wrap(cfToDeg(t[i].vec)+randRange(-5.0f, 5.0f),0.0f,360.0f));
 			t[i].size = clamp(t[i].size+rand()%3-1, 0, 20);
-			setColor(t[i].color);
+			setColor(mouseMoved()? PINK : t[i].color);
 			fillCircleCoord(CfC(t[i].pos), t[i].size);
 		}
 

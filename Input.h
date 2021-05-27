@@ -74,6 +74,11 @@ bool mouseScrolled(const u32 mouseWheel)
 	return mouse.wheel & mouseWheel;
 }
 
+bool mouseMoved(void)
+{
+	return !coordSame(mouse.pos, mouse.prev.pos);
+}
+
 void input_init(void)
 {
 	mouse.pos = coordDiv(getWindowLen(), 2);

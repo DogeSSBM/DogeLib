@@ -69,7 +69,7 @@ void setFontSize(int size)
 	if(gfx.font != NULL)
 		TTF_CloseFont(gfx.font);
 	gfx.fontSize = size;
-	gfx.font = TTF_OpenFont("./LiberationMono.ttf", gfx.fontSize);
+	gfx.font = TTF_OpenFont("./FiraCode-Medium.ttf", gfx.fontSize);
 }
 
 void setFontColor(Color c)
