@@ -51,7 +51,6 @@ int main(int argc, char const *argv[])
 		t[i].size = 5+rand()%15;
 	}
 
-
 	while(1){
 		Ticks frameStart = getTicks();
 		clear();
@@ -65,6 +64,11 @@ int main(int argc, char const *argv[])
 			else
 				setColor(mouseMoving()? PINK : t[i].color);
 			fillCircleCoord(CfC(t[i].pos), t[i].size);
+			fillBorderCoordSquare(
+				coordAdd(CfC(t[i].pos),-t[i].size),
+				t[i].size*2,
+				t[i].size/4
+			);
 		}
 
 		if(mouseMoveStart()){
