@@ -22,11 +22,6 @@ void events(const Ticks frameEnd)
 				break;
 			case SDL_WINDOWEVENT:
 				if(getWindowResizable() && event.window.event == SDL_WINDOWEVENT_RESIZED){
-					printf(
-						"Resized (%4i, %4i)\n",
-						event.window.data1,
-						event.window.data2
-					);
 					setWindowLen((Length){event.window.data1, event.window.data2});
 				}
 				break;
