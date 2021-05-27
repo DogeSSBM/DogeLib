@@ -49,12 +49,16 @@ int main(int argc, char const *argv[])
 
 		for(uint i = 0; i < 6; i++){
 			t[i] = bounceThing(t[i], getWindowLen());
-
-
 			t[i].vec = degToCf(wrap(cfToDeg(t[i].vec)+randRange(-5.0f, 5.0f),0.0f,360.0f));
 			t[i].size = clamp(t[i].size+rand()%3-1, 0, 20);
-			setColor(mouseMoved()? PINK : t[i].color);
+			setColor(mouseMoving()? PINK : t[i].color);
 			fillCircleCoord(CfC(t[i].pos), t[i].size);
+		}
+
+		if(mouseMoveStart()){
+			printf("Start\n");
+		}else if(mouseMoveStop()){
+			printf("Stop\n");
 		}
 
 		draw();

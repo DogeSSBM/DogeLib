@@ -74,9 +74,19 @@ bool mouseScrolled(const u32 mouseWheel)
 	return mouse.wheel & mouseWheel;
 }
 
-bool mouseMoved(void)
+bool mouseMoving(void)
 {
 	return !coordSame(mouse.pos, mouse.prev.pos);
+}
+
+bool mouseMoveStart(void)
+{
+	return mouseMoving() && coordSame(mouse.prev.vec, (Coord){0,0});
+}
+
+bool mouseMoveStop(void)
+{
+	return !mouseMoving() && !coordSame(mouse.prev.vec, (Coord){0,0});
 }
 
 void input_init(void)
