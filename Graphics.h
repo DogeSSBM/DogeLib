@@ -45,6 +45,13 @@ Length getWindowLen(void)
 }
 
 static inline
+bool coordInWindow(const Coord pos)
+{
+	const Length window = getWindowLen();
+	return inBound(pos.x, 0, window.x) && inBound(pos.y, 0, window.y);
+}
+
+static inline
 Length maximizeWindow(void)
 {
 	Length len = {0};

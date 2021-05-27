@@ -21,6 +21,15 @@ Thing bounceThing(Thing t, const Length window)
 	return t;
 }
 
+bool boundsInWindow(const Coord pos, const uint size)
+{
+	for(uint i = 0; i < 4; i++){
+		if(!coordInWindow(coordShift(pos, i, size)))
+			return false;
+	}
+	return true;
+}
+
 int main(int argc, char const *argv[])
 {
 	Length window = {800, 600};
@@ -51,7 +60,10 @@ int main(int argc, char const *argv[])
 			t[i] = bounceThing(t[i], getWindowLen());
 			t[i].vec = degToCf(wrap(cfToDeg(t[i].vec)+randRange(-5.0f, 5.0f),0.0f,360.0f));
 			t[i].size = clamp(t[i].size+rand()%3-1, 0, 20);
-			setColor(mouseMoving()? PINK : t[i].color);
+			if(!boundsInWindow(CfC(t[i].pos), t[i].size))
+				setColor(RED);
+			else
+				setColor(mouseMoving()? PINK : t[i].color);
 			fillCircleCoord(CfC(t[i].pos), t[i].size);
 		}
 
