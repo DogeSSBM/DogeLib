@@ -76,12 +76,12 @@ bool mouseScrolled(const u32 mouseWheel)
 
 bool mouseMoving(void)
 {
-	return !coordSame(mouse.pos, mouse.prev.pos);
+	return !coordSame(mouse.vec, (Coord){0,0}) && !coordSame(mouse.prev.vec, (Coord){0,0});
 }
 
 bool mouseMoveStart(void)
 {
-	return mouseMoving() && coordSame(mouse.prev.vec, (Coord){0,0});
+	return !coordSame(mouse.vec, (Coord){0,0}) && coordSame(mouse.prev.vec, (Coord){0,0});
 }
 
 bool mouseMoveStop(void)
