@@ -30,6 +30,41 @@ bool boundsInWindow(const Coord pos, const uint size)
 	return true;
 }
 
+void drawThing(const Thing t)
+{
+	if(!boundsInWindow(CfC(t.pos), t.size))
+		setColor(RED);
+	else
+		setColor(mouseMoving()? PINK : t.color);
+	fillCircleCoord(CfC(t.pos), t.size);
+	fillBorderCoordSquare(
+		coordAdd(CfC(t.pos),-t.size),
+		t.size*2,
+		t.size/4
+	);
+}
+
+Thing varyThing(const Thing t)
+{
+	return (const Thing){
+		.color = t.color,
+		.pos = t.pos,
+		.vec = degToCf(wrap(cfToDeg(t.vec)+randRange(-5.0f, 5.0f),0.0f,360.0f)),
+		.size = clamp(t.size+rand()%3-1, 0, 20),
+	};
+}
+
+Thing randomThing(const Length window)
+{
+	return (const Thing){
+		.color = WHITE,
+		.pos.x = randRange(0.0f, (float)window.x),
+		.pos.y = randRange(0.0f, (float)window.y),
+		.vec = degToCf(randRange(0.0f, 360.0f)),
+		.size = 5+rand()%15,
+	};
+}
+
 int main(int argc, char const *argv[])
 {
 	Length window = {800, 600};
@@ -37,6 +72,8 @@ int main(int argc, char const *argv[])
 	setWindowLen(window);
 
 	Thing t[6] = {0};
+	for(uint i = 0; i < 6; i++)
+		t[i] = randomThing(window);
 
 	t[0].color = CYAN;
 	t[1].color = RED;
@@ -44,12 +81,6 @@ int main(int argc, char const *argv[])
 	t[3].color = GREEN;
 	t[4].color = BLUE;
 	t[5].color = MAGENTA;
-	for(uint i = 0; i < 6; i++){
-		t[i].pos.x = randRange(0.0f, (float)window.x);
-		t[i].pos.y = randRange(0.0f, (float)window.y);
-		t[i].vec = degToCf(randRange(0.0f, 360.0f));
-		t[i].size = 5+rand()%15;
-	}
 
 	while(1){
 		Ticks frameStart = getTicks();
@@ -57,18 +88,8 @@ int main(int argc, char const *argv[])
 
 		for(uint i = 0; i < 6; i++){
 			t[i] = bounceThing(t[i], getWindowLen());
-			t[i].vec = degToCf(wrap(cfToDeg(t[i].vec)+randRange(-5.0f, 5.0f),0.0f,360.0f));
-			t[i].size = clamp(t[i].size+rand()%3-1, 0, 20);
-			if(!boundsInWindow(CfC(t[i].pos), t[i].size))
-				setColor(RED);
-			else
-				setColor(mouseMoving()? PINK : t[i].color);
-			fillCircleCoord(CfC(t[i].pos), t[i].size);
-			fillBorderCoordSquare(
-				coordAdd(CfC(t[i].pos),-t[i].size),
-				t[i].size*2,
-				t[i].size/4
-			);
+			t[i] = varyThing(t[i]);
+			drawThing(t[i]);
 		}
 
 		if(mouseMoveStart()){

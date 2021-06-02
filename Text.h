@@ -77,58 +77,6 @@ void setFontColor(Color c)
 	gfx.fontColor = c;
 }
 
-void TB_setText(TextBox *tb, const char *text)
-{
-	size_t size = sizeof(char)*strlen(text)+1;
-	tb->text = malloc(size);
-	memset(tb->text, '\0', size);
-	memcpy(tb->text, text, size);
-}
-
-void TB_setTextSize(TextBox *tb, int size)
-{
-	tb->size = size;
-}
-
-TextBox* TB_create(uint x, uint y, const char* text)
-{
-	TextBox *tb = malloc(sizeof(TextBox));
-	TB_setText(tb, text);
-	tb->r.x = x;
-	tb->r.y = y;
-	tb->backColor = BLACK;
-	tb->textColor = GREY;
-	tb->size = 48;
-	return tb;
-}
-
-void TB_destroy(TextBox *tb)
-{
-	if(tb){
-		if(tb->text){
-			free(tb->text);
-		}
-		free(tb);
-	}
-}
-
-void TB_draw(TextBox *tb)
-{
-	setFontSize(tb->size);
-	SDL_Surface *surface = TTF_RenderText_Solid(
-		gfx.font, tb->text, tb->textColor);
-	SDL_Texture *texture = SDL_CreateTextureFromSurface(
-		gfx.renderer, surface);
-	SDL_QueryTexture(texture, NULL, NULL, &(tb->r.w), &(tb->r.h));
-	setColor(tb->backColor);
-	SDL_RenderFillRect(gfx.renderer, &(tb->r));
-	SDL_RenderCopy(gfx.renderer, texture, NULL, &(tb->r));
-	setColor(tb->textColor);
-	// SDL_RenderDrawRect(gfx.renderer, &(tb->r));
-	SDL_FreeSurface(surface);
-	SDL_DestroyTexture(texture);
-}
-
 void text_quit(void)
 {
 	if(gfx.font != NULL){
