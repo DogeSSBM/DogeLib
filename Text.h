@@ -1,6 +1,6 @@
 #pragma once
 
-void drawText(uint x, uint y, const char *text)
+void drawText(const int x, const int y, const char *text)
 {
 	Rect r;
 	r.x = x; r.y = y;
@@ -22,11 +22,10 @@ Coord drawTextCoord(const Coord pos, const char *text)
 	SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
 	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
-	const Coord ret = {pos.x+r.w, pos.y};
-	return ret;
+	return (const Coord){pos.x+r.w, pos.y};
 }
 
-void drawTextCentered(uint x, uint y, const char *text)
+void drawTextCentered(const int x, const int y, const char *text)
 {
 	Rect r;
 	r.x = x; r.y = y;
@@ -54,6 +53,27 @@ Length getTextLength(const char *text)
 	return len;
 }
 
+// draws a collection of strings evenly spaced between 2 points
+void spanTextList(const Coord start, const Coord stop, const uint num, const char **textList)
+{
+	if(num == 0)
+		return;
+	const Length step = coordDiv(coordSub(stop, start), num>1?num-1:1);
+	for(uint i = 0; i < num; i++){
+		drawTextCenteredCoord(coordOffset(start, coordMul(step, i)), textList[i]);
+	}
+}
+
+void spanTextListCentered(const Coord start, const Coord stop, const uint num, const char **textList)
+{
+	if(num == 0)
+		return;
+	const Length step = coordDiv(coordSub(stop, start), num+1);
+	for(uint i = 1; i < num+1; i++){
+		drawTextCenteredCoord(coordOffset(start, coordMul(step, i)), textList[i-1]);
+	}
+}
+
 typedef struct{
 	char* text;
 	Rect r;
@@ -62,7 +82,7 @@ typedef struct{
 	Color backColor;
 }TextBox;
 
-void setFontSize(int size)
+void setTextSize(const uint size)
 {
 	if(size == gfx.fontSize)
 		return;
@@ -72,7 +92,7 @@ void setFontSize(int size)
 	gfx.font = TTF_OpenFont("./FiraCode-Medium.ttf", gfx.fontSize);
 }
 
-void setFontColor(Color c)
+void setTextColor(const Color c)
 {
 	gfx.fontColor = c;
 }
@@ -93,7 +113,7 @@ void text_init(void)
 
 	}
 	gfx.fontColor = WHITE;
-	setFontSize(32);
+	setTextSize(32);
 	if(!gfx.font){
 		printf("Unable to open font or set font size! Error: %s\n", TTF_GetError());
 		exit(0);
