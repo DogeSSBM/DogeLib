@@ -54,6 +54,27 @@ Length getTextLength(const char *text)
 	return len;
 }
 
+// draws a collection of strings evenly spaced between 2 points
+void spanTextList(const Coord start, const Coord stop, const uint num, const char **textList)
+{
+	if(num == 0)
+		return;
+	const Length step = coordDiv(coordSub(stop, start), num>1?num-1:1);
+	for(uint i = 0; i < num; i++){
+		drawTextCenteredCoord(coordOffset(start, coordMul(step, i)), textList[i]);
+	}
+}
+
+void spanTextListCentered(const Coord start, const Coord stop, const uint num, const char **textList)
+{
+	if(num == 0)
+		return;
+	const Length step = coordDiv(coordSub(stop, start), num+1);
+	for(uint i = 1; i < num+1; i++){
+		drawTextCenteredCoord(coordOffset(start, coordMul(step, i)), textList[i-1]);
+	}
+}
+
 typedef struct{
 	char* text;
 	Rect r;
