@@ -11,10 +11,12 @@ Thing bounceThing(Thing t, const Length window)
 {
 	const Vectorf prev = t.pos;
 	t.pos = cfTranslate(t.pos, t.vec);
-	if(t.pos.x < 0.0f || t.pos.x >= (float)window.x)
+	if(t.pos.x < 0.0f || t.pos.x >= (float)window.x){
 		t.vec.x = -t.vec.x;
-	if(t.pos.y < 0.0f || t.pos.y >= (float)window.y)
+	}
+	if(t.pos.y < 0.0f || t.pos.y >= (float)window.y){
 		t.vec.y = -t.vec.y;
+	}
 	t.pos = cfTranslate(t.vec, prev);
 	return t;
 }
@@ -66,14 +68,24 @@ Thing randomThing(const Length window)
 void textDemo(const Length window)
 {
 	static Coord p[2] = {0};
+	static Color c[2] = {WHITE, WHITE};
 	static uint i = 0;
-	if(mouseBtnPressed(MOUSE_L))
+	if(mouseBtnPressed(MOUSE_L)){
 		i = coordDistSq(mouse.pos, p[0]) > coordDistSq(mouse.pos, p[1]);
+		c[0] = randColor();
+		c[1] = (Color){255-c[0].r, 255-c[0].g, 255-c[0].b, 255};
+	}
 	if(mouseBtnState(MOUSE_L)){
 		p[i] = coordClampLen(coordOffset(p[i], mouse.vec), window);
 		fillCircleCoord(p[i], 5);
+	}else{
+		c[0] = WHITE;
+		c[1] = WHITE;
 	}
+	setTextColor(c[0]);
 	spanTextList(p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+	setTextColor(c[1]);
+	spanTextListCentered(p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
 }
 
 int main(int argc, char const *argv[])
@@ -93,11 +105,6 @@ int main(int argc, char const *argv[])
 	t[4].color = BLUE;
 	t[5].color = MAGENTA;
 
-	Coord red[2] = {{window.x/4, 0}, (Coord){window.x/4, window.y}};
-	Offset off = {window.x/2, 0};
-	const char *optText[] = {"This", "Is", "A", "Test"};
-	uint ind = 0;
-
 	while(1){
 		Ticks frameStart = getTicks();
 		clear();
@@ -114,29 +121,7 @@ int main(int argc, char const *argv[])
 			printf("Stop\n");
 		}
 
-<<<<<<< HEAD
 		textDemo(window);
-=======
-		if(mouseBtnPressed(MOUSE_L))
-			ind = coordDistSq(mouse.pos, red[0]) > coordDistSq(mouse.pos, red[1]);
-		if(mouseBtnState(MOUSE_L)){
-			setColor(WHITE);
-			fillCircleCoord(red[ind], 3);
-			red[ind] = coordOffset(red[ind], mouse.vec);
-		}
-
-		if(mouseBtnState(MOUSE_R))
-			off = coordOffset(off, mouse.vec);
-
-		const Coord blu[2]={coordOffset(red[0], off), coordOffset(red[1], off)};
-
-		const uint num = 4;
-		setTextSize(24);
-		setTextColor(RED);
-		spanTextList(red[0], red[1], num, optText);
-		setTextColor(BLUE);
-		spanTextListCentered(blu[0], blu[1], num, optText);
->>>>>>> 31f5c4f7edfe421e0bdad1354ad15ddc18eb8e21
 
 		draw();
 		events(frameStart + TPF);

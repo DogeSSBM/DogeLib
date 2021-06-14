@@ -97,6 +97,11 @@ void setTextColor(const Color c)
 	gfx.fontColor = c;
 }
 
+Color getTextColor(void)
+{
+	return gfx.fontColor;
+}
+
 void text_quit(void)
 {
 	if(gfx.font != NULL){
