@@ -1,6 +1,6 @@
 #pragma once
 
-void drawText(uint x, uint y, const char *text)
+void drawText(const int x, const int y, const char *text)
 {
 	Rect r;
 	r.x = x; r.y = y;
@@ -22,11 +22,10 @@ Coord drawTextCoord(const Coord pos, const char *text)
 	SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
 	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
-	const Coord ret = {pos.x+r.w, pos.y};
-	return ret;
+	return (const Coord){pos.x+r.w, pos.y};
 }
 
-void drawTextCentered(uint x, uint y, const char *text)
+void drawTextCentered(const int x, const int y, const char *text)
 {
 	Rect r;
 	r.x = x; r.y = y;
@@ -83,7 +82,7 @@ typedef struct{
 	Color backColor;
 }TextBox;
 
-void setFontSize(int size)
+void setTextSize(const uint size)
 {
 	if(size == gfx.fontSize)
 		return;
@@ -93,7 +92,7 @@ void setFontSize(int size)
 	gfx.font = TTF_OpenFont("./FiraCode-Medium.ttf", gfx.fontSize);
 }
 
-void setFontColor(Color c)
+void setTextColor(const Color c)
 {
 	gfx.fontColor = c;
 }
@@ -114,7 +113,7 @@ void text_init(void)
 
 	}
 	gfx.fontColor = WHITE;
-	setFontSize(32);
+	setTextSize(32);
 	if(!gfx.font){
 		printf("Unable to open font or set font size! Error: %s\n", TTF_GetError());
 		exit(0);
