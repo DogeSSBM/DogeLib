@@ -65,6 +65,19 @@ Thing randomThing(const Length window)
 	};
 }
 
+void textDemo(const Length window)
+{
+	static Coord p[2] = {0};
+	static uint i = 0;
+	if(mouseBtnPressed(MOUSE_L))
+		i = coordDistSq(mouse.pos, p[0]) > coordDistSq(mouse.pos, p[1]);
+	if(mouseBtnState(MOUSE_L)){
+		p[i] = coordClampLen(coordOffset(p[i], mouse.vec), window);
+		fillCircleCoord(p[i], 5);
+	}
+	spanTextList(p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+}
+
 int main(int argc, char const *argv[])
 {
 	Length window = {800, 600};
@@ -97,6 +110,8 @@ int main(int argc, char const *argv[])
 		}else if(mouseMoveStop()){
 			printf("Stop\n");
 		}
+
+		textDemo(window);
 
 		draw();
 		events(frameStart + TPF);
