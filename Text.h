@@ -144,14 +144,6 @@ void spanTextListCentered(const Coord start, const Coord stop, const uint num, c
 	}
 }
 
-typedef struct{
-	char* text;
-	Rect r;
-	int size;
-	Color textColor;
-	Color backColor;
-}TextBox;
-
 void setTextSize(const uint size)
 {
 	if(size == gfx.fontSize)
