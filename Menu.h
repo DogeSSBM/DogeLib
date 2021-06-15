@@ -1,6 +1,6 @@
 #pragma once
 
-typedef enum{M_LEAF, M_BRANCH}MenuType;
+typedef enum{M_INT, M_BRANCH}MenuType;
 
 typedef struct Menu{
 	MenuType type;
@@ -16,7 +16,7 @@ typedef struct Menu{
 
 Coord drawMenu(const Coord coord, const Menu menu)
 {
-	if(menu.type == M_LEAF){
+	if(menu.type == M_INT){
 		drawTextCoord(coord, menu.label);
 		char buf[32] = {0};
 		sprintf(buf, "%i", menu.val);
@@ -31,3 +31,5 @@ Coord drawMenu(const Coord coord, const Menu menu)
 		return (Coord){coord.x, subcoord.y};
 	}
 }
+
+Menu* menuEntries()

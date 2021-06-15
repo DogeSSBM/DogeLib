@@ -111,7 +111,7 @@ void menuExample(const Length window)
 			.numItem = 3,
 			.item = (Menu[3]){
 				(Menu){
-					.type = M_LEAF,
+					.type = M_INT,
 					.label = "Val 1: ",
 					.val = 10
 				},(Menu){
@@ -121,18 +121,18 @@ void menuExample(const Length window)
 						.numItem = 2,
 						.item = (Menu[2]){
 							(Menu){
-								.type = M_LEAF,
+								.type = M_INT,
 								.label = "Val 1: ",
 								.val = 10
 							},(Menu){
-								.type = M_LEAF,
+								.type = M_INT,
 								.label = "Val 2: ",
 								.val = 20
 							}
 						}
 					}
 				},(Menu){
-					.type = M_LEAF,
+					.type = M_INT,
 					.label = "Val 2: ",
 					.val = 20
 				}
