@@ -31,5 +31,3 @@ Coord drawMenu(const Coord coord, const Menu menu)
 		return (Coord){coord.x, subcoord.y};
 	}
 }
-
-Menu* menuEntries()
