@@ -73,7 +73,7 @@ Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord 
 	return coords;
 }
 
-Rect* spanTextListRect(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
+Rect* getTextListRect(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
 {
 	if(num == 0 || rect == NULL)
 		return rect;
@@ -93,7 +93,7 @@ Rect* spanTextListRect(Rect *const rect, const Coord start, const Coord stop, co
 	return rect;
 }
 
-Rect* spanTextListRectCentered(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
+Rect* getTextListRectCentered(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
 {
 	if(num == 0 || rect == NULL)
 		return rect;
@@ -113,6 +113,15 @@ Rect* spanTextListRectCentered(Rect *const rect, const Coord start, const Coord 
 	return rect;
 }
 
+int coordInRectList(const Coord coord, Rect *const rect, const int num)
+{
+	if(num < 1)
+		return -1;
+	for(int i = 0; i < num; i++)
+		if(coordInRect(coord, rect[i]))
+			return i;
+	return -1;
+}
 
 // draws a collection of strings evenly spaced between 2 points
 void spanTextList(const Coord start, const Coord stop, const uint num, const char **textList)

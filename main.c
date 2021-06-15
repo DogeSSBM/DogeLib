@@ -88,13 +88,16 @@ void textDemo(const Length window)
 	spanTextListCentered(p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
 
 	Rect c0[4] = {0};
-	spanTextListRect(c0, p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+	getTextListRect(c0, p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
 	Rect c1[4] = {0};
-	spanTextListRectCentered(c1, p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+	getTextListRectCentered(c1, p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+
+	const int r0 = coordInRectList(mouse.pos, c0, 4);
+	const int r1 = coordInRectList(mouse.pos, c1, 4);
 	for(uint i = 0; i < 4; i++){
-		setColor(YELLOW);
+		setColor(i == r0 ? WHITE : YELLOW);
 		drawRectRect(c0[i]);
-		setColor(MAGENTA);
+		setColor(i == r1 ? WHITE : MAGENTA);
 		drawRectRect(c1[i]);
 	}
 }
