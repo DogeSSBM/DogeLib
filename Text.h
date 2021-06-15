@@ -73,7 +73,7 @@ Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord 
 	return coords;
 }
 
-Rect* spanTextListRect(Rect *rect, const Coord start, const Coord stop, const uint num, const char **textList)
+Rect* spanTextListRect(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
 {
 	if(num == 0 || rect == NULL)
 		return rect;
@@ -93,7 +93,7 @@ Rect* spanTextListRect(Rect *rect, const Coord start, const Coord stop, const ui
 	return rect;
 }
 
-Rect* spanTextListRectCentered(Rect *rect, const Coord start, const Coord stop, const uint num, const char **textList)
+Rect* spanTextListRectCentered(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
 {
 	if(num == 0 || rect == NULL)
 		return rect;
