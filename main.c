@@ -102,12 +102,62 @@ void textDemo(const Length window)
 	}
 }
 
+void menuExample(const Length window)
+{
+	Menu m = {
+		.type = M_BRANCH,
+		.label = "Root",
+		.branch = {
+			.numItem = 3,
+			.item = (Menu[3]){
+				(Menu){
+					.type = M_LEAF,
+					.label = "Val 1: ",
+					.val = 10
+				},(Menu){
+					.type = M_BRANCH,
+					.label = "Branch:",
+					.branch = {
+						.numItem = 2,
+						.item = (Menu[2]){
+							(Menu){
+								.type = M_LEAF,
+								.label = "Val 1: ",
+								.val = 10
+							},(Menu){
+								.type = M_LEAF,
+								.label = "Val 2: ",
+								.val = 20
+							}
+						}
+					}
+				},(Menu){
+					.type = M_LEAF,
+					.label = "Val 2: ",
+					.val = 20
+				}
+			}
+		}
+	};
+
+	while(1){
+		Ticks frameStart = getTicks();
+		clear();
+
+		drawMenu((Coord){100, 100}, m);
+
+		draw();
+		events(frameStart + TPF);
+	}
+}
+
 int main(int argc, char const *argv[])
 {
 	Length window = {800, 600};
 	init();
 	setWindowLen(window);
 
+	menuExample(window);
 	Thing t[6] = {0};
 	for(uint i = 0; i < 6; i++)
 		t[i] = randomThing(window);

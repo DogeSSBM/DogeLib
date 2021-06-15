@@ -29,6 +29,7 @@
 #include "Image.h"
 #include "Input.h"
 #include "Events.h"
+#include "Menu.h"
 #include "DogeUtil.h"
 #include "Poly.h"
 #include "Examples.h"

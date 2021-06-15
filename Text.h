@@ -53,6 +53,22 @@ Length getTextLength(const char *text)
 	return len;
 }
 
+static inline
+int getTextXLen(const char *text)
+{
+	Length len = {0};
+	TTF_SizeText(gfx.font, text, &len.x, &len.y);
+	return len.x;
+}
+
+static inline
+int getTextYLen(const char *text)
+{
+	Length len = {0};
+	TTF_SizeText(gfx.font, text, &len.x, &len.y);
+	return len.y;
+}
+
 Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, const uint num, const char **textList)
 {
 	if(num == 0 || coords == NULL)
@@ -152,6 +168,11 @@ void setTextSize(const uint size)
 		TTF_CloseFont(gfx.font);
 	gfx.fontSize = size;
 	gfx.font = TTF_OpenFont("./FiraCode-Medium.ttf", gfx.fontSize);
+}
+
+int getTextSize(void)
+{
+	return gfx.fontSize;
 }
 
 void setTextColor(const Color c)
