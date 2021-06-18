@@ -32,6 +32,7 @@ typedef struct{
 
 Frame frameStart()
 {
+	clear();
 	return (Frame){.startTime = getTicks(), .pipeline = NULL};
 }
 
