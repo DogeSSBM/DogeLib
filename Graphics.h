@@ -171,6 +171,17 @@ void fillRectCoords(const Coord pos1, const Coord pos2)
 }
 
 static inline
+void drawRectCoordLength(const Coord pos, const Length len)
+{
+	SDL_RenderDrawRect(gfx.renderer, &(const Rect){pos.x, pos.y, len.x, len.y});
+}
+
+static inline
+void fillRectCoordLength(const Coord pos, const Length len)
+{
+	SDL_RenderFillRect(gfx.renderer, &(const Rect){pos.x, pos.y, len.x, len.y});
+}
+static inline
 void drawRectRect(const Rect rect)
 {
 	SDL_RenderDrawRect(gfx.renderer, &rect);
