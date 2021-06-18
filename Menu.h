@@ -1,33 +1,36 @@
 #pragma once
 
-typedef enum{M_INT, M_BRANCH}MenuType;
-
+typedef enum{M_INT, M_TEXT, M_SUBMENU}MenuType;
+typedef enum{E_DEFAULT, E_HIGHLIGHT, E_DISABLED}LabelType;
 typedef struct Menu{
 	MenuType type;
-	char *label;
+	struct{
+		char text[64];
+		Color color;
+		uint size;
+		LabelType type;
+	}label;
 	union{
 		struct{
 			uint numItem;
 			struct Menu *item;
-		}branch;
-		int val;
+		};
+		struct{
+			Range range;
+			int val;
+		}mint;
+		struct{
+			char text[64];
+		}mtext;
 	};
 }Menu;
 
-Coord drawMenu(const Coord coord, const Menu menu)
+Menu* menuLoadFile(const char *menuFile)
 {
-	if(menu.type == M_INT){
-		drawTextCoord(coord, menu.label);
-		char buf[32] = {0};
-		sprintf(buf, "%i", menu.val);
-		drawTextCoord(coordShift(coord, DIR_R, getTextXLen(menu.label)), buf);
-		return coordShift(coord, DIR_D, getTextYLen(menu.label));
-	}else{
-		drawTextCoord(coord, menu.label);
-		Coord subcoord = coordOffset(coord,(Coord){getTextSize()*4,getTextYLen(menu.label)});
-		for(uint i = 0; i < menu.branch.numItem; i++){
-			subcoord = drawMenu(subcoord, menu.branch.item[i]);
-		}
-		return (Coord){coord.x, subcoord.y};
-	}
+	char buf[256] = {0};
+	sprintf(buf, "./Menu/%s", menuFile);
+	// char* raw = fileReadText(buf);
+	// const uint rawlen = strlen(raw);
+
+	return NULL;
 }

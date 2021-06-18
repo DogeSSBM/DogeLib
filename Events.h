@@ -1,8 +1,8 @@
 #pragma once
 
-void events(const Ticks frameEnd)
+void events(const Ticks endOfFrame)
 {
-	i32 ticksLeft = frameEnd - getTicks();
+	i32 ticksLeft = endOfFrame - getTicks();
 	mouse.prev.wheel = mouse.wheel;
 	mouse.wheel = 0;
 	do{
@@ -29,7 +29,7 @@ void events(const Ticks frameEnd)
 				break;
 			}
 		}
-		ticksLeft = frameEnd - getTicks();
+		ticksLeft = endOfFrame - getTicks();
 	}while(ticksLeft > 0);
 	memcpy(keys.prev, keys.key, SDL_NUM_SCANCODES);
 	memcpy(keys.key, SDL_GetKeyboardState(NULL), SDL_NUM_SCANCODES);

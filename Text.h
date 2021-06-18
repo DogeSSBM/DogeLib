@@ -1,5 +1,17 @@
 #pragma once
 
+bool strEndsWith(const char *str, const char *end)
+{
+	if(str == NULL || end == NULL)
+		return false;
+	const uint lenEnd = strlen(end);
+	const uint lenStr = strlen(str);
+	const char *pos = strstr(str, end);
+	if(lenEnd > lenStr || strlen(pos) != strlen(end))
+		return false;
+	return true;
+}
+
 void drawText(const int x, const int y, const char *text)
 {
 	Rect r;
@@ -137,6 +149,12 @@ int coordInRectList(const Coord coord, Rect *const rect, const int num)
 		if(coordInRect(coord, rect[i]))
 			return i;
 	return -1;
+}
+
+int coordInTextList(const Coord coord, const Coord start, const Coord stop, const uint num, const char **textList)
+{
+	Rect r[num];
+	return coordInRectList(coord, getTextListRect(r, start, stop, num, textList), num);
 }
 
 // draws a collection of strings evenly spaced between 2 points

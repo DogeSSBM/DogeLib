@@ -159,7 +159,6 @@ CoordPair rectToCoordPair(const Rect rect)
 	};
 }
 
-
 // Returns true if coord is in rect
 static inline
 bool coordInRect(const Coord coord, const Rect rect)
@@ -277,4 +276,11 @@ static inline
 Coord coordOffset(const Coord coord, const Offset off)
 {
 	return (Coord){coord.x+off.x, coord.y+off.y};
+}
+
+static inline
+Rect rectOffset(const Rect rect, const Offset off)
+{
+	const Coord pos = coordOffset((Coord){rect.x, rect.y}, off);
+	return (Rect){.x=pos.x, .y=pos.y, .w=rect.w, .h=rect.h};
 }

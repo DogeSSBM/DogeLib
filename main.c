@@ -82,15 +82,17 @@ void textDemo(const Length window)
 		c[0] = WHITE;
 		c[1] = WHITE;
 	}
+
+	const char* texts[] = {"This", "Is", "A", "Test"};
 	setTextColor(c[0]);
-	spanTextList(p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+	spanTextList(p[0], p[1], 4, texts);
 	setTextColor(c[1]);
-	spanTextListCentered(p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+	spanTextListCentered(p[0], p[1], 4, texts);
 
 	Rect c0[4] = {0};
-	getTextListRect(c0, p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+	getTextListRect(c0, p[0], p[1], 4, texts);
 	Rect c1[4] = {0};
-	getTextListRectCentered(c1, p[0], p[1], 4, (const char*[]){"This", "Is", "A", "Test"});
+	getTextListRectCentered(c1, p[0], p[1], 4, texts);
 
 	const int r0 = coordInRectList(mouse.pos, c0, 4);
 	const int r1 = coordInRectList(mouse.pos, c1, 4);
@@ -102,62 +104,12 @@ void textDemo(const Length window)
 	}
 }
 
-void menuExample(const Length window)
-{
-	Menu m = {
-		.type = M_BRANCH,
-		.label = "Root",
-		.branch = {
-			.numItem = 3,
-			.item = (Menu[3]){
-				(Menu){
-					.type = M_INT,
-					.label = "Val 1: ",
-					.val = 10
-				},(Menu){
-					.type = M_BRANCH,
-					.label = "Branch:",
-					.branch = {
-						.numItem = 2,
-						.item = (Menu[2]){
-							(Menu){
-								.type = M_INT,
-								.label = "Val 1: ",
-								.val = 10
-							},(Menu){
-								.type = M_INT,
-								.label = "Val 2: ",
-								.val = 20
-							}
-						}
-					}
-				},(Menu){
-					.type = M_INT,
-					.label = "Val 2: ",
-					.val = 20
-				}
-			}
-		}
-	};
-
-	while(1){
-		Ticks frameStart = getTicks();
-		clear();
-
-		drawMenu((Coord){100, 100}, m);
-
-		draw();
-		events(frameStart + TPF);
-	}
-}
-
 int main(int argc, char const *argv[])
 {
 	Length window = {800, 600};
 	init();
 	setWindowLen(window);
 
-	menuExample(window);
 	Thing t[6] = {0};
 	for(uint i = 0; i < 6; i++)
 		t[i] = randomThing(window);
@@ -170,8 +122,7 @@ int main(int argc, char const *argv[])
 	t[5].color = MAGENTA;
 
 	while(1){
-		Ticks frameStart = getTicks();
-		clear();
+		Frame frame = frameStart();
 
 		for(uint i = 0; i < 6; i++){
 			t[i] = bounceThing(t[i], getWindowLen());
@@ -179,16 +130,9 @@ int main(int argc, char const *argv[])
 			drawThing(t[i]);
 		}
 
-		if(mouseMoveStart()){
-			printf("Start\n");
-		}else if(mouseMoveStop()){
-			printf("Stop\n");
-		}
-
 		textDemo(window);
 
-		draw();
-		events(frameStart + TPF);
+		frameEnd(frame);
 	}
 	return 0;
 }
