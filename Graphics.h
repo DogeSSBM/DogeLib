@@ -10,6 +10,7 @@ struct{
 	Color fontColor;
 	Color defaultColor;
 	Length restoreLen;
+    Ticks frameStart;
 }gfx = {};
 
 static inline
@@ -470,6 +471,20 @@ static inline
 void draw(void)
 {
 	SDL_RenderPresent(gfx.renderer);
+}
+
+void frameStart()
+{
+	clear();
+	gfx.frameStart = getTicks();
+}
+
+void events(const Ticks);
+
+void frameEnd()
+{
+	draw();
+	events(gfx.frameStart+TPF);
 }
 
 static inline
