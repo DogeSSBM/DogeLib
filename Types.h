@@ -73,7 +73,7 @@ typedef union{
     };
 }Coord, Range, Length, Offset, Ratio;
 
-const Coord iC(const int x, const int y)
+Coord iC(const int x, const int y)
 {
     return (const Coord){x,y};
 }

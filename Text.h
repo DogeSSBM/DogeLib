@@ -81,7 +81,7 @@ int getTextYLen(const char *text)
 	return len.y;
 }
 
-Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, const uint num, const char **textList)
+Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0 || coords == NULL)
 		return coords;
@@ -91,7 +91,7 @@ Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, co
 	return coords;
 }
 
-Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord stop, const uint num, const char **textList)
+Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0 || coords == NULL)
 		return coords;
@@ -178,7 +178,7 @@ void spanTextListCentered(const Coord start, const Coord stop, const uint num, c
 	}
 }
 
-void setTextSize(const uint size)
+void setTextSize(const int size)
 {
 	if(size == gfx.fontSize)
 		return;

@@ -5,22 +5,22 @@ void clearTerminal(void)
     printf("\e[1;1H\e[2J");
 }
 
-const int mini(const int a, const int b)
+int mini(const int a, const int b)
 {
     return a < b ? a : b;
 }
 
-const int maxi(const int a, const int b)
+int maxi(const int a, const int b)
 {
     return a < b ? b : a;
 }
 
-const float minf(const float a, const float b)
+float minf(const float a, const float b)
 {
     return a < b ? a : b;
 }
 
-const float maxf(const float a, const float b)
+float maxf(const float a, const float b)
 {
     return a < b ? b : a;
 }

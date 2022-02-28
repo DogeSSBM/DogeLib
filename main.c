@@ -1,6 +1,6 @@
 #include "Includes.h"
 
-void pi(const int a, const int b, const int n)
+void pi(const int a, const int b, const uint n)
 {
     printf("i (%d, %d)\n", a, b);
     for(uint i = 0; i < n; i++){
@@ -16,7 +16,7 @@ void pi(const int a, const int b, const int n)
     }
 }
 
-void pf(const float a, const float b, const int n)
+void pf(const float a, const float b, const uint n)
 {
     printf("f (%f, %f)\n", a, b);
     for(uint i = 0; i < n; i++){
@@ -34,6 +34,8 @@ void pf(const float a, const float b, const int n)
 
 int main(int argc, char const *argv[])
 {
+    (void)argc;
+    (void)argv;
     init(800, 600);
 
     pf(0.0f, 100.0f, 10);
