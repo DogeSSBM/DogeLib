@@ -279,6 +279,12 @@ Coord coordOffset(const Coord coord, const Offset off)
 }
 
 static inline
+Coordf coordfOffset(const Coordf coord, const Offsetf off)
+{
+	return (Coordf){coord.x+off.x, coord.y+off.y};
+}
+
+static inline
 Rect rectOffset(const Rect rect, const Offset off)
 {
 	const Coord pos = coordOffset((Coord){rect.x, rect.y}, off);
