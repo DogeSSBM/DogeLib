@@ -53,8 +53,8 @@ float fclamp(const float n, const float min, const float max)
 {
 	if(n < min)
 		return min;
-	if(n >= max)
-		return max-1;
+	if(n > max)
+		return max;
 	return n;
 }
 
@@ -108,9 +108,39 @@ Coordf radMagToCf(const float rad, const float mag)
 }
 
 static inline
+Coordf cfSetMag(const Coordf vec, const float mag)
+{
+    return radMagToCf(cfToRad(vec), mag);
+}
+
+static inline
+Coordf cfScaleMag(const Coordf vec, const float scale)
+{
+    return radMagToCf(cfToRad(vec), cfMag(vec)*scale);
+}
+
+static inline
 Coordf cfNormalize(const Coordf coord)
 {
 	return cfDiv(coord, cfMag(coord));
+}
+
+static inline
+Coordf cfAbsBound(const Coordf vec, const float bound)
+{
+    const float a = fabs(bound);
+    return (const Coordf){
+        .x = fclamp(vec.x, -a, a),
+        .y = fclamp(vec.y, -a, a)
+    };
+}
+
+static inline
+Coordf cfMagBound(const Coordf vec, const float bound)
+{
+    if(cfMag(vec) > bound)
+        return cfSetMag(vec, bound);
+    return vec;
 }
 
 static inline

@@ -132,6 +132,54 @@ typedef enum{
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
 
 static inline
+int posSign(const int n)
+{
+    return n > 0 ? n : -n;
+}
+
+static inline
+int negSign(const int n)
+{
+    return n < 0 ? n : -n;
+}
+
+static inline
+float posSignf(const float n)
+{
+    return n > 0.0f ? n : -n;
+}
+
+static inline
+float negSignf(const float n)
+{
+    return n < 0.0f ? n : -n;
+}
+
+static inline
+int matchSign(const int s, const int n)
+{
+    return s > 0 ? posSign(n) : negSign(n);
+}
+
+static inline
+float matchSignf(const float s, const float n)
+{
+    return s > 0.0 ? posSignf(n) : negSignf(n);
+}
+
+static inline
+int invSign(const int s, const int n)
+{
+    return s < 0 ? posSign(n) : negSign(n);
+}
+
+static inline
+float invSignf(const float s, const float n)
+{
+    return s < 0.0 ? posSignf(n) : negSignf(n);
+}
+
+static inline
 int lbound(const int n, const int l)
 {
     return n<l?l:n;
@@ -140,11 +188,23 @@ int lbound(const int n, const int l)
 static inline
 int ubound(const int n, const int u)
 {
-    return n>=u?u-1:n;
+    return n>u?u:n;
+}
+
+static inline
+float lboundf(const float n, const float l)
+{
+    return n<l?l:n;
+}
+
+static inline
+float uboundf(const float n, const float u)
+{
+    return n>u?u:n;
 }
 
 int gcd(const int a, const int b) {
     if (!b)
-    return a;
+        return a;
     return gcd(b, a % b);
 }

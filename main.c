@@ -43,26 +43,68 @@ void drawThing(const Thing t)
     );
 }
 
-Coordf dirKey(void)
+Coord dirKey(void)
 {
-    Coordf r = {0};
-    r.x += keyState(SDL_SCANCODE_D)||keyState(SDL_SCANCODE_RIGHT) ?1.0f:0.0f;
-    r.x -= keyState(SDL_SCANCODE_A)||keyState(SDL_SCANCODE_LEFT)  ?1.0f:0.0f;
-    r.y += keyState(SDL_SCANCODE_S)||keyState(SDL_SCANCODE_DOWN)  ?1.0f:0.0f;
-    r.y -= keyState(SDL_SCANCODE_W)||keyState(SDL_SCANCODE_UP)    ?1.0f:0.0f;
+    Coord r = {0};
+    r.x += keyState(SDL_SCANCODE_D)||keyState(SDL_SCANCODE_RIGHT);
+    r.x -= keyState(SDL_SCANCODE_A)||keyState(SDL_SCANCODE_LEFT);
+    r.y += keyState(SDL_SCANCODE_S)||keyState(SDL_SCANCODE_DOWN);
+    r.y -= keyState(SDL_SCANCODE_W)||keyState(SDL_SCANCODE_UP);
     return r;
+}
+
+Coordf friction(const Coordf c)
+{
+    const float rad = cfToRad(c);
+    const float mag = cfMag(c);
+    if(fabs(mag) <= 0.2f)
+        return (const Coordf){0.0f, 0.0f};
+    return radMagToCf(rad, mag-0.2f);
+}
+
+Coordf accel(const Coordf c)
+{
+    return cfMagBound(
+        cfTranslate(
+            cfMul(
+                CCf(dirKey()),
+                keyState(SDL_SCANCODE_LSHIFT)?1.0f:0.4f
+            ),
+            friction(c)
+        ),
+        keyState(SDL_SCANCODE_LSHIFT)?5.0f:4.0f
+    );
+}
+
+Thing move(const Thing player)
+{
+    const Coordf nxt = cfTranslate(player.pos, player.vec);
+    Thing ret = {
+        .vec = accel(player.vec),
+        .pos = coordInWindow(CfC(nxt)) ? nxt : player.pos,
+        .color = MAGENTA,
+        .size = 12
+    };
+
+    const Coord cpos = CfC(ret.pos);
+    setColor(MAGENTA);
+    fillCircleCoord(cpos, 12);
+    setColor(CYAN);
+    fillCircleCoord(cpos, 3);
+    setColor(BLUE);
+    drawLineCoords(cpos, CfC(cfTranslate(ret.pos, cfScaleMag(ret.vec, 6.0f))));
+
+    return ret;
 }
 
 Thing varyThing(const Thing t)
 {
-    Thing r = {
+    return (const Thing){
         .color = t.color,
         .pos = t.pos,
         .vec = degToCf(wrap(cfToDeg(t.vec)+randRange(-5.0f, 5.0f),0.0f,360.0f)),
         .size = clamp(t.size+rand()%3-1, 0, 20),
     };
-    r.vec = cfNormalize(coordfOffset(r.vec, dirKey()));
-    return r;
 }
 
 Thing randomThing(const Length window)
@@ -132,8 +174,17 @@ int main(int argc, char const *argv[])
     t[4].color = BLUE;
     t[5].color = MAGENTA;
 
+    Thing player = {
+        .pos = CCf(getWindowMid()),
+        .vec = {0.0f, 0.0f},
+        .color = MAGENTA,
+        .size = 12
+    };
+
     while(1){
         const Ticks time = frameStart();
+
+        player = move(player);
 
         for(uint i = 0; i < 6; i++){
             t[i] = bounceThing(t[i], getWindowLen());

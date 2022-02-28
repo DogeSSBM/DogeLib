@@ -233,6 +233,12 @@ Coordf coordfNormalize(const Coordf coord)
 }
 
 static inline
+Coord coordMid(const Coord coord1, const Coord coord2)
+{
+	return (const Coord){(coord1.x+coord2.x)/2, (coord1.y+coord2.y)/2};
+}
+
+static inline
 uint coordDistSq(const Coord coord1, const Coord coord2)
 {
 	Coord distvec = coordSub(coord2, coord1);
