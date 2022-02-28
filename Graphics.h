@@ -1,17 +1,15 @@
 #pragma once
-#define DEFAULT_WINDOW_XLEN	800
-#define DEFAULT_WINDOW_YLEN	600
 
 struct{
-	SDL_Window* window;
-	SDL_Renderer* renderer;
-	TTF_Font* font;
-	int fontSize;
-	Color fontColor;
-	Color defaultColor;
-	Length restoreLen;
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    TTF_Font* font;
+    int fontSize;
+    Color fontColor;
+    Color defaultColor;
+    Length restoreLen;
     Ticks frameStart;
-}gfx = {};
+}gfx = {0};
 
 static inline
 void setWindowMode(const WindowMode mode)
@@ -473,21 +471,19 @@ void draw(void)
 	SDL_RenderPresent(gfx.renderer);
 }
 
-void frameStart()
+Ticks frameStart(void)
 {
 	clear();
-	gfx.frameStart = getTicks();
+	return getTicks();
 }
 
 void events(const Ticks);
-
-void frameEnd()
+void frameEnd(const Ticks frameStart)
 {
-	draw();
-	events(gfx.frameStart+TPF);
+    draw();
+    events(frameStart+TPF);
 }
 
-static inline
 void gfx_quit(void)
 {
 	SDL_DestroyRenderer(gfx.renderer);
@@ -495,26 +491,19 @@ void gfx_quit(void)
 	SDL_Quit();
 }
 
-static inline
-void gfx_init(void)
+void gfx_init(const int x, const int y)
 {
 	if(SDL_Init(SDL_INIT_VIDEO)<0){
 		printf("SDL borked! Error: %s\n", SDL_GetError());
-		exit(0);
+		exit(-1);
 	}
-	else{
-		//Create window
-		SDL_CreateWindowAndRenderer(DEFAULT_WINDOW_XLEN, DEFAULT_WINDOW_YLEN, SDL_WINDOW_RESIZABLE,
-			&gfx.window, &gfx.renderer);
-		printf("Adding gfx_quit to atexit()\n");
-		atexit(gfx_quit);
-		gfx.defaultColor = BLACK;
-		SDL_SetRenderDrawBlendMode(gfx.renderer, BLEND_NONE);
-		gfx.restoreLen.x = DEFAULT_WINDOW_XLEN;
-		gfx.restoreLen.y = DEFAULT_WINDOW_YLEN;
-		setWindowResizable(true);
-		clear();
-		draw();
-		clear();
-	}
+	SDL_CreateWindowAndRenderer(x, y, SDL_WINDOW_RESIZABLE, &gfx.window, &gfx.renderer);
+	printf("Adding gfx_quit to atexit()\n");
+	atexit(gfx_quit);
+	gfx.defaultColor = BLACK;
+	SDL_SetRenderDrawBlendMode(gfx.renderer, BLEND_NONE);
+    gfx.restoreLen.x = x;
+	gfx.restoreLen.y = y;
+	setWindowResizable(true);
+	clear();
 }
