@@ -63,7 +63,7 @@ void intToStr(int num, char* str)
 
 int getInt(void)
 {
-	const int bufSize = 10;
+	const static int bufSize = 10;
 	char buffer[bufSize];
 	memset(buffer, '\0', bufSize);
 	for(int i = 0; i < bufSize - 1; i++){

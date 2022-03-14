@@ -1,4 +1,6 @@
 #pragma once
+#define DEFAULT_WINDOW_XLEN	800
+#define DEFAULT_WINDOW_YLEN	600
 
 struct{
     SDL_Window* window;
@@ -8,8 +10,8 @@ struct{
     Color fontColor;
     Color defaultColor;
     Length restoreLen;
-    Ticks frameStart;
-}gfx = {0};
+    bool outlined;
+}gfx = {};
 
 static inline
 void setWindowMode(const WindowMode mode)
@@ -44,9 +46,11 @@ Length getWindowLen(void)
 }
 
 static inline
-Coord getWindowMid(void)
+Length getWindowMid(void)
 {
-    return coordDiv(getWindowLen(), 2);
+    Length ret = {0, 0};
+    SDL_GetRendererOutputSize(gfx.renderer, &ret.x, &ret.y);
+    return coordDiv(ret, 2);
 }
 
 static inline
@@ -71,7 +75,7 @@ Length restoreWindow(void)
 {
     SDL_RestoreWindow(gfx.window);
     if(getWindowResizable())
-        SDL_SetWindowSize(gfx.window, gfx.restoreLen.x, gfx.restoreLen.y);
+    SDL_SetWindowSize(gfx.window, gfx.restoreLen.x, gfx.restoreLen.y);
     return gfx.restoreLen;
 }
 
@@ -133,8 +137,8 @@ static inline
 void drawRect(const uint x, const uint y, const uint xlen, const uint ylen)
 {
     SDL_RenderDrawRect(
-        gfx.renderer,
-        &(const Rect){x, y, xlen, ylen}
+    gfx.renderer,
+    &(const Rect){x, y, xlen, ylen}
     );
 }
 
@@ -142,8 +146,8 @@ static inline
 void fillRect(const uint x, const uint y, const uint xlen, const uint ylen)
 {
     SDL_RenderFillRect(
-        gfx.renderer,
-        &(const Rect){x, y, xlen, ylen}
+    gfx.renderer,
+    &(const Rect){x, y, xlen, ylen}
     );
 }
 
@@ -151,13 +155,13 @@ static inline
 void drawRectCoords(const Coord pos1, const Coord pos2)
 {
     SDL_RenderDrawRect(
-        gfx.renderer,
-        &(const Rect){
-            pos1.x < pos2.x? pos1.x: pos2.x,
-            pos1.y < pos2.y? pos1.y: pos2.y,
-            abs(pos1.x-pos2.x),
-            abs(pos1.y-pos2.y)
-        }
+    gfx.renderer,
+    &(const Rect){
+    pos1.x < pos2.x? pos1.x: pos2.x,
+    pos1.y < pos2.y? pos1.y: pos2.y,
+    abs(pos1.x-pos2.x),
+    abs(pos1.y-pos2.y)
+    }
     );
 }
 
@@ -165,13 +169,13 @@ static inline
 void fillRectCoords(const Coord pos1, const Coord pos2)
 {
     SDL_RenderFillRect(
-        gfx.renderer,
-        &(const Rect){
-            pos1.x < pos2.x? pos1.x: pos2.x,
-            pos1.y < pos2.y? pos1.y: pos2.y,
-            abs(pos1.x-pos2.x),
-            abs(pos1.y-pos2.y)
-        }
+    gfx.renderer,
+    &(const Rect){
+    pos1.x < pos2.x? pos1.x: pos2.x,
+    pos1.y < pos2.y? pos1.y: pos2.y,
+    abs(pos1.x-pos2.x),
+    abs(pos1.y-pos2.y)
+    }
     );
 }
 
@@ -202,8 +206,8 @@ static inline
 void drawSquareCoord(const Coord pos, const uint len)
 {
     SDL_RenderDrawRect(
-        gfx.renderer,
-        &(const Rect){pos.x, pos.y, len, len}
+    gfx.renderer,
+    &(const Rect){pos.x, pos.y, len, len}
     );
 }
 
@@ -211,8 +215,8 @@ static inline
 void drawSquare(const uint x, const uint y, const uint len)
 {
     SDL_RenderDrawRect(
-        gfx.renderer,
-        &(const Rect){x, y, len, len}
+    gfx.renderer,
+    &(const Rect){x, y, len, len}
     );
 }
 
@@ -220,8 +224,8 @@ static inline
 void fillSquare(const uint x, const uint y, const uint len)
 {
     SDL_RenderFillRect(
-        gfx.renderer,
-        &(const Rect){x, y, len, len}
+    gfx.renderer,
+    &(const Rect){x, y, len, len}
     );
 }
 
@@ -229,10 +233,10 @@ static inline
 void fillSquareResize(const uint x, const uint y, const uint len, const int resize)
 {
     SDL_RenderFillRect(
-        gfx.renderer,
-        &(const Rect){
-            x-resize, y-resize, len+resize*2, len+resize*2
-        }
+    gfx.renderer,
+    &(const Rect){
+    x-resize, y-resize, len+resize*2, len+resize*2
+    }
     );
 }
 
@@ -240,8 +244,8 @@ static inline
 void fillSquareCoord(const Coord pos, const uint len)
 {
     SDL_RenderFillRect(
-        gfx.renderer,
-        &(const Rect){pos.x, pos.y, len, len}
+    gfx.renderer,
+    &(const Rect){pos.x, pos.y, len, len}
     );
 }
 
@@ -249,10 +253,10 @@ static inline
 void fillSquareCoordResize(const Coord pos, const uint len, const int resize)
 {
     SDL_RenderFillRect(
-        gfx.renderer,
-        &(const Rect){
-            pos.x-resize, pos.y-resize, len+resize*2, len+resize*2
-        }
+    gfx.renderer,
+    &(const Rect){
+    pos.x-resize, pos.y-resize, len+resize*2, len+resize*2
+    }
     );
 }
 
@@ -268,19 +272,19 @@ void fillBorder(uint x, uint y, uint xlen, uint ylen, int b)
 static inline
 void fillBorderCoords(const Coord pos, const Length len, const int b)
 {
-    fillRect(pos.x-b,        pos.y-b,        len.x+2*b,    b);
-    fillRect(pos.x-b,        pos.y+len.y,    len.x+2*b,    b);
-    fillRect(pos.x-b,        pos.y,        b,        len.y);
-    fillRect(pos.x+len.x,    pos.y,        b,        len.y);
+    fillRect(pos.x-b,		pos.y-b,		len.x+2*b,	b);
+    fillRect(pos.x-b,		pos.y+len.y,	len.x+2*b,	b);
+    fillRect(pos.x-b,		pos.y,		b,		len.y);
+    fillRect(pos.x+len.x,	pos.y,		b,		len.y);
 }
 
 static inline
 void fillBorderCoordSquare(const Coord pos, const uint len, const int b)
 {
-    fillRect(pos.x-b,        pos.y-b,        len+2*b,    b);
-    fillRect(pos.x-b,        pos.y+len,        len+2*b,    b);
-    fillRect(pos.x-b,        pos.y,        b,        len);
-    fillRect(pos.x+len,    pos.y,        b,        len);
+    fillRect(pos.x-b,		pos.y-b,		len+2*b,	b);
+    fillRect(pos.x-b,		pos.y+len,		len+2*b,	b);
+    fillRect(pos.x-b,		pos.y,		b,		len);
+    fillRect(pos.x+len,	pos.y,		b,		len);
 }
 
 static inline
@@ -289,19 +293,19 @@ void drawCircle(const uint x, const uint y, const uint radius)
     const double rsq = (double)(radius*radius);
     uint yoff = radius;
     for(uint xoff = 0; xoff <= yoff; xoff++){
-        const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
-        const double ym = (double)yoff - 0.5;
-        // 8 sections of circle
-        drawPixel(x+xoff, y+yoff);        // 1
-        drawPixel(x-yoff, y+xoff);        // 2
-        drawPixel(x-xoff, y-yoff);        // 3
-        drawPixel(x+yoff, y-xoff);        // 4
+    const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
+    const double ym = (double)yoff - 0.5;
+    // 8 sections of circle
+    drawPixel(x+xoff, y+yoff);		// 1
+    drawPixel(x-yoff, y+xoff);		// 2
+    drawPixel(x-xoff, y-yoff);		// 3
+    drawPixel(x+yoff, y-xoff);		// 4
 
-        drawPixel(x-xoff, y+yoff);        // 5
-        drawPixel(x-yoff, y-xoff);        // 6
-        drawPixel(x+xoff, y-yoff);        // 7
-        drawPixel(x+yoff, y+xoff);        // 8
-        yoff -= yc <= ym;
+    drawPixel(x-xoff, y+yoff);		// 5
+    drawPixel(x-yoff, y-xoff);		// 6
+    drawPixel(x+xoff, y-yoff);		// 7
+    drawPixel(x+yoff, y+xoff);		// 8
+    yoff -= yc <= ym;
     }
 }
 
@@ -311,14 +315,14 @@ void fillCircle(const uint x, const uint y, const uint radius)
     const double rsq = (double)(radius*radius);
     uint yoff = radius;
     for(uint xoff = 0; xoff <= yoff; xoff++){
-        const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
-        const double ym = (double)yoff - 0.5;
-        // connecting 8 sections of circle
-        drawLine(x+xoff, y-yoff, x+xoff, y+yoff);        // 7 to 1
-        drawLine(x-yoff, y+xoff, x+yoff, y+xoff);        // 2 to 8
-        drawLine(x-xoff, y-yoff, x-xoff, y+yoff);        // 3 to 5
-        drawLine(x-yoff, y-xoff, x+yoff, y-xoff);        // 6 to 4
-        yoff -= yc <= ym;
+    const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
+    const double ym = (double)yoff - 0.5;
+    // connecting 8 sections of circle
+    drawLine(x+xoff, y-yoff, x+xoff, y+yoff);		// 7 to 1
+    drawLine(x-yoff, y+xoff, x+yoff, y+xoff);		// 2 to 8
+    drawLine(x-xoff, y-yoff, x-xoff, y+yoff);		// 3 to 5
+    drawLine(x-yoff, y-xoff, x+yoff, y-xoff);		// 6 to 4
+    yoff -= yc <= ym;
     }
 }
 
@@ -328,19 +332,19 @@ void drawCircleCoord(const Coord pos, const uint radius)
     const double rsq = (double)(radius*radius);
     uint yoff = radius;
     for(uint xoff = 0; xoff <= yoff; xoff++){
-        const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
-        const double ym = (double)yoff - 0.5;
-        // 8 sections of circle
-        drawPixel(pos.x+xoff, pos.y+yoff);        // 1
-        drawPixel(pos.x-yoff, pos.y+xoff);        // 2
-        drawPixel(pos.x-xoff, pos.y-yoff);        // 3
-        drawPixel(pos.x+yoff, pos.y-xoff);        // 4
+    const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
+    const double ym = (double)yoff - 0.5;
+    // 8 sections of circle
+    drawPixel(pos.x+xoff, pos.y+yoff);		// 1
+    drawPixel(pos.x-yoff, pos.y+xoff);		// 2
+    drawPixel(pos.x-xoff, pos.y-yoff);		// 3
+    drawPixel(pos.x+yoff, pos.y-xoff);		// 4
 
-        drawPixel(pos.x-xoff, pos.y+yoff);        // 5
-        drawPixel(pos.x-yoff, pos.y-xoff);        // 6
-        drawPixel(pos.x+xoff, pos.y-yoff);        // 7
-        drawPixel(pos.x+yoff, pos.y+xoff);        // 8
-        yoff -= yc <= ym;
+    drawPixel(pos.x-xoff, pos.y+yoff);		// 5
+    drawPixel(pos.x-yoff, pos.y-xoff);		// 6
+    drawPixel(pos.x+xoff, pos.y-yoff);		// 7
+    drawPixel(pos.x+yoff, pos.y+xoff);		// 8
+    yoff -= yc <= ym;
     }
 }
 
@@ -350,14 +354,14 @@ void fillCircleCoord(const Coord pos, const uint radius)
     const double rsq = (double)(radius*radius);
     uint yoff = radius;
     for(uint xoff = 0; xoff <= yoff; xoff++){
-        const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
-        const double ym = (double)yoff - 0.5;
-        // connecting 8 sections of circle
-        drawLine(pos.x+xoff, pos.y-yoff, pos.x+xoff, pos.y+yoff);// 7 to 1
-        drawLine(pos.x-yoff, pos.y+xoff, pos.x+yoff, pos.y+xoff);// 2 to 8
-        drawLine(pos.x-xoff, pos.y-yoff, pos.x-xoff, pos.y+yoff);// 3 to 5
-        drawLine(pos.x-yoff, pos.y-xoff, pos.x+yoff, pos.y-xoff);// 6 to 4
-        yoff -= yc <= ym;
+    const double yc = sqrt(rsq - (xoff+1)*(xoff+1));
+    const double ym = (double)yoff - 0.5;
+    // connecting 8 sections of circle
+    drawLine(pos.x+xoff, pos.y-yoff, pos.x+xoff, pos.y+yoff);// 7 to 1
+    drawLine(pos.x-yoff, pos.y+xoff, pos.x+yoff, pos.y+xoff);// 2 to 8
+    drawLine(pos.x-xoff, pos.y-yoff, pos.x-xoff, pos.y+yoff);// 3 to 5
+    drawLine(pos.x-yoff, pos.y-xoff, pos.x+yoff, pos.y-xoff);// 6 to 4
+    yoff -= yc <= ym;
     }
 }
 
@@ -391,11 +395,11 @@ static inline
 void drawTri(const Coord pos1, const Coord pos2, const Coord pos3)
 {
     trigonColor(
-        gfx.renderer,
-        pos1.x, pos1.y,
-        pos2.x, pos2.y,
-        pos3.x, pos3.y,
-        colorToU32(getColor())
+    gfx.renderer,
+    pos1.x, pos1.y,
+    pos2.x, pos2.y,
+    pos3.x, pos3.y,
+    colorToU32(getColor())
     );
 }
 
@@ -403,11 +407,11 @@ static inline
 void fillTri(const Coord pos1, const Coord pos2, const Coord pos3)
 {
     filledTrigonColor(
-        gfx.renderer,
-        pos1.x, pos1.y,
-        pos2.x, pos2.y,
-        pos3.x, pos3.y,
-        colorToU32(getColor())
+    gfx.renderer,
+    pos1.x, pos1.y,
+    pos2.x, pos2.y,
+    pos3.x, pos3.y,
+    colorToU32(getColor())
     );
 }
 
@@ -416,8 +420,8 @@ void drawPoly(Coord *pos, const uint num)
     i16 posx[num];
     i16 posy[num];
     for(uint i = 0; i < num; i++){
-        posx[i] = pos[i].x;
-        posy[i] = pos[i].y;
+    posx[i] = pos[i].x;
+    posy[i] = pos[i].y;
     }
     polygonColor(gfx.renderer, posx, posy, num, colorToU32(getColor()));
 }
@@ -427,8 +431,8 @@ void fillPoly(Coord *pos, const uint num)
     i16 posx[num];
     i16 posy[num];
     for(uint i = 0; i < num; i++){
-        posx[i] = pos[i].x;
-        posy[i] = pos[i].y;
+    posx[i] = pos[i].x;
+    posy[i] = pos[i].y;
     }
     filledPolygonColor(gfx.renderer, posx, posy, num, colorToU32(getColor()));
 }
@@ -438,8 +442,8 @@ void bezier(const Coord *pos, const uint numc, const uint nums)
     i16 posx[numc];
     i16 posy[numc];
     for(uint i = 0; i < numc; i++){
-        posx[i] = pos[i].x;
-        posy[i] = pos[i].y;
+    posx[i] = pos[i].x;
+    posy[i] = pos[i].y;
     }
     bezierColor(gfx.renderer, posx, posy, numc, nums, colorToU32(getColor()));
 }
@@ -471,25 +475,37 @@ void clear(void)
     setColor(c);
 }
 
+void outlineWindow(void)
+{
+    const Color c = getColor();
+    setColor(WHITE);
+    fillBorderCoords(iC(0,0), getWindowLen(), -2);
+    setColor(c);
+}
+
 static inline
 void draw(void)
 {
+
+    if(gfx.outlined)
+        outlineWindow();
     SDL_RenderPresent(gfx.renderer);
 }
 
-Ticks frameStart(void)
+const Ticks frameStart(void)
 {
-    clear();
-    return getTicks();
+	clear();
+	return getTicks();
 }
 
 void events(const Ticks);
-void frameEnd(const Ticks frameStart)
+void frameEnd(const Ticks t)
 {
-    draw();
-    events(frameStart+TPF);
+	draw();
+	events(t+TPF);
 }
 
+static inline
 void gfx_quit(void)
 {
     SDL_DestroyRenderer(gfx.renderer);
@@ -497,19 +513,27 @@ void gfx_quit(void)
     SDL_Quit();
 }
 
-void gfx_init(const int x, const int y)
+static inline
+void gfx_init(void)
 {
     if(SDL_Init(SDL_INIT_VIDEO)<0){
-        printf("SDL borked! Error: %s\n", SDL_GetError());
-        exit(-1);
+    printf("SDL borked! Error: %s\n", SDL_GetError());
+    exit(0);
     }
-    SDL_CreateWindowAndRenderer(x, y, SDL_WINDOW_RESIZABLE, &gfx.window, &gfx.renderer);
+    else{
+    //Create window
+    SDL_CreateWindowAndRenderer(DEFAULT_WINDOW_XLEN, DEFAULT_WINDOW_YLEN, SDL_WINDOW_RESIZABLE,
+    &gfx.window, &gfx.renderer);
     printf("Adding gfx_quit to atexit()\n");
     atexit(gfx_quit);
     gfx.defaultColor = BLACK;
+        gfx.outlined = true;
     SDL_SetRenderDrawBlendMode(gfx.renderer, BLEND_NONE);
-    gfx.restoreLen.x = x;
-    gfx.restoreLen.y = y;
+    gfx.restoreLen.x = DEFAULT_WINDOW_XLEN;
+    gfx.restoreLen.y = DEFAULT_WINDOW_YLEN;
     setWindowResizable(true);
     clear();
+    draw();
+    clear();
+    }
 }

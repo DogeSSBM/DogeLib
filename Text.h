@@ -12,7 +12,7 @@ bool strEndsWith(const char *str, const char *end)
 	return true;
 }
 
-void drawText(const int x, const int y, const char *text)
+void drawText(const char *text, const int x, const int y)
 {
 	Rect r;
 	r.x = x; r.y = y;
@@ -24,7 +24,7 @@ void drawText(const int x, const int y, const char *text)
 	SDL_DestroyTexture(texture);
 }
 
-Coord drawTextCoord(const Coord pos, const char *text)
+Coord drawTextCoord(const char *text, const Coord pos)
 {
 	Rect r;
 	r.x = pos.x; r.y = pos.y;
@@ -37,7 +37,7 @@ Coord drawTextCoord(const Coord pos, const char *text)
 	return (const Coord){pos.x+r.w, pos.y};
 }
 
-void drawTextCentered(const int x, const int y, const char *text)
+void drawTextCentered(const char *text, const int x, const int y)
 {
 	Rect r;
 	r.x = x; r.y = y;
@@ -52,9 +52,9 @@ void drawTextCentered(const int x, const int y, const char *text)
 }
 
 static inline
-void drawTextCenteredCoord(const Coord pos, const char *text)
+void drawTextCenteredCoord(const char *text, const Coord pos)
 {
-	drawTextCentered(pos.x, pos.y, text);
+	drawTextCentered(text, pos.x, pos.y);
 }
 
 static inline
@@ -81,7 +81,7 @@ int getTextYLen(const char *text)
 	return len.y;
 }
 
-Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, const uint num)
+Coord* spanTextListCoords(const char **textList, Coord *coords, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0 || coords == NULL)
 		return coords;
@@ -91,7 +91,7 @@ Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, co
 	return coords;
 }
 
-Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord stop, const uint num)
+Coord* spanTextListCoordsCentered(const char **textList, Coord *coords, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0 || coords == NULL)
 		return coords;
@@ -101,7 +101,7 @@ Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord 
 	return coords;
 }
 
-Rect* getTextListRect(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
+Rect* getTextListRect(const char **textList, Rect *const rect, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0 || rect == NULL)
 		return rect;
@@ -121,7 +121,7 @@ Rect* getTextListRect(Rect *const rect, const Coord start, const Coord stop, con
 	return rect;
 }
 
-Rect* getTextListRectCentered(Rect *const rect, const Coord start, const Coord stop, const uint num, const char **textList)
+Rect* getTextListRectCentered(const char **textList, Rect *const rect, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0 || rect == NULL)
 		return rect;
@@ -151,41 +151,41 @@ int coordInRectList(const Coord coord, Rect *const rect, const int num)
 	return -1;
 }
 
-int coordInTextList(const Coord coord, const Coord start, const Coord stop, const uint num, const char **textList)
+int coordInTextList(const char **textList, const Coord coord, const Coord start, const Coord stop, const uint num)
 {
 	Rect r[num];
-	return coordInRectList(coord, getTextListRect(r, start, stop, num, textList), num);
+	return coordInRectList(coord, getTextListRect(textList, r, start, stop, num), num);
 }
 
 // draws a collection of strings evenly spaced between 2 points
-void spanTextList(const Coord start, const Coord stop, const uint num, const char **textList)
+void spanTextList(const char **textList, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0)
 		return;
 	const Length step = coordDiv(coordSub(stop, start), num>1?num-1:1);
 	for(uint i = 0; i < num; i++){
-		drawTextCenteredCoord(coordOffset(start, coordMul(step, i)), textList[i]);
+		drawTextCenteredCoord(textList[i], coordOffset(start, coordMul(step, i)));
 	}
 }
 
-void spanTextListCentered(const Coord start, const Coord stop, const uint num, const char **textList)
+void spanTextListCentered(const char **textList, const Coord start, const Coord stop, const uint num)
 {
 	if(num == 0)
 		return;
 	const Length step = coordDiv(coordSub(stop, start), num+1);
 	for(uint i = 1; i < num+1; i++){
-		drawTextCenteredCoord(coordOffset(start, coordMul(step, i)), textList[i-1]);
+		drawTextCenteredCoord(textList[i-1], coordOffset(start, coordMul(step, i)));
 	}
 }
 
-void setTextSize(const int size)
+void setTextSize(const uint size)
 {
 	if(size == gfx.fontSize)
 		return;
 	if(gfx.font != NULL)
 		TTF_CloseFont(gfx.font);
 	gfx.fontSize = size;
-	gfx.font = TTF_OpenFont("./FiraCode-Medium.ttf", gfx.fontSize);
+	gfx.font = TTF_OpenFont("./FiraCode.ttf", gfx.fontSize);
 }
 
 int getTextSize(void)
