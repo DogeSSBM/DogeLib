@@ -20,6 +20,11 @@ bool keyHeld(const SDL_Scancode key)
 	return keys.key[key] && keys.prev[key];
 }
 
+bool keyChanged(const SDL_Scancode key)
+{
+	return keys.key[key] != keys.prev[key];
+}
+
 bool keyReleased(const SDL_Scancode key)
 {
 	return !keys.key[key] && keys.prev[key];
