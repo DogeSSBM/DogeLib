@@ -105,13 +105,11 @@ typedef union{
 	};
 }CoordPair, RangePair, LengthPair, OffsetPair;
 
-static inline
 CoordPair iCp(const int x1, const int y1, const int x2, const int y2)
 {
 	return (CoordPair){(Coord){x1, y1}, (Coord){x2, y2}};
 }
 
-static inline
 CoordPair CCp(const Coord pos1, const Coord pos2)
 {
 	return (CoordPair){pos1, pos2};
@@ -134,20 +132,62 @@ typedef enum{
 
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
 
-static inline
+int posSign(const int n)
+{
+    return n > 0 ? n : -n;
+}
+
+int negSign(const int n)
+{
+    return n < 0 ? n : -n;
+}
+
+float posSignf(const float n)
+{
+    return n > 0.0f ? n : -n;
+}
+
+float negSignf(const float n)
+{
+    return n < 0.0f ? n : -n;
+}
+
+int matchSign(const int s, const int n)
+{
+    return s > 0 ? posSign(n) : negSign(n);
+}
+
+float matchSignf(const float s, const float n)
+{
+    return s > 0.0 ? posSignf(n) : negSignf(n);
+}
+
+int invSign(const int s, const int n)
+{
+    return s < 0 ? posSign(n) : negSign(n);
+}
+
+float invSignf(const float s, const float n)
+{
+    return s < 0.0 ? posSignf(n) : negSignf(n);
+}
+
 int lbound(const int n, const int l)
 {
 	return n<l?l:n;
 }
 
-static inline
 int ubound(const int n, const int u)
 {
-	return n>=u?u-1:n;
+    return n>u?u:n;
 }
 
-int gcd(const int a, const int b) {
-	if (!b)
-		return a;
-	return gcd(b, a % b);
+float lboundf(const float n, const float l)
+{
+    return n<l?l:n;
+}
+
+float uboundf(const float n, const float u)
+{
+    return n>u?u:n;
 }

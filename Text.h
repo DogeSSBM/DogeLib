@@ -151,10 +151,10 @@ int coordInRectList(const Coord coord, Rect *const rect, const int num)
 	return -1;
 }
 
-int coordInTextList(const char **textList, const Coord coord, const Coord start, const Coord stop, const uint num)
+int coordInTextList(const Coord coord, const Coord start, const Coord stop, const uint num, const char **textList)
 {
 	Rect r[num];
-	return coordInRectList(coord, getTextListRect(textList, r, start, stop, num), num);
+	return coordInRectArr(coord, getTextListRect(textList, r, start, stop, num), num);
 }
 
 // draws a collection of strings evenly spaced between 2 points
