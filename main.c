@@ -2,23 +2,29 @@
 
 int main(int argc, char const *argv[])
 {
-	Length window = {800, 600};
-	init();
-	setWindowLen(window);
+    Length window = {.x = 800, .y = 600};
+    init();
+    setWindowLen(window);
+
+    Coord pos = coordDiv(getWindowLen(), 2);
+
+    const SDL_Scancode dirKey[4] = {SDL_SCANCODE_UP, SDL_SCANCODE_RIGHT, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT};
+
+    setColor(PINK);
 
 	while(1){
-        Ticks t = frameStart();
+       const uint t = frameStart();
 
-        if(keyPressed(SDL_SCANCODE_SPACE)){
-            printf("Space pressed\n");
-            drawTextCenteredCoord("Space pressed", getWindowMid());
-        }
         if(mouseBtnState(MOUSE_L)){
-            if(mouseBtnPressed(MOUSE_L))
-                printf("Left clicked\n");
             drawTextCenteredCoord("Left clicked", mouse.pos);
         }
+
+        for(Direction i = DIR_U; i <= DIR_L; i++)
+            pos = coordShift(pos, i, 8*keyState(dirKey[i]));
+
+        fillCircleCoord(pos, 32);
+
         frameEnd(t);
-	}
-	return 0;
+    }
+    return 0;
 }

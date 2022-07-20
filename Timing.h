@@ -4,19 +4,19 @@
 #define TPF		(TPS/FPS)
 
 static inline
-Ticks getTicks(void)
+uint getTicks(void)
 {
 	return SDL_GetTicks();
 }
 
 static inline
-Ticks secondsToTicks(const uint sec)
+uint secondsToTicks(const uint sec)
 {
 	return TPS*sec;
 }
 
 static inline
-Ticks getTimeIn(const uint sec)
+uint getTimeIn(const uint sec)
 {
 	return TPS*sec+getTicks();
 }

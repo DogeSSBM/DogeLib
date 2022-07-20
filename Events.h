@@ -1,6 +1,6 @@
 #pragma once
 
-void events(const Ticks endOfFrame)
+void events(const uint endOfFrame)
 {
 	i32 ticksLeft = endOfFrame - getTicks();
 	mouse.prev.wheel = mouse.wheel;

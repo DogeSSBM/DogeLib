@@ -1,7 +1,6 @@
 #pragma once
 typedef FILE			File;
 typedef time_t			Time;
-typedef unsigned int		Ticks;
 
 typedef long int			lint;
 typedef unsigned char		uchar;
@@ -32,9 +31,6 @@ typedef int64_t			i64;
 #define U16MAX			UINT16_MAX
 #define U32MAX			UINT32_MAX
 #define U64MAX			UINT64_MAX
-
-// #define ABS(n)			((n)<0? -(n):(n))
-// #define ZFLOOR(n)			((n)<0?    0:(n))
 
 typedef SDL_Event			Event;
 typedef SDL_Rect 			Rect;

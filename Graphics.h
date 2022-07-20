@@ -492,14 +492,14 @@ void draw(void)
     SDL_RenderPresent(gfx.renderer);
 }
 
-const Ticks frameStart(void)
+const uint frameStart(void)
 {
 	clear();
 	return getTicks();
 }
 
-void events(const Ticks);
-void frameEnd(const Ticks t)
+void events(const uint);
+void frameEnd(const uint t)
 {
 	draw();
 	events(t+TPF);
