@@ -1,7 +1,8 @@
-#include "Includes.h"
+#include "DogeLib/Includes.h"
 
 int main(int argc, char const *argv[])
 {
+    (void)argc; (void)argv;
     Length window = {.x = 800, .y = 600};
     init();
     setWindowLen(window);
