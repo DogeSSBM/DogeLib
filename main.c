@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
             pos = coordShift(pos, i, 8*keyState(dirKey[i]));
 
         // fillCircleCoord(pos, 32);
-        drawTextureCoord(doggo, pos);
+        drawTextureCoordResize(doggo, pos, (const Length){.x = 64, .y = 64});
 
         frameEnd(t);
     }

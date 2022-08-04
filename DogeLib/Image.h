@@ -85,3 +85,20 @@ void drawTextureCoord(SDL_Texture *texture, const Coord pos)
 {
     drawTexture(texture, pos.x, pos.y);
 }
+
+void drawTextureResize(
+    SDL_Texture *texture, const int x, const int y, const int xlen, const int ylen
+){
+    const Length len = textureLen(texture);
+    SDL_RenderCopy(
+        gfx.renderer,
+        texture,
+        &(const Rect){.w = len.x, .h = len.y},
+        &(const Rect){.x = x, .y = y, .w = xlen, .h = ylen}
+    );
+}
+
+void drawTextureCoordResize(SDL_Texture *texture, const Coord pos, const Length len)
+{
+    drawTextureResize(texture, pos.x, pos.y, len.x, len.y);
+}
