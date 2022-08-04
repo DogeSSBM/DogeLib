@@ -8,9 +8,9 @@ int main(int argc, char const *argv[])
     setWindowLen(window);
 
     Coord pos = coordDiv(getWindowLen(), 2);
-    SDL_Texture *doggo = loadTexture("./Doggo16x16.png");
+    Texture *doggo = loadTexture("./Doggo16x16.png");
 
-    const SDL_Scancode dirKey[4] = {SDL_SCANCODE_UP, SDL_SCANCODE_RIGHT, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT};
+    const Scancode dirKey[4] = {SDL_SCANCODE_UP, SDL_SCANCODE_RIGHT, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT};
 
     setColor(PINK);
 

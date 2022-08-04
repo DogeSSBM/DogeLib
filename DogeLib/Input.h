@@ -5,27 +5,27 @@ struct{
     u8 prev[SDL_NUM_SCANCODES];
 }keys = {0};
 
-bool keyState(const SDL_Scancode key)
+bool keyState(const Scancode key)
 {
     return keys.key[key];
 }
 
-bool keyPressed(const SDL_Scancode key)
+bool keyPressed(const Scancode key)
 {
     return keys.key[key] && !keys.prev[key];
 }
 
-bool keyHeld(const SDL_Scancode key)
+bool keyHeld(const Scancode key)
 {
     return keys.key[key] && keys.prev[key];
 }
 
-bool keyChanged(const SDL_Scancode key)
+bool keyChanged(const Scancode key)
 {
     return keys.key[key] != keys.prev[key];
 }
 
-bool keyReleased(const SDL_Scancode key)
+bool keyReleased(const Scancode key)
 {
     return !keys.key[key] && keys.prev[key];
 }

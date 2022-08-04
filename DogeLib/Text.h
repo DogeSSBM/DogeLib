@@ -17,7 +17,7 @@ void drawText(const char *text, const int x, const int y)
     Rect r;
     r.x = x; r.y = y;
     SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
+    Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
     SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
     SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
     SDL_FreeSurface(surface);
@@ -29,7 +29,7 @@ Coord drawTextCoord(const char *text, const Coord pos)
     Rect r;
     r.x = pos.x; r.y = pos.y;
     SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
+    Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
     SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
     SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
     SDL_FreeSurface(surface);
@@ -42,7 +42,7 @@ void drawTextCentered(const char *text, const int x, const int y)
     Rect r;
     r.x = x; r.y = y;
     SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
+    Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
     SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
     r.x-=r.w/2;
     r.y-=r.h/2;

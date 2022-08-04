@@ -34,17 +34,17 @@ Img* loadImg(const char *imgFile)
     return surface;
 }
 
-SDL_Texture* loadTexture(const char *imgFile)
+Texture* loadTexture(const char *imgFile)
 {
     Img *img = IMG_Load(imgFile);
-    SDL_Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, img);
+    Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, img);
     SDL_FreeSurface(img);
     return t;
 }
 
 void drawImg(Img *image)
 {
-    SDL_Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, image);
+    Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, image);
     SDL_RenderCopy(gfx.renderer, t, NULL, NULL);
     SDL_DestroyTexture(t);
 }
@@ -57,20 +57,20 @@ void loadDrawImg(const char *imgFile)
             imgFile, IMG_GetError());
         exit(0);
     }
-    SDL_Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, img);
+    Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, img);
     SDL_RenderCopy(gfx.renderer, t, NULL, NULL);
     SDL_DestroyTexture(t);
     SDL_FreeSurface(img);
 }
 
-Length textureLen(SDL_Texture *texture)
+Length textureLen(Texture *texture)
 {
     Length len = {0};
     SDL_QueryTexture(texture, NULL, NULL, &len.x, &len.y);
     return len;
 }
 
-void drawTexture(SDL_Texture *texture, const int x, const int y)
+void drawTexture(Texture *texture, const int x, const int y)
 {
     const Length len = textureLen(texture);
     SDL_RenderCopy(
@@ -81,13 +81,13 @@ void drawTexture(SDL_Texture *texture, const int x, const int y)
     );
 }
 
-void drawTextureCoord(SDL_Texture *texture, const Coord pos)
+void drawTextureCoord(Texture *texture, const Coord pos)
 {
     drawTexture(texture, pos.x, pos.y);
 }
 
 void drawTextureResize(
-    SDL_Texture *texture, const int x, const int y, const int xlen, const int ylen
+    Texture *texture, const int x, const int y, const int xlen, const int ylen
 ){
     const Length len = textureLen(texture);
     SDL_RenderCopy(
@@ -98,7 +98,7 @@ void drawTextureResize(
     );
 }
 
-void drawTextureCoordResize(SDL_Texture *texture, const Coord pos, const Length len)
+void drawTextureCoordResize(Texture *texture, const Coord pos, const Length len)
 {
     drawTextureResize(texture, pos.x, pos.y, len.x, len.y);
 }

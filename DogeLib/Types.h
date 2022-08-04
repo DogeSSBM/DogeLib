@@ -39,6 +39,8 @@ typedef SDL_Color           Color;
 typedef SDL_Surface         Img;
 typedef SDL_Keycode         Key;
 typedef SDL_BlendMode       BlendMode;
+typedef SDL_Texture         Texture;
+typedef SDL_Scancode        Scancode;
 #define BLEND_NONE          SDL_BLENDMODE_NONE
 #define BLEND_ALPHA         SDL_BLENDMODE_BLEND
 #define BLEND_ADD           SDL_BLENDMODE_ADD
