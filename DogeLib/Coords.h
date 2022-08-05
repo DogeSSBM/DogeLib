@@ -128,6 +128,17 @@ Rect coordsToRect(const Coord coord1, const Coord coord2)
     };
 }
 
+// returns rect at pos with length len
+Rect rectify(const Coord pos, const Length len)
+{
+    return (const Rect){
+        .x = pos.x,
+        .y = pos.y,
+        .w = len.x,
+        .h = len.y
+    };
+}
+
 // Returns true if coord is in rect
 bool coordInRect(const Coord coord, const Rect rect)
 {
@@ -214,7 +225,7 @@ uint coordDistSq(const Coord coord1, const Coord coord2)
 
 Coord coordDiv(const Coord coord, const int num)
 {
-    return (const Coord){.x = coord.x/num, .y = coord.y/num};
+    return (const Coord){.x = num ? coord.x / num : 0, .y = num ? coord.y / num : 0};
 }
 
 Coord coordWrap(const Coord coord, const Range x, const Range y)
@@ -248,6 +259,12 @@ Coord coordOffset(const Coord coord, const Offset off)
 Coordf coordfOffset(const Coordf coord, const Offsetf off)
 {
     return (Coordf){.x = coord.x+off.x, .y = coord.y+off.y};
+}
+
+// offsets the coord by 1/2 the length
+Coord coordCenter(const Coord coord, const Length len)
+{
+    return coordOffset(coord, coordDiv(len, 2));
 }
 
 Rect rectOffset(const Rect rect, const Offset off)

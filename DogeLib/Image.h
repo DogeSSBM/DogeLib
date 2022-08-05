@@ -86,9 +86,24 @@ void drawTextureCoord(Texture *texture, const Coord pos)
     drawTexture(texture, pos.x, pos.y);
 }
 
-void drawTextureResize(
-    Texture *texture, const int x, const int y, const int xlen, const int ylen
-){
+void drawTextureCentered(Texture *texture, const int x, const int y)
+{
+    const Length len = textureLen(texture);
+    SDL_RenderCopy(
+        gfx.renderer,
+        texture,
+        &(const Rect){.w = len.x, .h = len.y},
+        &(const Rect){.x = x - len.x/2, .y = y - len.y/2, .w = len.x, .h = len.y}
+    );
+}
+
+void drawTextureCenteredCoord(Texture *texture, const Coord pos)
+{
+    drawTextureCentered(texture, pos.x, pos.y);
+}
+
+void drawTextureResize(Texture *texture, const int x, const int y, const int xlen, const int ylen)
+{
     const Length len = textureLen(texture);
     SDL_RenderCopy(
         gfx.renderer,
@@ -101,4 +116,20 @@ void drawTextureResize(
 void drawTextureCoordResize(Texture *texture, const Coord pos, const Length len)
 {
     drawTextureResize(texture, pos.x, pos.y, len.x, len.y);
+}
+
+void drawTextureCenteredResize(Texture *texture, const int x, const int y, const int xlen, const int ylen)
+{
+    const Length len = textureLen(texture);
+    SDL_RenderCopy(
+        gfx.renderer,
+        texture,
+        &(const Rect){.w = len.x, .h = len.y},
+        &(const Rect){.x = x - xlen/2, .y = y - ylen/2, .w = xlen, .h = ylen}
+    );
+}
+
+void drawTextureCenteredCoordResize(Texture *texture, const Coord pos, const Length len)
+{
+    drawTextureCenteredResize(texture, pos.x, pos.y, len.x, len.y);
 }

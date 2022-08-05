@@ -14,18 +14,20 @@ int main(int argc, char const *argv[])
 
     setColor(PINK);
 
-	while(1){
+    while(1){
        const uint t = frameStart();
-
-        if(mouseBtnState(MOUSE_L)){
-            drawTextCenteredCoord("Left clicked", mouse.pos);
-        }
 
         for(Direction i = DIR_U; i <= DIR_L; i++)
             pos = coordShift(pos, i, 8*keyState(dirKey[i]));
 
-        drawCircleCoord(coordOffset(pos, (const Length){.x = 32, .y = 32}), 64);
-        drawTextureCoordResize(doggo, pos, (const Length){.x = 64, .y = 64});
+        drawTextureCenteredCoordResize(
+            doggo,
+            mouse.pos,
+            (const Length){
+                .x = mouseBtnState(MOUSE_L) ? 128 : 64,
+                .y = mouseBtnState(MOUSE_R) ? 128 : 64
+            }
+        );
 
         frameEnd(t);
     }
