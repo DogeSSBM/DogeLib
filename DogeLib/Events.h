@@ -22,6 +22,7 @@ void events(const uint endOfFrame)
                 break;
             case SDL_WINDOWEVENT:
                 if(getWindowResizable() && event.window.event == SDL_WINDOWEVENT_RESIZED){
+                    gfx.prvLen = getWindowLen();
                     setWindowLen((const Length){.x = event.window.data1, .y = event.window.data2});
                 }
                 break;

@@ -10,6 +10,7 @@ struct{
     Color fontColor;
     Color defaultColor;
     Length restoreLen;
+    Length prvLen;
     bool outlined;
 }gfx = {0};
 
@@ -43,6 +44,12 @@ Length getWindowLen(void)
     Length ret = {0};
     SDL_GetRendererOutputSize(gfx.renderer, &ret.x, &ret.y);
     return ret;
+}
+
+static inline
+bool windowResized(void)
+{
+    return !coordSame(gfx.prvLen, getWindowLen());
 }
 
 static inline
@@ -537,6 +544,8 @@ void gfx_init(void)
     gfx.restoreLen.x = DEFAULT_WINDOW_XLEN;
     gfx.restoreLen.y = DEFAULT_WINDOW_YLEN;
     setWindowResizable(true);
+    gfx.prvLen.x = DEFAULT_WINDOW_XLEN;
+    gfx.prvLen.y = DEFAULT_WINDOW_YLEN;
 
     clear();
     draw();

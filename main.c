@@ -11,6 +11,11 @@ int main(int argc, char const *argv[])
     while(1){
        const uint t = frameStart();
 
+       if(windowResized()){
+           setColor(PINK);
+           fillCircleCoord(getWindowMid(), 16);
+       }
+
         drawTextureCenteredCoordResize(
             doggo,
             mouse.pos,
