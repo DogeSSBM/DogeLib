@@ -9,16 +9,15 @@ int main(int argc, char const *argv[])
 
     Coord pos = coordDiv(getWindowLen(), 2);
     Texture *doggo = loadTexture("./Doggo16x16.png");
-
-    const Scancode dirKey[4] = {SDL_SCANCODE_UP, SDL_SCANCODE_RIGHT, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT};
-
-    setColor(PINK);
+    const Scancode dirKey[4] = {
+        SDL_SCANCODE_UP,
+        SDL_SCANCODE_RIGHT,
+        SDL_SCANCODE_DOWN,
+        SDL_SCANCODE_LEFT
+    };
 
     while(1){
        const uint t = frameStart();
-
-        for(Direction i = DIR_U; i <= DIR_L; i++)
-            pos = coordShift(pos, i, 8*keyState(dirKey[i]));
 
         drawTextureCenteredCoordResize(
             doggo,
