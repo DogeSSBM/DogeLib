@@ -228,6 +228,14 @@ Coord coordDiv(const Coord coord, const int num)
     return (const Coord){.x = num ? coord.x / num : 0, .y = num ? coord.y / num : 0};
 }
 
+Coord coordDivCoord(const Coord coord1, const Coord coord2)
+{
+    return (const Coord){
+        .x = coord2.x ? coord1.x/coord2.x : 0,
+        .y = coord2.y ? coord1.y/coord2.y : 0
+    };
+}
+
 Coord coordWrap(const Coord coord, const Range x, const Range y)
 {
     return (const Coord){
