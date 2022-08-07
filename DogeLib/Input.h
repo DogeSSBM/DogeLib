@@ -99,6 +99,11 @@ bool mouseMoveStop(void)
     return !mouseMoving() && !coordSame(mouse.prev.vec, (const Coord){0});
 }
 
+Length mouseMovement(void)
+{
+    return coordSub(mouse.pos, mouse.prev.pos);
+}
+
 void input_init(void)
 {
     mouse.pos = coordDiv(getWindowLen(), 2);
