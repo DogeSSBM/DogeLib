@@ -43,9 +43,10 @@ int main(int argc, char const *argv[])
     maximizeWindow();
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
-    panic("asdf %i %s\n", 2345, "DSFAGSDFG");
     Length len = {.x=8,.y=6};
     Coord origin = {0};
+
+    panic("%s %i\n", "eyyyyy", 1324);
 
     while(1){
         const uint t = frameStart();
