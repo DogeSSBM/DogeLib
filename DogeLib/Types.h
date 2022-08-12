@@ -116,15 +116,6 @@ typedef enum{DIR_U = 0, DIR_R, DIR_D, DIR_L}Direction;
 
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
 
-void panic(const char * format, ...)
-{
-  va_list args;
-  va_start (args, format);
-  vprintf (format, args);
-  va_end (args);
-  exit(EXIT_FAILURE);
-}
-
 int imax(const int a, const int b)
 {
     return a > b ? a : b;
