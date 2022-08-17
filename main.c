@@ -17,7 +17,7 @@ void drawDoggos(const Coord origin, const Length len, const uint scale, Texture 
                 }
             );
             fillBorderCoordSquare(
-                coordMul((const Coord){.x=x,.y=y}, scale),
+                coordOffset(coordMul((const Coord){.x=x,.y=y}, scale), origin),
                 scale,
                 -1
             );
