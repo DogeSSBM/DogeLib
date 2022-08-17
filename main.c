@@ -46,8 +46,6 @@ int main(int argc, char const *argv[])
     Length len = {.x=8,.y=6};
     Coord origin = {0};
 
-    panic("%s %i\n", "eyyyyy", 1324);
-
     while(1){
         const uint t = frameStart();
         const Length window = getWindowLen();
