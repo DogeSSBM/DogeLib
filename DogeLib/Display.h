@@ -16,14 +16,14 @@ Length getWinDisplayLen(void)
 {
     Rect rect = {0};
     assert(SDL_GetDisplayBounds(getWinDisplayIndex(), &rect) >= 0);
-    return iC(rect.w, rect.h);
+    return irL(rect);
 }
 
 Length getDisplayIndexLen(const uint i)
 {
     Rect rect = {0};
     assert(SDL_GetDisplayBounds(i, &rect) >= 0);
-    return irC(rect);
+    return irL(rect);
 }
 
 Rect getDisplayIndexRect(const uint i)
@@ -37,6 +37,13 @@ Coord getWinDisplayOffset(void)
 {
     Rect rect = {0};
     SDL_GetDisplayBounds(getWinDisplayIndex(), &rect);
+    return irC(rect);
+}
+
+Coord getDisplayIndexOffset(const uint i)
+{
+    Rect rect = {0};
+    SDL_GetDisplayBounds(i, &rect);
     return irC(rect);
 }
 
