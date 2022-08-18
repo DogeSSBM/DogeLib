@@ -1,5 +1,23 @@
 #include "DogeLib/Includes.h"
 
+int main(void)
+{
+    init();
+    setWindowLen((const Length){.x = 800, .y = 600});
+    setWindowResizable(false);
+
+    setColor(PINK);
+
+    while(1){
+        const uint t = frameStart();
+
+        fillCircleCoord(mouse.pos, 12);
+
+        frameEnd(t);
+    }
+    return 0;
+}
+
 void drawDoggos(const Coord origin, const Length len, const uint scale, Texture *doggo, Texture *borko)
 {
     assert(scale > 0);
@@ -35,7 +53,7 @@ Coord originOffset(const Coord origin)
     return origin;
 }
 
-int main(int argc, char const *argv[])
+int main2(int argc, char const *argv[])
 {
     (void)argc; (void)argv;
     init();

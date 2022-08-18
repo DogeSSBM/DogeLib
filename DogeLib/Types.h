@@ -80,6 +80,18 @@ Coord iC(const int x, const int y)
     return (const Coord){.x = x, .y = y};
 }
 
+static inline
+Coord irC(const Rect rect)
+{
+    return iC(rect.x, rect.y);
+}
+
+static inline
+Coord irL(const Rect rect)
+{
+    return iC(rect.w, rect.h);
+}
+
 typedef union{
     Coord arr[2];
     struct{

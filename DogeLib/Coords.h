@@ -128,34 +128,6 @@ Rect coordsToRect(const Coord coord1, const Coord coord2)
     };
 }
 
-// returns rect at pos with length len
-Rect rectify(const Coord pos, const Length len)
-{
-    return (const Rect){
-        .x = pos.x,
-        .y = pos.y,
-        .w = len.x,
-        .h = len.y
-    };
-}
-
-// Returns true if coord is in rect
-bool coordInRect(const Coord coord, const Rect rect)
-{
-    return inBound(coord.x, rect.x, rect.x+rect.w) && inBound(coord.y, rect.y, rect.y+rect.h);
-}
-
-// returns index of first rect that coord can be found in or -1 if in none
-int coordInRectArr(const Coord coord, Rect *const rect, const int num)
-{
-    if(num < 1)
-        return -1;
-    for(int i = 0; i < num; i++)
-        if(coordInRect(coord, rect[i]))
-            return i;
-    return -1;
-}
-
 bool coordNz(const Coord coord)
 {
     return coord.x||coord.y;
@@ -273,6 +245,40 @@ Coordf coordfOffset(const Coordf coord, const Offsetf off)
 Coord coordCenter(const Coord coord, const Length len)
 {
     return coordOffset(coord, coordDiv(len, 2));
+}
+
+// returns rect at pos with length len
+Rect rectify(const Coord pos, const Length len)
+{
+    return (const Rect){
+        .x = pos.x,
+        .y = pos.y,
+        .w = len.x,
+        .h = len.y
+    };
+}
+
+// returns rect pos offset by len of rect
+Length unrectify(const Rect rect)
+{
+    return coordOffset(irC(rect), irL(rect));
+}
+
+// Returns true if coord is in rect
+bool coordInRect(const Coord coord, const Rect rect)
+{
+    return inBound(coord.x, rect.x, rect.x+rect.w) && inBound(coord.y, rect.y, rect.y+rect.h);
+}
+
+// returns index of first rect that coord can be found in or -1 if in none
+int coordInRectArr(const Coord coord, Rect *const rect, const int num)
+{
+    if(num < 1)
+        return -1;
+    for(int i = 0; i < num; i++)
+        if(coordInRect(coord, rect[i]))
+            return i;
+    return -1;
 }
 
 Rect rectOffset(const Rect rect, const Offset off)
