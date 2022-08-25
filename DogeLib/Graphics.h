@@ -150,11 +150,29 @@ void drawRect(const uint x, const uint y, const uint xlen, const uint ylen)
 }
 
 static inline
+void drawRectCentered(const uint x, const uint y, const uint xlen, const uint ylen)
+{
+    SDL_RenderDrawRect(
+        gfx.renderer,
+        &(const Rect){.x = x - xlen/2, .y = y - ylen/2, .w = xlen, .h = ylen}
+    );
+}
+
+static inline
 void fillRect(const uint x, const uint y, const uint xlen, const uint ylen)
 {
     SDL_RenderFillRect(
         gfx.renderer,
         &(const Rect){.x = x, .y = y, .w = xlen, .h = ylen}
+    );
+}
+
+static inline
+void fillRectCentered(const uint x, const uint y, const uint xlen, const uint ylen)
+{
+    SDL_RenderFillRect(
+        gfx.renderer,
+        &(const Rect){.x = x - xlen/2, .y = y - ylen/2, .w = xlen, .h = ylen}
     );
 }
 
@@ -166,6 +184,20 @@ void drawRectCoords(const Coord pos1, const Coord pos2)
         &(const Rect){
             .x = pos1.x < pos2.x? pos1.x: pos2.x,
             .y = pos1.y < pos2.y? pos1.y: pos2.y,
+            .w = abs(pos1.x-pos2.x),
+            .h = abs(pos1.y-pos2.y)
+        }
+    );
+}
+
+static inline
+void drawRectCenteredCoords(const Coord pos1, const Coord pos2)
+{
+    SDL_RenderDrawRect(
+        gfx.renderer,
+        &(const Rect){
+            .x = (pos1.x < pos2.x? pos1.x: pos2.x) - abs(pos1.x-pos2.x)/2,
+            .y = (pos1.y < pos2.y? pos1.y: pos2.y) - abs(pos1.y-pos2.y)/2,
             .w = abs(pos1.x-pos2.x),
             .h = abs(pos1.y-pos2.y)
         }
@@ -187,9 +219,37 @@ void fillRectCoords(const Coord pos1, const Coord pos2)
 }
 
 static inline
+void fillRectCenteredCoords(const Coord pos1, const Coord pos2)
+{
+    SDL_RenderFillRect(
+        gfx.renderer,
+        &(const Rect){
+            .x = (pos1.x < pos2.x? pos1.x: pos2.x) - abs(pos1.x-pos2.x)/2,
+            .y = (pos1.y < pos2.y? pos1.y: pos2.y) - abs(pos1.y-pos2.y)/2,
+            .w = abs(pos1.x-pos2.x),
+            .h = abs(pos1.y-pos2.y)
+        }
+    );
+}
+
+static inline
 void drawRectCoordLength(const Coord pos, const Length len)
 {
     SDL_RenderDrawRect(gfx.renderer, &(const Rect){.x = pos.x, .y = pos.y, .w = len.x, .h = len.y});
+}
+
+static inline
+void drawRectCenteredCoordLength(const Coord pos, const Length len)
+{
+    SDL_RenderDrawRect(
+        gfx.renderer,
+        &(const Rect){
+            .x = (pos.x) - len.x/2,
+            .y = (pos.y) - len.y/2,
+            .w = len.x,
+            .h = len.y
+        }
+    );
 }
 
 static inline
@@ -197,6 +257,21 @@ void fillRectCoordLength(const Coord pos, const Length len)
 {
     SDL_RenderFillRect(gfx.renderer, &(const Rect){.x = pos.x, .y = pos.y, .w = len.x, .h = len.y});
 }
+
+static inline
+void fillRectCenteredCoordLength(const Coord pos, const Length len)
+{
+    SDL_RenderFillRect(
+        gfx.renderer,
+        &(const Rect){
+            .x = (pos.x) - len.x/2,
+            .y = (pos.y) - len.y/2,
+            .w = len.x,
+            .h = len.y
+        }
+    );
+}
+
 static inline
 void drawRectRect(const Rect rect)
 {
