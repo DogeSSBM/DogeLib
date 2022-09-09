@@ -20,11 +20,9 @@ void events(const uint endOfFrame)
                 if(event.wheel.y)
                     mouse.wheel |= event.wheel.y>0?MW_D:MW_U;
                 break;
+            case SDL_WINDOWEVENT_SIZE_CHANGED:
             case SDL_WINDOWEVENT:
-                if(getWindowResizable() && event.window.event == SDL_WINDOWEVENT_RESIZED){
-                    gfx.prvLen = getWindowLen();
-                    setWindowLen((const Length){.x = event.window.data1, .y = event.window.data2});
-                }
+                gfx.prvLen = getWindowLen();
                 break;
             default:
                 break;
