@@ -1,47 +1,5 @@
 #include "DogeLib/Includes.h"
 
-void drawDoggos(const Coord origin, const Length len, const uint scale, Texture *doggo, Texture *borko)
-{
-    assert(scale > 0);
-    assert(len.y > 0);
-    assert(len.x > 0);
-
-    setColor(GREY1);
-    fillRectCenteredCoordLength(
-        coordOffset(origin, coordDiv(coordMul(len, scale) ,2)),
-        coordMul(len, scale)
-    );
-
-    setColor(PINK);
-    for(int y = 0; y < len.y; y++){
-        for(int x = 0; x < len.x; x++){
-            drawTextureCoordResize(
-                (x&1) ^ (y&1) ? borko : doggo,
-                coordOffset(coordMul((const Coord){.x=x,.y=y}, scale), origin),
-                (const Length){
-                    .x = scale,
-                    .y = scale
-                }
-            );
-            fillBorderCoordSquare(
-                coordOffset(coordMul((const Coord){.x=x,.y=y}, scale), origin),
-                scale,
-                -1
-            );
-        }
-    }
-}
-
-Coord originOffset(const Coord origin)
-{
-    if(keyPressed(SDL_SCANCODE_SPACE))
-        return (const Coord){0};
-
-    if(mouseBtnState(MOUSE_L) && mouseMoving())
-        return coordOffset(origin, mouseMovement());
-    return origin;
-}
-
 int main(int argc, char const *argv[])
 {
     (void)argc; (void)argv;
@@ -50,32 +8,47 @@ int main(int argc, char const *argv[])
     maximizeWindow();
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
+    const Scancode keydir[4] = {
+        SDL_SCANCODE_LEFT,
+        SDL_SCANCODE_UP,
+        SDL_SCANCODE_RIGHT,
+        SDL_SCANCODE_DOWN
+    };
     Length len = {.x=8,.y=6};
     Coord origin = {0};
 
     while(1){
         const uint t = frameStart();
         const Length window = getWindowLen();
-        origin = originOffset(origin);
+        if(keyPressed(SDL_SCANCODE_SPACE))
+            origin = (const Coord){0};
+        else if(mouseBtnState(MOUSE_L) && mouseMoving())
+            origin = coordOffset(origin, mouseMovement());
 
         if(keyPressed(SDL_SCANCODE_ESCAPE))
             return 0;
 
-        len.x = imax(1, len.x - keyPressed(SDL_SCANCODE_LEFT));
-        len.y = imax(1, len.y - keyPressed(SDL_SCANCODE_UP));
-        len.x = imax(1, len.x + keyPressed(SDL_SCANCODE_RIGHT));
-        len.y = imax(1, len.y + keyPressed(SDL_SCANCODE_DOWN));
+        for(Direction d = 0; d < 4; d++)
+            if(keyPressed(keydir[d]))
+                len = coordMost(iC(1,1), coordShift(len, d, 1));
+
         const uint scale = coordMin(coordDivCoord(window, len));
 
-        drawDoggos(origin, len, scale, doggo, borko);
+        for(int y = 0; y < len.y; y++){
+            for(int x = 0; x < len.x; x++){
+                const Coord pos = coordOffset(coordMul((const Coord){.x=x,.y=y}, scale), origin);
+                setColor(GREY1);
+                drawCircleCoord(coordAdd(pos, scale/2), scale/2);
+                drawTextureCoordResize((x&1)^(y&1) ? borko : doggo, pos, iC(scale,scale));
+                setColor(PINK);
+                fillBorderCoordSquare(pos, scale, -1);
+            }
+        }
 
         drawTextureCenteredCoordResize(
             doggo,
             mouse.pos,
-            (const Length){
-                .x = mouseBtnState(MOUSE_L) ? 128 : 64,
-                .y = mouseBtnState(MOUSE_R) ? 128 : 64
-            }
+            iC(mouseBtnState(MOUSE_L) ? 128 : 64, mouseBtnState(MOUSE_R) ? 128 : 64)
         );
 
         frameEnd(t);
