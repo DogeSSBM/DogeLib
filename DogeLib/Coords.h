@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COORDS_H
+#define COORDS_H
 
 Direction dirROR(const Direction dir)
 {
@@ -247,6 +248,12 @@ Coord coordCenter(const Coord coord, const Length len)
     return coordOffset(coord, coordDiv(len, 2));
 }
 
+// offsets the coord by -1/2 the length
+Coord coordUncenter(const Coord coord, const Length len)
+{
+    return coordOffset(coord, coordDiv(len, -2));
+}
+
 // returns rect at pos with length len
 Rect rectify(const Coord pos, const Length len)
 {
@@ -256,6 +263,13 @@ Rect rectify(const Coord pos, const Length len)
         .w = len.x,
         .h = len.y
     };
+}
+
+// offsets rect pos by 1/2 its length
+Rect rectCenter(Rect r)
+{
+    const Length len = irL(r);
+    return rectify(coordCenter(irC(r), len), len);
 }
 
 // returns rect pos offset by len of rect
@@ -286,3 +300,5 @@ Rect rectOffset(const Rect rect, const Offset off)
     const Coord pos = coordOffset((const Coord){.x = rect.x, .y = rect.y}, off);
     return (Rect){.x = pos.x, .y = pos.y, .w = rect.w, .h = rect.h};
 }
+
+#endif /* end of include guard: COORDS_H */

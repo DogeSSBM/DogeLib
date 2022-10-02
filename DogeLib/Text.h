@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TEXT_H
+#define TEXT_H
 
 bool strEndsWith(const char *str, const char *end)
 {
@@ -12,43 +13,39 @@ bool strEndsWith(const char *str, const char *end)
     return true;
 }
 
+static inline
+Img* textImg(const char *text)
+{
+    return TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
+}
+
+static inline
+Texture* textTexture(const char *text)
+{
+    return imgTexture(textImg(text));
+}
+
+static inline
 void drawText(const char *text, const int x, const int y)
 {
-    Rect r;
-    r.x = x; r.y = y;
-    SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
-    Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
-    SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
-    SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
+    Texture *t = textTexture(text);
+    const Rect r = textureRect(t, iC(x,y));
+    SDL_RenderCopy(gfx.renderer, t, NULL, &r);
+    freeTexture(t);
 }
 
+static inline
 Coord drawTextCoord(const char *text, const Coord pos)
 {
-    Rect r;
-    r.x = pos.x; r.y = pos.y;
-    SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
-    Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
-    SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
-    SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
-    return (const Coord){.x = pos.x+r.w, .y = pos.y};
+    drawText(text, pos.x, pos.y);
 }
 
+static inline
 void drawTextCentered(const char *text, const int x, const int y)
 {
-    Rect r;
-    r.x = x; r.y = y;
-    SDL_Surface *surface = TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
-    Texture *texture = SDL_CreateTextureFromSurface(gfx.renderer, surface);
-    SDL_QueryTexture(texture, NULL, NULL, &r.w, &r.h);
-    r.x-=r.w/2;
-    r.y-=r.h/2;
-    SDL_RenderCopy(gfx.renderer, texture, NULL, &r);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
+    Texture *t = textTexture(text);
+    drawTextureCentered(t, x, y);
+    freeTexture(t);
 }
 
 static inline
@@ -227,3 +224,5 @@ void text_init(void)
     printf("Adding text_quit to atexit()\n");
     atexit(text_quit);
 }
+
+#endif /* end of include guard: TEXT_H */

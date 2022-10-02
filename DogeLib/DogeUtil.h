@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOGEUTIL_H
+#define DOGEUTIL_H
 
 void clearTerminal(void)
 {
@@ -18,3 +19,5 @@ void init(void)
     text_init();
     input_init();
 }
+
+#endif /* end of include guard: DOGEUTIL_H */

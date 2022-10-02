@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DISPLAY_H
+#define DISPLAY_H
 
 int getWinDisplayIndex(void)
 {
@@ -63,3 +64,5 @@ Length getDisplayTotalLen(void)
     }
     return ret;
 }
+
+#endif /* end of include guard: DISPLAY_H */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INPUT_H
+#define INPUT_H
 
 struct{
     u8 key[SDL_NUM_SCANCODES];
@@ -29,17 +30,6 @@ bool keyReleased(const Scancode key)
 {
     return !keys.key[key] && keys.prev[key];
 }
-
-#define MOUSE_L        (SDL_BUTTON(SDL_BUTTON_LEFT))
-#define MOUSE_M        (SDL_BUTTON(SDL_BUTTON_MIDDLE))
-#define MOUSE_R        (SDL_BUTTON(SDL_BUTTON_RIGHT))
-#define MOUSE_F        (SDL_BUTTON(SDL_BUTTON_X1))
-#define MOUSE_B        (SDL_BUTTON(SDL_BUTTON_X2))
-
-#define MW_D        1u
-#define MW_R        (1u<<1)
-#define MW_U        (1u<<2)
-#define MW_L        (1u<<3)
 
 struct{
     Offset vec;
@@ -109,3 +99,5 @@ void input_init(void)
     mouse.pos = coordDiv(getWindowLen(), 2);
     mouse.prev.pos = coordDiv(getWindowLen(), 2);
 }
+
+#endif /* end of include guard: INPUT_H */

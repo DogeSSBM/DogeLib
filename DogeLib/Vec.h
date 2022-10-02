@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VEC_H
+#define VEC_H
 
 float cfToRad(const Coordf coord)
 {
@@ -168,3 +169,5 @@ Coordf cfRotateDeg(const Coordf vec, const float d)
 {
     return cfRotateRad(vec, degToRad(d));
 }
+
+#endif /* end of include guard: VEC_H */

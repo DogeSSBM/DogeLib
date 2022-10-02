@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
+
 #define DEFAULT_WINDOW_XLEN    800
 #define DEFAULT_WINDOW_YLEN    600
 
@@ -580,7 +582,6 @@ uint frameStart(void)
     return getTicks();
 }
 
-void events(const uint);
 void frameEnd(const uint t)
 {
     draw();
@@ -629,3 +630,5 @@ void gfx_init(void)
     draw();
     clear();
 }
+
+#endif /* end of include guard: GRAPHICS_H */

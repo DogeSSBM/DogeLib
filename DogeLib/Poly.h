@@ -1,10 +1,5 @@
-#pragma once
-
-typedef struct{
-    Color color;
-    uint numVertex;
-    Coord *vertex;
-}Poly;
+#ifndef POLY_H
+#define POLY_H
 
 Poly polyCreate(const uint numVertex, ...)
 {
@@ -49,3 +44,5 @@ CoordPair polyBbMinMax(const Poly p)
     }
     return ret;
 }
+
+#endif /* end of include guard: POLY_H */

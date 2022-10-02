@@ -19,6 +19,7 @@
 
 #include "Types.h"
 #include "Panic.h"
+#include "Decls.h"
 #include "Coords.h"
 #include "Vec.h"
 #include "GetInt.h"

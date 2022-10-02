@@ -1,4 +1,5 @@
-#pragma once
+#ifndef IMAGE_H
+#define IMAGE_H
 
 void img_quit(void)
 {
@@ -17,12 +18,21 @@ void img_init(void)
     atexit(img_quit);
 }
 
+static inline
 void freeImg(Img *image)
 {
-    if(image != NULL)
+    if(image)
         SDL_FreeSurface(image);
 }
 
+static inline
+void freeTexture(Texture *t)
+{
+    if(t)
+        SDL_DestroyTexture(t);
+}
+
+static inline
 Img* loadImg(const char *imgFile)
 {
     Img *surface = IMG_Load(imgFile);
@@ -34,6 +44,15 @@ Img* loadImg(const char *imgFile)
     return surface;
 }
 
+static inline
+Texture* imgTexture(Img *img)
+{
+    Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, img);
+    freeImg(img);
+    return t;
+}
+
+static inline
 Texture* loadTexture(const char *imgFile)
 {
     Img *img = IMG_Load(imgFile);
@@ -42,6 +61,7 @@ Texture* loadTexture(const char *imgFile)
     return t;
 }
 
+static inline
 void drawImg(Img *image)
 {
     Texture *t = SDL_CreateTextureFromSurface(gfx.renderer, image);
@@ -49,6 +69,7 @@ void drawImg(Img *image)
     SDL_DestroyTexture(t);
 }
 
+static inline
 void loadDrawImg(const char *imgFile)
 {
     Img *img = IMG_Load(imgFile);
@@ -63,6 +84,7 @@ void loadDrawImg(const char *imgFile)
     SDL_FreeSurface(img);
 }
 
+static inline
 Length textureLen(Texture *texture)
 {
     Length len = {0};
@@ -70,6 +92,13 @@ Length textureLen(Texture *texture)
     return len;
 }
 
+static inline
+Rect textureRect(Texture *texture, const Coord pos)
+{
+    return rectify(pos, textureLen(texture));
+}
+
+static inline
 void drawTexture(Texture *texture, const int x, const int y)
 {
     const Length len = textureLen(texture);
@@ -81,11 +110,13 @@ void drawTexture(Texture *texture, const int x, const int y)
     );
 }
 
+static inline
 void drawTextureCoord(Texture *texture, const Coord pos)
 {
     drawTexture(texture, pos.x, pos.y);
 }
 
+static inline
 void drawTextureCentered(Texture *texture, const int x, const int y)
 {
     const Length len = textureLen(texture);
@@ -97,11 +128,13 @@ void drawTextureCentered(Texture *texture, const int x, const int y)
     );
 }
 
+static inline
 void drawTextureCenteredCoord(Texture *texture, const Coord pos)
 {
     drawTextureCentered(texture, pos.x, pos.y);
 }
 
+static inline
 void drawTextureResize(Texture *texture, const int x, const int y, const int xlen, const int ylen)
 {
     const Length len = textureLen(texture);
@@ -113,11 +146,13 @@ void drawTextureResize(Texture *texture, const int x, const int y, const int xle
     );
 }
 
+static inline
 void drawTextureCoordResize(Texture *texture, const Coord pos, const Length len)
 {
     drawTextureResize(texture, pos.x, pos.y, len.x, len.y);
 }
 
+static inline
 void drawTextureCenteredResize(Texture *texture, const int x, const int y, const int xlen, const int ylen)
 {
     const Length len = textureLen(texture);
@@ -129,7 +164,10 @@ void drawTextureCenteredResize(Texture *texture, const int x, const int y, const
     );
 }
 
+static inline
 void drawTextureCenteredCoordResize(Texture *texture, const Coord pos, const Length len)
 {
     drawTextureCenteredResize(texture, pos.x, pos.y, len.x, len.y);
 }
+
+#endif /* end of include guard: IMAGE_H */

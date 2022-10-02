@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EVENTS_H
+#define EVENTS_H
 
 void events(const uint endOfFrame)
 {
@@ -38,3 +39,5 @@ void events(const uint endOfFrame)
     mouse.state = SDL_GetMouseState(&mouse.pos.x, &mouse.pos.y);
     SDL_GetRelativeMouseState(&mouse.vec.x, &mouse.vec.y);
 }
+
+#endif /* end of include guard: EVENTS_H */

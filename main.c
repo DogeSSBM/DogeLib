@@ -4,6 +4,12 @@ int main(int argc, char const *argv[])
 {
     (void)argc; (void)argv;
     init();
+
+
+    const uint n = rand()%10000;
+
+    printf("%u has %u digits\n", n, digits(n));
+
     setWindowLen((const Length){.x = 800, .y = 600});
     maximizeWindow();
     Texture *doggo = loadTexture("./Doggo16x16.png");

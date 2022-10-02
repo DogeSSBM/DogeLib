@@ -1,39 +1,44 @@
-#pragma once
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-int charToInt(const char c)
-{
-    if(c < '0' || c > '9')
-        return 0;
-    else
-        return (int)c - '0';
-}
-
-int shiftL(int num, int digits)
-{
-    if(digits <= 0){
-        return num;
-    }
-    else{
-        for(int i = 1; i < digits; i++){
-            num *= 10;
-        }
-    }
-    return num;
-}
+#ifndef GETINT_H
+#define GETINT_H
 
 int strToInt(const char *str)
 {
-    int total = 0;
-    int current = 0;
-    for(int i = strlen(str); i >= 0; i--){
-        total += shiftL(charToInt(str[i]), current);
-        current++;
+    if(!str)
+        panic("Cannot convert NULL str to int!");
+    const int len = strlen(str);
+    int n = 0;
+    for(int i = 0; i < len; i++){
+        n *=  10;
+        n += *(str+(len-1)-i) - '0';
     }
-    return total;
+    return n;
 }
+
+uint digits(int n)
+{
+    int p = 1;
+    uint d = 0;
+    while(n){
+        n += n > 0 ? -n % p : n / p;
+        p *= 10;
+    }
+    return d;
+}
+
+//  123
+// ""
+// 
+// char* intToStr(int n, char *str)
+// {
+//     if(!str)
+//         panic("Cannot store int into a NULL str!");
+//     const uint l = strlen(str);
+//     const uint d = digits(n);
+//     for(int i = 0; n; i++){
+//
+//     }
+//     return n;
+// }
 
 int shiftR(const int num)
 {
@@ -81,3 +86,5 @@ int getInt(void)
     }
     return strToInt(buffer);
 }
+
+#endif /* end of include guard: GETINT_H */

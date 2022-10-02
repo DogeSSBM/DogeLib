@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FILE_H
+#define FILE_H
 
 uint fileLen(const char *filePath)
 {
@@ -36,3 +37,5 @@ char* fileReadText(const char *filePath)
         panic("Size mismatch");
     return buf;
 }
+
+#endif /* end of include guard: FILE_H */
