@@ -4,45 +4,58 @@ int main(int argc, char const *argv[])
 {
     (void)argc; (void)argv;
     init();
-
+    maximizeWindow();
 
     const uint n = rand()%10000;
-
     printf("%u has %u digits\n", n, digits(n));
 
-    setWindowLen((const Length){.x = 800, .y = 600});
-    maximizeWindow();
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
     const Scancode keydir[4] = {
-        SDL_SCANCODE_LEFT,
         SDL_SCANCODE_UP,
         SDL_SCANCODE_RIGHT,
-        SDL_SCANCODE_DOWN
+        SDL_SCANCODE_DOWN,
+        SDL_SCANCODE_LEFT,
     };
+    Length window = {0};
     Length len = {.x=8,.y=6};
     Coord origin = {0};
+    uint scale = 0;
+    Texture *nametag = NULL;
 
     while(1){
         const uint t = frameStart();
-        const Length window = getWindowLen();
-        if(keyPressed(SDL_SCANCODE_SPACE))
-            origin = (const Coord){0};
-        else if(mouseBtnState(MOUSE_L) && mouseMoving())
+
+        if(keyPressed(SDL_SCANCODE_ESCAPE)){
+            freeTexture(doggo);
+            freeTexture(borko);
+            return 0;
+        }
+
+        if(mouseBtnState(MOUSE_L))
             origin = coordOffset(origin, mouseMovement());
 
-        if(keyPressed(SDL_SCANCODE_ESCAPE))
-            return 0;
+        if(keyPressed(SDL_SCANCODE_SPACE))
+            origin = (const Coord){0};
+
+        scale = imax(1, scale-mouseScrolled(MW_D)+mouseScrolled(MW_U));
 
         for(Direction d = 0; d < 4; d++)
             if(keyPressed(keydir[d]))
                 len = coordMost(iC(1,1), coordShift(len, d, 1));
 
-        const uint scale = coordMin(coordDivCoord(window, len));
+        if(windowResized() || !scale){
+            scale = coordMin(coordDivCoord((window = getWindowLen()), len));
+            freeTexture(nametag);
+            setTextSize(scale/5);
+            setTextColor(GREEN);
+            nametag = textTexture("Doggo");
+        }
 
-        for(int y = 0; y < len.y; y++){
-            for(int x = 0; x < len.x; x++){
+        for(int x = 0; x < len.x; x++){
+            for(int y = 0; y < len.y; y++){
                 const Coord pos = coordOffset(coordMul((const Coord){.x=x,.y=y}, scale), origin);
+                drawTextureCoord(nametag, pos);
                 setColor(GREY1);
                 drawCircleCoord(coordAdd(pos, scale/2), scale/2);
                 drawTextureCoordResize((x&1)^(y&1) ? borko : doggo, pos, iC(scale,scale));

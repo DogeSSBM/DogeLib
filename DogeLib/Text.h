@@ -26,32 +26,34 @@ Texture* textTexture(const char *text)
 }
 
 static inline
-void drawText(const char *text, const int x, const int y)
+Length drawText(const char *text, const int x, const int y)
 {
     Texture *t = textTexture(text);
     const Rect r = textureRect(t, iC(x,y));
     SDL_RenderCopy(gfx.renderer, t, NULL, &r);
     freeTexture(t);
+    return iC(r.w, r.h);
 }
 
 static inline
-Coord drawTextCoord(const char *text, const Coord pos)
+Length drawTextCoord(const char *text, const Coord pos)
 {
-    drawText(text, pos.x, pos.y);
+    return drawText(text, pos.x, pos.y);
 }
 
 static inline
-void drawTextCentered(const char *text, const int x, const int y)
+Length drawTextCentered(const char *text, const int x, const int y)
 {
     Texture *t = textTexture(text);
-    drawTextureCentered(t, x, y);
+    const Length len = drawTextureCentered(t, x, y);
     freeTexture(t);
+    return len;
 }
 
 static inline
-void drawTextCenteredCoord(const char *text, const Coord pos)
+Length drawTextCenteredCoord(const char *text, const Coord pos)
 {
-    drawTextCentered(text, pos.x, pos.y);
+    return drawTextCentered(text, pos.x, pos.y);
 }
 
 static inline

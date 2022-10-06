@@ -225,13 +225,13 @@ Img* textImg(const char *text);
 static inline
 Texture* textTexture(const char *text);
 static inline
-void drawText(const char *text, const int x, const int y);
+Length drawText(const char *text, const int x, const int y);
 static inline
 Coord drawTextCoord(const char *text, const Coord pos);
 static inline
-void drawTextCentered(const char *text, const int x, const int y);
+Length drawTextCentered(const char *text, const int x, const int y);
 static inline
-void drawTextCenteredCoord(const char *text, const Coord pos);
+Length drawTextCenteredCoord(const char *text, const Coord pos);
 static inline
 Length getTextLength(const char *text);
 static inline
@@ -274,21 +274,21 @@ Length textureLen(Texture *texture);
 static inline
 Rect textureRect(Texture *texture, const Coord pos);
 static inline
-void drawTexture(Texture *texture, const int x, const int y);
+Length drawTexture(Texture *texture, const int x, const int y);
 static inline
-void drawTextureCoord(Texture *texture, const Coord pos);
+Length drawTextureCoord(Texture *texture, const Coord pos);
 static inline
-void drawTextureCentered(Texture *texture, const int x, const int y);
+Length drawTextureCentered(Texture *texture, const int x, const int y);
 static inline
-void drawTextureCenteredCoord(Texture *texture, const Coord pos);
+Length drawTextureCenteredCoord(Texture *texture, const Coord pos);
 static inline
-void drawTextureResize(Texture *texture, const int x, const int y, const int xlen, const int ylen);
+Length drawTextureResize(Texture *texture, const int x, const int y, const int xlen, const int ylen);
 static inline
-void drawTextureCoordResize(Texture *texture, const Coord pos, const Length len);
+Length drawTextureCoordResize(Texture *texture, const Coord pos, const Length len);
 static inline
-void drawTextureCenteredResize(Texture *texture, const int x, const int y, const int xlen, const int ylen);
+Length drawTextureCenteredResize(Texture *texture, const int x, const int y, const int xlen, const int ylen);
 static inline
-void drawTextureCenteredCoordResize(Texture *texture, const Coord pos, const Length len);
+Length drawTextureCenteredCoordResize(Texture *texture, const Coord pos, const Length len);
 void img_quit(void);
 void img_init(void);
 
