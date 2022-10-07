@@ -20,7 +20,8 @@ int main(int argc, char const *argv[])
     Length window = {0};
     Length len = {.x=8,.y=6};
     Coord origin = {0};
-    uint scale = 0;
+    uint scale = coordMin(coordDivCoord((window = getWindowLen()), len));
+    setTextColor(GREEN);
     Texture *nametag = NULL;
 
     while(1){
@@ -32,23 +33,22 @@ int main(int argc, char const *argv[])
             return 0;
         }
 
-        if(mouseBtnState(MOUSE_L))
+        if(mouseBtnState(MOUSE_L) || mouseBtnState(MOUSE_R))
             origin = coordOffset(origin, mouseMovement());
 
-        if(keyPressed(SDL_SCANCODE_SPACE))
+        if(keyPressed(SDL_SCANCODE_SPACE)){
             origin = (const Coord){0};
-
-        scale = imax(1, scale-mouseScrolled(MW_D)+mouseScrolled(MW_U));
-
+            scale = coordMin(coordDivCoord((window = getWindowLen()), len));
+        }
         for(Direction d = 0; d < 4; d++)
             if(keyPressed(keydir[d]))
                 len = coordMost(iC(1,1), coordShift(len, d, 1));
 
-        if(windowResized() || !scale){
-            scale = coordMin(coordDivCoord((window = getWindowLen()), len));
+        const int change = mouseScrolled(MW_U) - mouseScrolled(MW_D);
+        if(change || !nametag){
+            scale = imax(1, scale + change);
             freeTexture(nametag);
             setTextSize(scale/5);
-            setTextColor(GREEN);
             nametag = textTexture("Doggo");
         }
 
