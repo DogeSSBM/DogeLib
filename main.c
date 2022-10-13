@@ -6,9 +6,6 @@ int main(int argc, char const *argv[])
     init();
     maximizeWindow();
 
-    const uint n = rand()%10000;
-    printf("%u has %u digits\n", n, digits(n));
-
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
     const Scancode keydir[4] = {
