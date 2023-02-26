@@ -134,19 +134,14 @@ bool coordNz(const Coord coord)
     return coord.x||coord.y;
 }
 
-Coord coordMul(const Coord coord, const int num)
+Coord coordMuli(const Coord coord, const int num)
 {
     return (const Coord){.x = coord.x*num, .y = coord.y*num};
 }
 
-Coord coordOffsetMul(const Coord coord1, const Coord coord2)
+Coord CoordMul(const Coord coord1, const Coord coord2)
 {
     return (const Coord){.x = coord1.x*coord2.x, .y = coord1.y*coord2.y};
-}
-
-Coordf coordfOffsetMul(const Coordf coord1, const Coordf coord2)
-{
-    return (Coordf){.x = coord1.x*coord2.x, .y = coord1.y*coord2.y};
 }
 
 Coord coordInv(const Coord coord)
@@ -154,7 +149,7 @@ Coord coordInv(const Coord coord)
     return (const Coord){.x = -coord.x, .y = -coord.y};
 }
 
-Coord coordAdd(const Coord coord1, const uint num)
+Coord coordAddi(const Coord coord1, const int num)
 {
     return (const Coord){.x = coord1.x+num, .y = coord1.y+num};
 }
@@ -192,16 +187,16 @@ Coord coordMid(const Coord coord1, const Coord coord2)
 uint coordDistSq(const Coord coord1, const Coord coord2)
 {
     Coord distvec = coordSub(coord2, coord1);
-    distvec = coordOffsetMul(distvec, distvec);
+    distvec = CoordMul(distvec, distvec);
     return distvec.x + distvec.y;
 }
 
-Coord coordDiv(const Coord coord, const int num)
+Coord coordDivi(const Coord coord, const int num)
 {
     return (const Coord){.x = num ? coord.x / num : 0, .y = num ? coord.y / num : 0};
 }
 
-Coord coordDivCoord(const Coord coord1, const Coord coord2)
+Coord coordDiv(const Coord coord1, const Coord coord2)
 {
     return (const Coord){
         .x = coord2.x ? coord1.x/coord2.x : 0,
@@ -232,12 +227,12 @@ Coord coordShift(const Coord coord, const Direction dir, const int units)
     return (const Coord){.x = dirPOS(dir)? coord.x+units : coord.x-units, .y = coord.y};
 }
 
-Coord coordOffset(const Coord coord, const Offset off)
+Coord coordAdd(const Coord coord, const Offset off)
 {
     return (const Coord){.x = coord.x+off.x, .y = coord.y+off.y};
 }
 
-Coordf coordfOffset(const Coordf coord, const Offsetf off)
+Coordf cfAdd(const Coordf coord, const Offsetf off)
 {
     return (Coordf){.x = coord.x+off.x, .y = coord.y+off.y};
 }
@@ -245,13 +240,13 @@ Coordf coordfOffset(const Coordf coord, const Offsetf off)
 // offsets the coord by 1/2 the length
 Coord coordCenter(const Coord coord, const Length len)
 {
-    return coordOffset(coord, coordDiv(len, 2));
+    return coordAdd(coord, coordDivi(len, 2));
 }
 
 // offsets the coord by -1/2 the length
 Coord coordUncenter(const Coord coord, const Length len)
 {
-    return coordOffset(coord, coordDiv(len, -2));
+    return coordAdd(coord, coordDivi(len, -2));
 }
 
 // returns rect at pos with length len
@@ -275,7 +270,7 @@ Rect rectCenter(Rect r)
 // returns rect pos offset by len of rect
 Length unrectify(const Rect rect)
 {
-    return coordOffset(irC(rect), irL(rect));
+    return coordAdd(irC(rect), irL(rect));
 }
 
 // Returns true if coord is in rect
@@ -297,7 +292,7 @@ int coordInRectArr(const Coord coord, Rect *const rect, const int num)
 
 Rect rectOffset(const Rect rect, const Offset off)
 {
-    const Coord pos = coordOffset((const Coord){.x = rect.x, .y = rect.y}, off);
+    const Coord pos = coordAdd((const Coord){.x = rect.x, .y = rect.y}, off);
     return (Rect){.x = pos.x, .y = pos.y, .w = rect.w, .h = rect.h};
 }
 

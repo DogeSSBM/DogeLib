@@ -1,4 +1,4 @@
-#ifndef TEXT_H
+        #ifndef TEXT_H
 #define TEXT_H
 
 bool strEndsWith(const char *str, const char *end)
@@ -84,9 +84,9 @@ Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, co
 {
     if(num == 0 || coords == NULL)
         return coords;
-    const Length step = coordDiv(coordSub(stop, start), num>1?num-1:1);
+    const Length step = coordDivi(coordSub(stop, start), num>1?num-1:1);
     for(uint i = 0; i < num; i++)
-        coords[i] = coordOffset(start, coordMul(step, i));
+        coords[i] = coordAdd(start, coordMuli(step, i));
     return coords;
 }
 
@@ -94,9 +94,9 @@ Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord 
 {
     if(num == 0 || coords == NULL)
         return coords;
-    const Length step = coordDiv(coordSub(stop, start), num+1);
+    const Length step = coordDivi(coordSub(stop, start), num+1);
     for(uint i = 1; i < num+1; i++)
-        coords[i-1] = coordOffset(start, coordMul(step, i));
+        coords[i-1] = coordAdd(start, coordMuli(step, i));
     return coords;
 }
 
@@ -105,12 +105,12 @@ Rect* getTextListRect(const char **textList, Rect *const rect, const Coord start
     if(num == 0 || rect == NULL)
         return rect;
 
-    const Length step = coordDiv(coordSub(stop, start), num>1?num-1:1);
+    const Length step = coordDivi(coordSub(stop, start), num>1?num-1:1);
     for(uint i = 0; i < num; i++){
         const Length len = getTextLength(textList[i]);
         const Coord pos = coordSub(
-            coordOffset(start, coordMul(step, i)),
-            coordDiv(len,2)
+            coordAdd(start, coordMuli(step, i)),
+            coordDivi(len,2)
         );
         rect[i].x = pos.x;
         rect[i].y = pos.y;
@@ -125,12 +125,12 @@ Rect* getTextListRectCentered(const char **textList, Rect *const rect, const Coo
     if(num == 0 || rect == NULL)
         return rect;
 
-    const Length step = coordDiv(coordSub(stop, start), num+1);
+    const Length step = coordDivi(coordSub(stop, start), num+1);
     for(uint i = 1; i < num+1; i++){
         const Length len = getTextLength(textList[i-1]);
         const Coord pos = coordSub(
-            coordOffset(start, coordMul(step, i)),
-            coordDiv(len,2)
+            coordAdd(start, coordMuli(step, i)),
+            coordDivi(len,2)
         );
         rect[i-1].x = pos.x;
         rect[i-1].y = pos.y;
@@ -161,9 +161,9 @@ void spanTextList(const char **textList, const Coord start, const Coord stop, co
 {
     if(num == 0)
         return;
-    const Length step = coordDiv(coordSub(stop, start), num>1?num-1:1);
+    const Length step = coordDivi(coordSub(stop, start), num>1?num-1:1);
     for(uint i = 0; i < num; i++){
-        drawTextCenteredCoord(textList[i], coordOffset(start, coordMul(step, i)));
+        drawTextCenteredCoord(textList[i], coordAdd(start, coordMuli(step, i)));
     }
 }
 
@@ -171,9 +171,9 @@ void spanTextListCentered(const char **textList, const Coord start, const Coord 
 {
     if(num == 0)
         return;
-    const Length step = coordDiv(coordSub(stop, start), num+1);
+    const Length step = coordDivi(coordSub(stop, start), num+1);
     for(uint i = 1; i < num+1; i++){
-        drawTextCenteredCoord(textList[i-1], coordOffset(start, coordMul(step, i)));
+        drawTextCenteredCoord(textList[i-1], coordAdd(start, coordMuli(step, i)));
     }
 }
 

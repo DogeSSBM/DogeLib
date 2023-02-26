@@ -59,7 +59,7 @@ Length getWindowMid(void)
 {
     Length ret = {0};
     SDL_GetWindowSize(gfx.window, &ret.x, &ret.y);
-    return coordDiv(ret, 2);
+    return coordDivi(ret, 2);
 }
 
 static inline

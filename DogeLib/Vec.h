@@ -65,12 +65,22 @@ float fwrap(const float n, const float min, const float max)
     return n;
 }
 
-Coordf cfMul(const Coordf coord, const float num)
+Coordf cfMul(const Coordf coord1, const Coordf coord2)
+{
+    return (Coordf){.x = coord1.x*coord2.x, .y = coord1.y*coord2.y};
+}
+
+Coordf cfMulf(const Coordf coord, const float num)
 {
     return (const Coordf){.x = coord.x*num, .y = coord.y*num};
 }
 
-Coordf cfDiv(const Coordf coord, const float num)
+Coordf cfDiv(const Coordf coord1, const Coordf coord2)
+{
+    return (Coordf){.x = coord1.x/coord2.x, .y = coord1.y/coord2.y};
+}
+
+Coordf cfDivf(const Coordf coord, const float num)
 {
     if(num==0.0f)
         return coord;
@@ -90,18 +100,18 @@ float cfMag(const Coordf coord)
 // creates a vector given angle in rads and a magnitude
 Coordf radMagToCf(const float rad, const float mag)
 {
-    return cfMul(radToCf(rad), mag);
+    return cfMulf(radToCf(rad), mag);
 }
 
 // creates a vector given angle in rads and a magnitude
 Coordf degMagToCf(const float deg, const float mag)
 {
-    return cfMul(radToCf(degToRad(deg)), mag);
+    return cfMulf(radToCf(degToRad(deg)), mag);
 }
 
 Coordf cfNormalize(const Coordf coord)
 {
-    return cfDiv(coord, cfMag(coord));
+    return cfDivf(coord, cfMag(coord));
 }
 
 Coordf cfTranslate(const Coordf coord, const Vectorf vec)

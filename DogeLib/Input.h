@@ -96,8 +96,8 @@ Length mouseMovement(void)
 
 void input_init(void)
 {
-    mouse.pos = coordDiv(getWindowLen(), 2);
-    mouse.prev.pos = coordDiv(getWindowLen(), 2);
+    mouse.pos = coordDivi(getWindowLen(), 2);
+    mouse.prev.pos = coordDivi(getWindowLen(), 2);
 }
 
 #endif /* end of include guard: INPUT_H */

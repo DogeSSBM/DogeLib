@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
     Length window = {0};
     Length len = {.x=8,.y=6};
     Coord origin = {0};
-    uint scale = coordMin(coordDivCoord((window = getWindowLen()), len));
+    uint scale = coordMin(coordDiv((window = getWindowLen()), len));
     setTextColor(GREEN);
     Texture *nametag = NULL;
 
@@ -31,11 +31,11 @@ int main(int argc, char const *argv[])
         }
 
         if(mouseBtnState(MOUSE_L) || mouseBtnState(MOUSE_R))
-            origin = coordOffset(origin, mouseMovement());
+            origin = coordAdd(origin, mouseMovement());
 
         if(keyPressed(SDL_SCANCODE_SPACE)){
             origin = (const Coord){0};
-            scale = coordMin(coordDivCoord((window = getWindowLen()), len));
+            scale = coordMin(coordDiv((window = getWindowLen()), len));
         }
         for(Direction d = 0; d < 4; d++)
             if(keyPressed(keydir[d]))
@@ -51,10 +51,10 @@ int main(int argc, char const *argv[])
 
         for(int x = 0; x < len.x; x++){
             for(int y = 0; y < len.y; y++){
-                const Coord pos = coordOffset(coordMul((const Coord){.x=x,.y=y}, scale), origin);
+                const Coord pos = coordAdd(coordMuli((const Coord){.x=x,.y=y}, scale), origin);
                 drawTextureCoord(nametag, pos);
                 setColor(GREY1);
-                drawCircleCoord(coordAdd(pos, scale/2), scale/2);
+                drawCircleCoord(coordAddi(pos, scale/2), scale/2);
                 drawTextureCoordResize((x&1)^(y&1) ? borko : doggo, pos, iC(scale,scale));
                 setColor(PINK);
                 fillBorderCoordSquare(pos, scale, -1);
