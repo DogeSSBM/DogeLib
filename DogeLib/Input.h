@@ -35,12 +35,12 @@ struct{
     Offset vec;
     Coord pos;
     u32 state;
-    u32 wheel;
+    Coord wheel;
     struct{
         Offset vec;
         Coord pos;
         u32 state;
-        u32 wheel;
+        Coord wheel;
     }prev;
 }mouse = {0};
 
@@ -69,9 +69,14 @@ bool mouseBtnChanged(const u32 mouseBtn)
     return (mouse.state&mouseBtn) != (mouse.prev.state&mouseBtn);
 }
 
-bool mouseScrolled(const u32 mouseWheel)
+int mouseScrolledX(void)
 {
-    return mouse.wheel & mouseWheel;
+    return mouse.wheel.x;
+}
+
+int mouseScrolledY(void)
+{
+    return mouse.wheel.y;
 }
 
 bool mouseMoving(void)

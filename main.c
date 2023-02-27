@@ -41,7 +41,7 @@ int main(int argc, char const *argv[])
             if(keyPressed(keydir[d]))
                 len = coordMost(iC(1,1), coordShift(len, d, 1));
 
-        const int change = mouseScrolled(MW_U) - mouseScrolled(MW_D);
+        const int change = mouseScrolledY();
         if(change || !nametag){
             scale = imax(1, scale + change);
             freeTexture(nametag);

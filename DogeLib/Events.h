@@ -5,7 +5,7 @@ void events(const uint endOfFrame)
 {
     i32 ticksLeft = endOfFrame - getTicks();
     mouse.prev.wheel = mouse.wheel;
-    mouse.wheel = 0;
+    mouse.wheel = (const Coord){.x = 0, .y = 0};
     do{
         Event event;
         if(SDL_WaitEventTimeout(&event, ticksLeft>0?ticksLeft:1)){
@@ -16,10 +16,8 @@ void events(const uint endOfFrame)
                 exit(0);
                 break;
             case SDL_MOUSEWHEEL:
-                if(event.wheel.x)
-                    mouse.wheel |= event.wheel.x>0?MW_R:MW_L;
-                if(event.wheel.y)
-                    mouse.wheel |= event.wheel.y>0?MW_D:MW_U;
+                mouse.wheel.x += event.wheel.x;
+                mouse.wheel.y += event.wheel.y;
                 break;
             case SDL_WINDOWEVENT_SIZE_CHANGED:
             case SDL_WINDOWEVENT:
