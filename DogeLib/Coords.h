@@ -169,7 +169,12 @@ Coordf coordfDiv(const Coordf coord, const float num)
     return (const Coordf){.x = coord.x/num, .y = coord.y/num};
 }
 
-Coord coordMod(const Coord coord, const int num)
+Coord coordMod(const Coord coord1, const Coord coord2)
+{
+    return (const Coord){.x = coord1.x%coord2.x, .y = coord1.y%coord2.y};
+}
+
+Coord coordModi(const Coord coord, const int num)
 {
     return (const Coord){.x = coord.x%num, .y = coord.y%num};
 }
