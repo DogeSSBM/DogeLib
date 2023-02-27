@@ -3,12 +3,17 @@
 
 void events(const uint endOfFrame)
 {
-    i32 ticksLeft = endOfFrame - getTicks();
+    i32 ticksLeft = imax(1, endOfFrame - getTicks());
     mouse.prev.wheel = mouse.wheel;
     mouse.wheel = (const Coord){.x = 0, .y = 0};
+    bool e = false;
     do{
         Event event;
-        if(SDL_WaitEventTimeout(&event, ticksLeft>0?ticksLeft:1)){
+        if(ticksLeft > 0)
+            e = SDL_WaitEventTimeout(&event, ticksLeft);
+        else
+            e = SDL_PollEvent(&event);
+        if(e){
             switch(event.type)
             {
             case SDL_QUIT:
@@ -27,8 +32,8 @@ void events(const uint endOfFrame)
                 break;
             }
         }
-        ticksLeft = endOfFrame - getTicks();
-    }while(ticksLeft > 0);
+        ticksLeft = imax(0, endOfFrame - getTicks());
+    }while(ticksLeft > 0 || e);
     memcpy(keys.prev, keys.key, SDL_NUM_SCANCODES);
     memcpy(keys.key, SDL_GetKeyboardState(NULL), SDL_NUM_SCANCODES);
     mouse.prev.state = mouse.state;
