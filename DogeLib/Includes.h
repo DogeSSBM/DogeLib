@@ -34,3 +34,4 @@
 #include "DogeUtil.h"
 #include "Poly.h"
 #include "Display.h"
+#include "Window.h"

@@ -4,7 +4,7 @@ int main(int argc, char const *argv[])
 {
     (void)argc; (void)argv;
     init();
-    maximizeWindow();
+    // maximizeWindow();
 
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
@@ -21,6 +21,10 @@ int main(int argc, char const *argv[])
     setTextColor(GREEN);
     Texture *nametag = NULL;
 
+    uint wposi = 0;
+    Coord wpos = {0};
+    winSetPosCoord(wpos);
+
     while(1){
         const uint t = frameStart();
 
@@ -28,6 +32,22 @@ int main(int argc, char const *argv[])
             freeTexture(doggo);
             freeTexture(borko);
             return 0;
+        }
+
+        if(keyPressed(SDL_SCANCODE_RETURN)){
+            wposi = (wposi+1)%4;
+            const Length wlen = getWindowLen();
+            const Length dlen = getWinDisplayLen();
+            if(wposi == 0 || wposi == 3)
+                wpos.x = 0;
+            if(wposi == 1 || wposi == 2)
+                wpos.x = dlen.x-wlen.x;
+            if(wposi <= 1)
+                wpos.y = 0;
+            if(wposi > 1)
+                wpos.y = dlen.y-wlen.y;
+
+            winSetPosCoord(wpos);
         }
 
         if(mouseBtnState(MOUSE_L) || mouseBtnState(MOUSE_R))
