@@ -25,13 +25,24 @@ int main(int argc, char const *argv[])
     Coord wpos = {0};
     winSetPosCoord(wpos);
 
+    bool grabbed = false;
+
     while(1){
         const uint t = frameStart();
 
-        if(keyPressed(SDL_SCANCODE_ESCAPE)){
+        if(
+            keyPressed(SDL_SCANCODE_ESCAPE) ||
+            (keyState(SDL_SCANCODE_LCTRL) && keyPressed(SDL_SCANCODE_Q))
+        ){
             freeTexture(doggo);
             freeTexture(borko);
             return 0;
+        }
+
+        if(keyPressed(SDL_SCANCODE_GRAVE)){
+            grabbed = !grabbed;
+            printf("%s\n", grabbed ? "grabbed" : "not grabbed");
+            winSetGrab(grabbed);
         }
 
         if(keyPressed(SDL_SCANCODE_RETURN)){

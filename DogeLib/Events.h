@@ -7,6 +7,7 @@ void events(const uint endOfFrame)
     mouse.prev.wheel = mouse.wheel;
     mouse.wheel = (const Coord){.x = 0, .y = 0};
     bool e = false;
+    gfx.winFlags = SDL_GetWindowFlags(gfx.window);
     do{
         Event event;
         if(ticksLeft > 0)

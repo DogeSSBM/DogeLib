@@ -14,33 +14,29 @@ struct{
     Length restoreLen;
     Length prvLen;
     bool outlined;
+    u32 winFlags;
 }gfx = {0};
 
-static inline
 void setWindowMode(const WindowMode mode)
 {
     SDL_SetWindowFullscreen(gfx.window, mode);
 }
 
-static inline
 void setWindowResizable(const bool resizable)
 {
     SDL_SetWindowResizable(gfx.window, resizable);
 }
 
-static inline
 bool getWindowResizable(void)
 {
     return SDL_WINDOW_RESIZABLE & SDL_GetWindowFlags(gfx.window);
 }
 
-static inline
 void setWindowLen(const Length len)
 {
     SDL_SetWindowSize(gfx.window, len.x, len.y);
 }
 
-static inline
 Length getWindowLen(void)
 {
     Length ret = {0};
@@ -48,13 +44,11 @@ Length getWindowLen(void)
     return ret;
 }
 
-static inline
 bool windowResized(void)
 {
     return !coordSame(gfx.prvLen, getWindowLen());
 }
 
-static inline
 Length getWindowMid(void)
 {
     Length ret = {0};
@@ -62,14 +56,12 @@ Length getWindowMid(void)
     return coordDivi(ret, 2);
 }
 
-static inline
 bool coordInWindow(const Coord pos)
 {
     const Length window = getWindowLen();
     return inBound(pos.x, 0, window.x) && inBound(pos.y, 0, window.y);
 }
 
-static inline
 Length maximizeWindow(void)
 {
     Length len = {0};
@@ -79,7 +71,6 @@ Length maximizeWindow(void)
     return len;
 }
 
-static inline
 Length restoreWindow(void)
 {
     SDL_RestoreWindow(gfx.window);
@@ -88,61 +79,51 @@ Length restoreWindow(void)
     return gfx.restoreLen;
 }
 
-static inline
 void setWindowSize(const uint x, const uint y)
 {
     SDL_SetWindowSize(gfx.window, x, y);
 }
 
-static inline
 void setBlend(const BlendMode mode)
 {
     SDL_SetRenderDrawBlendMode(gfx.renderer, mode);
 }
 
-static inline
 void drawPixel(const uint x, const uint y)
 {
     SDL_RenderDrawPoint(gfx.renderer, x, y);
 }
 
-static inline
 void drawPixelCoord(const Coord pos)
 {
     SDL_RenderDrawPoint(gfx.renderer, pos.x, pos.y);
 }
 
-static inline
 void drawLine(const uint x1, const uint y1, const uint x2, const uint y2)
 {
     SDL_RenderDrawLine(gfx.renderer, x1, y1, x2, y2);
 }
 
-static inline
 void drawLineCoords(const Coord pos1, const Coord pos2)
 {
     SDL_RenderDrawLine(gfx.renderer, pos1.x, pos1.y, pos2.x, pos2.y);
 }
 
-static inline
 void drawLineCoordPair(const CoordPair pair)
 {
     SDL_RenderDrawLine(gfx.renderer, pair.pos1.x, pair.pos1.y, pair.pos2.x, pair.pos2.y);
 }
 
-static inline
 void drawHLine(const uint x, const uint y, int len)
 {
     SDL_RenderDrawLine(gfx.renderer, x, y, x+len, y);
 }
 
-static inline
 void drawVLine(const uint x, const uint y, int len)
 {
     SDL_RenderDrawLine(gfx.renderer, x, y, x, y+len);
 }
 
-static inline
 void drawRect(const uint x, const uint y, const uint xlen, const uint ylen)
 {
     SDL_RenderDrawRect(
@@ -151,7 +132,6 @@ void drawRect(const uint x, const uint y, const uint xlen, const uint ylen)
     );
 }
 
-static inline
 void drawRectCentered(const uint x, const uint y, const uint xlen, const uint ylen)
 {
     SDL_RenderDrawRect(
@@ -160,7 +140,6 @@ void drawRectCentered(const uint x, const uint y, const uint xlen, const uint yl
     );
 }
 
-static inline
 void fillRect(const uint x, const uint y, const uint xlen, const uint ylen)
 {
     SDL_RenderFillRect(
@@ -169,7 +148,6 @@ void fillRect(const uint x, const uint y, const uint xlen, const uint ylen)
     );
 }
 
-static inline
 void fillRectCentered(const uint x, const uint y, const uint xlen, const uint ylen)
 {
     SDL_RenderFillRect(
@@ -178,7 +156,6 @@ void fillRectCentered(const uint x, const uint y, const uint xlen, const uint yl
     );
 }
 
-static inline
 void drawRectCoords(const Coord pos1, const Coord pos2)
 {
     SDL_RenderDrawRect(
@@ -192,7 +169,6 @@ void drawRectCoords(const Coord pos1, const Coord pos2)
     );
 }
 
-static inline
 void drawRectCenteredCoords(const Coord pos1, const Coord pos2)
 {
     SDL_RenderDrawRect(
@@ -206,7 +182,6 @@ void drawRectCenteredCoords(const Coord pos1, const Coord pos2)
     );
 }
 
-static inline
 void fillRectCoords(const Coord pos1, const Coord pos2)
 {
     SDL_RenderFillRect(
@@ -220,7 +195,6 @@ void fillRectCoords(const Coord pos1, const Coord pos2)
     );
 }
 
-static inline
 void fillRectCenteredCoords(const Coord pos1, const Coord pos2)
 {
     SDL_RenderFillRect(
@@ -234,13 +208,11 @@ void fillRectCenteredCoords(const Coord pos1, const Coord pos2)
     );
 }
 
-static inline
 void drawRectCoordLength(const Coord pos, const Length len)
 {
     SDL_RenderDrawRect(gfx.renderer, &(const Rect){.x = pos.x, .y = pos.y, .w = len.x, .h = len.y});
 }
 
-static inline
 void drawRectCenteredCoordLength(const Coord pos, const Length len)
 {
     SDL_RenderDrawRect(
@@ -254,13 +226,11 @@ void drawRectCenteredCoordLength(const Coord pos, const Length len)
     );
 }
 
-static inline
 void fillRectCoordLength(const Coord pos, const Length len)
 {
     SDL_RenderFillRect(gfx.renderer, &(const Rect){.x = pos.x, .y = pos.y, .w = len.x, .h = len.y});
 }
 
-static inline
 void fillRectCenteredCoordLength(const Coord pos, const Length len)
 {
     SDL_RenderFillRect(
@@ -274,19 +244,16 @@ void fillRectCenteredCoordLength(const Coord pos, const Length len)
     );
 }
 
-static inline
 void drawRectRect(const Rect rect)
 {
     SDL_RenderDrawRect(gfx.renderer, &rect);
 }
 
-static inline
 void fillRectRect(const Rect rect)
 {
     SDL_RenderFillRect(gfx.renderer, &rect);
 }
 
-static inline
 void drawSquareCoord(const Coord pos, const uint len)
 {
     SDL_RenderDrawRect(
@@ -295,7 +262,6 @@ void drawSquareCoord(const Coord pos, const uint len)
     );
 }
 
-static inline
 void drawSquare(const uint x, const uint y, const uint len)
 {
     SDL_RenderDrawRect(
@@ -304,7 +270,6 @@ void drawSquare(const uint x, const uint y, const uint len)
     );
 }
 
-static inline
 void fillSquare(const uint x, const uint y, const uint len)
 {
     SDL_RenderFillRect(
@@ -313,7 +278,6 @@ void fillSquare(const uint x, const uint y, const uint len)
     );
 }
 
-static inline
 void fillSquareResize(const uint x, const uint y, const uint len, const int resize)
 {
     SDL_RenderFillRect(
@@ -324,7 +288,6 @@ void fillSquareResize(const uint x, const uint y, const uint len, const int resi
     );
 }
 
-static inline
 void fillSquareCoord(const Coord pos, const uint len)
 {
     SDL_RenderFillRect(
@@ -333,7 +296,6 @@ void fillSquareCoord(const Coord pos, const uint len)
     );
 }
 
-static inline
 void fillSquareCoordResize(const Coord pos, const uint len, const int resize)
 {
     SDL_RenderFillRect(
@@ -344,7 +306,6 @@ void fillSquareCoordResize(const Coord pos, const uint len, const int resize)
     );
 }
 
-static inline
 void fillBorder(uint x, uint y, uint xlen, uint ylen, int b)
 {
     fillRect(x-b, y-b, xlen+2*b, b);
@@ -353,7 +314,6 @@ void fillBorder(uint x, uint y, uint xlen, uint ylen, int b)
     fillRect(x+xlen, y, b, ylen);
 }
 
-static inline
 void fillBorderCoords(const Coord pos, const Length len, const int b)
 {
     fillRect(pos.x-b,       pos.y-b,        len.x+2*b,  b);
@@ -362,7 +322,6 @@ void fillBorderCoords(const Coord pos, const Length len, const int b)
     fillRect(pos.x+len.x,   pos.y,          b,          len.y);
 }
 
-static inline
 void fillBorderCoordSquare(const Coord pos, const uint len, const int b)
 {
     fillRect(pos.x-b,       pos.y-b,        len+2*b,    b);
@@ -371,7 +330,6 @@ void fillBorderCoordSquare(const Coord pos, const uint len, const int b)
     fillRect(pos.x+len,     pos.y,          b,          len);
 }
 
-static inline
 void drawCircle(const uint x, const uint y, const uint radius)
 {
     const double rsq = (double)(radius*radius);
@@ -393,7 +351,6 @@ void drawCircle(const uint x, const uint y, const uint radius)
     }
 }
 
-static inline
 void fillCircle(const uint x, const uint y, const uint radius)
 {
     const double rsq = (double)(radius*radius);
@@ -410,7 +367,6 @@ void fillCircle(const uint x, const uint y, const uint radius)
     }
 }
 
-static inline
 void drawCircleCoord(const Coord pos, const uint radius)
 {
     const double rsq = (double)(radius*radius);
@@ -432,7 +388,6 @@ void drawCircleCoord(const Coord pos, const uint radius)
     }
 }
 
-static inline
 void fillCircleCoord(const Coord pos, const uint radius)
 {
     const double rsq = (double)(radius*radius);
@@ -449,7 +404,6 @@ void fillCircleCoord(const Coord pos, const uint radius)
     }
 }
 
-static inline
 Color getColor(void)
 {
     Color c = {0};
@@ -457,25 +411,21 @@ Color getColor(void)
     return c;
 }
 
-static inline
 void setColor(const Color c)
 {
     SDL_SetRenderDrawColor(gfx.renderer, c.r, c.g, c.b, c.a);
 }
 
-static inline
 u32 colorToU32(const Color c)
 {
     return *((u32*)&c);
 }
 
-static inline
 Color u32ToColor(const u32 u)
 {
     return (const Color){.r = u&0xff, .g = (u>>8)&0xff, .b = (u>>16)&0xff, 0xff};
 }
 
-static inline
 void drawTri(const Coord pos1, const Coord pos2, const Coord pos3)
 {
     trigonColor(
@@ -487,7 +437,6 @@ void drawTri(const Coord pos1, const Coord pos2, const Coord pos3)
     );
 }
 
-static inline
 void fillTri(const Coord pos1, const Coord pos2, const Coord pos3)
 {
     filledTrigonColor(
@@ -532,25 +481,21 @@ void bezier(const Coord *pos, const uint numc, const uint nums)
     bezierColor(gfx.renderer, posx, posy, numc, nums, colorToU32(getColor()));
 }
 
-static inline
 void setRGB(const u8 r, const u8 g, const u8 b)
 {
     SDL_SetRenderDrawColor(gfx.renderer, r, g, b, 255);
 }
 
-static inline
 void setRGBA(const u8 r, const u8 g, const u8 b, const u8 a)
 {
     SDL_SetRenderDrawColor(gfx.renderer, r, g, b, a);
 }
 
-static inline
 void fillScreen(void)
 {
     SDL_RenderClear(gfx.renderer);
 }
 
-static inline
 void clear(void)
 {
     const Color c = getColor();
@@ -567,7 +512,6 @@ void outlineWindow(void)
     setColor(c);
 }
 
-static inline
 void draw(void)
 {
 
@@ -588,7 +532,6 @@ void frameEnd(const uint t)
     events(t+TPF);
 }
 
-static inline
 void gfx_quit(void)
 {
     SDL_DestroyRenderer(gfx.renderer);
@@ -596,7 +539,6 @@ void gfx_quit(void)
     SDL_Quit();
 }
 
-static inline
 void gfx_init(void)
 {
     if(SDL_Init(SDL_INIT_VIDEO)<0){
