@@ -221,23 +221,14 @@ uint frameStart(void);
 void frameEnd(const uint t);
 
 // Text.h
-static inline
 Img* textImg(const char *text);
-static inline
 Texture* textTexture(const char *text);
-static inline
 Length drawText(const char *text, const int x, const int y);
-static inline
 Coord drawTextCoord(const char *text, const Coord pos);
-static inline
 Length drawTextCentered(const char *text, const int x, const int y);
-static inline
 Length drawTextCenteredCoord(const char *text, const Coord pos);
-static inline
 Length getTextLength(const char *text);
-static inline
 int getTextXLen(const char *text);
-static inline
 int getTextYLen(const char *text);
 bool strEndsWith(const char *str, const char *end);
 Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, const uint num);

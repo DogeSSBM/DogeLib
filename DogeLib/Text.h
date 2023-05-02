@@ -1,4 +1,4 @@
-        #ifndef TEXT_H
+#ifndef TEXT_H
 #define TEXT_H
 
 bool strEndsWith(const char *str, const char *end)
@@ -13,19 +13,16 @@ bool strEndsWith(const char *str, const char *end)
     return true;
 }
 
-static inline
 Img* textImg(const char *text)
 {
     return TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
 }
 
-static inline
 Texture* textTexture(const char *text)
 {
     return imgTexture(textImg(text));
 }
 
-static inline
 Length drawText(const char *text, const int x, const int y)
 {
     Texture *t = textTexture(text);
@@ -35,13 +32,11 @@ Length drawText(const char *text, const int x, const int y)
     return iC(r.w, r.h);
 }
 
-static inline
 Length drawTextCoord(const char *text, const Coord pos)
 {
     return drawText(text, pos.x, pos.y);
 }
 
-static inline
 Length drawTextCentered(const char *text, const int x, const int y)
 {
     Texture *t = textTexture(text);
@@ -50,13 +45,11 @@ Length drawTextCentered(const char *text, const int x, const int y)
     return len;
 }
 
-static inline
 Length drawTextCenteredCoord(const char *text, const Coord pos)
 {
     return drawTextCentered(text, pos.x, pos.y);
 }
 
-static inline
 Length getTextLength(const char *text)
 {
     Length len = {0};
@@ -64,7 +57,6 @@ Length getTextLength(const char *text)
     return len;
 }
 
-static inline
 int getTextXLen(const char *text)
 {
     Length len = {0};
@@ -72,7 +64,6 @@ int getTextXLen(const char *text)
     return len.x;
 }
 
-static inline
 int getTextYLen(const char *text)
 {
     Length len = {0};
