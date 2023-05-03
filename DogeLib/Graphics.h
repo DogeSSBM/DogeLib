@@ -13,6 +13,7 @@ struct{
     Color defaultColor;
     Length restoreLen;
     Length prvLen;
+    Length winLen;
     bool outlined;
     u32 winFlags;
 }gfx = {0};
@@ -46,7 +47,7 @@ Length getWindowLen(void)
 
 bool windowResized(void)
 {
-    return !coordSame(gfx.prvLen, getWindowLen());
+    return !coordSame(gfx.prvLen, gfx.winLen);
 }
 
 Length getWindowMid(void)

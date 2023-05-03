@@ -8,6 +8,7 @@ void events(const uint endOfFrame)
     mouse.wheel = (const Coord){.x = 0, .y = 0};
     bool e = false;
     gfx.winFlags = SDL_GetWindowFlags(gfx.window);
+    gfx.prvLen = gfx.winLen;
     do{
         Event event;
         if(ticksLeft > 0)
@@ -25,16 +26,16 @@ void events(const uint endOfFrame)
                 mouse.wheel.x += event.wheel.x;
                 mouse.wheel.y += event.wheel.y;
                 break;
-            case SDL_WINDOWEVENT_SIZE_CHANGED:
-            case SDL_WINDOWEVENT:
-                gfx.prvLen = getWindowLen();
-                break;
+            // case SDL_WINDOWEVENT_SIZE_CHANGED:
+            // case SDL_WINDOWEVENT:
+                // break;
             default:
                 break;
             }
         }
         ticksLeft = imax(0, endOfFrame - getTicks());
     }while(ticksLeft > 0 || e);
+    gfx.winLen = getWindowLen();
     memcpy(keys.prev, keys.key, SDL_NUM_SCANCODES);
     memcpy(keys.key, SDL_GetKeyboardState(NULL), SDL_NUM_SCANCODES);
     mouse.prev.state = mouse.state;
