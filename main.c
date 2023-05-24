@@ -88,7 +88,8 @@ int main(int argc, char const *argv[])
                 drawCircleCoord(coordAddi(pos, scale/2), scale/2);
                 drawTextureCoordResize((x&1)^(y&1) ? borko : doggo, pos, iC(scale,scale));
                 setColor(PINK);
-                fillBorderCoordSquare(pos, scale, -1);
+                // fillBorderCoordSquare(pos, scale, -1);
+                drawSquareCoord(pos, scale);
             }
         }
 

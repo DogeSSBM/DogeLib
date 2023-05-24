@@ -257,18 +257,22 @@ void fillRectRect(const Rect rect)
 
 void drawSquareCoord(const Coord pos, const uint len)
 {
-    SDL_RenderDrawRect(
-        gfx.renderer,
-        &(const Rect){.x = pos.x, .y = pos.y, .w = len, .h = len}
-    );
+    SDL_RenderDrawLine(gfx.renderer, pos.x, pos.y, pos.x+len, pos.y);
+    SDL_RenderDrawLine(gfx.renderer, pos.x, pos.y, pos.x, pos.y+len);
+    SDL_RenderDrawLine(gfx.renderer, pos.x+len-1, pos.y, pos.x+len-1, pos.y+len);
+    SDL_RenderDrawLine(gfx.renderer, pos.x, pos.y+len-1, pos.x+len, pos.y+len-1);
+    // SDL_RenderDrawRect(
+    //     gfx.renderer,
+    //     &(const Rect){.x = pos.x, .y = pos.y, .w = len, .h = len}
+    // );
 }
 
 void drawSquare(const uint x, const uint y, const uint len)
 {
-    SDL_RenderDrawRect(
-        gfx.renderer,
-        &(const Rect){.x = x, .y = y, .w = len, .h = len}
-    );
+    SDL_RenderDrawLine(gfx.renderer, x, y, x+len, y);
+    SDL_RenderDrawLine(gfx.renderer, x, y, x, y+len);
+    SDL_RenderDrawLine(gfx.renderer, x+len-1, y, x+len-1, y+len);
+    SDL_RenderDrawLine(gfx.renderer, x, y+len-1, x+len, y+len-1);
 }
 
 void fillSquare(const uint x, const uint y, const uint len)
