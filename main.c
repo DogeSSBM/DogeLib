@@ -1,10 +1,8 @@
 #include "DogeLib/Includes.h"
 
-int main(int argc, char const *argv[])
+int main(void)
 {
-    (void)argc; (void)argv;
     init();
-    // maximizeWindow();
 
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
@@ -24,9 +22,6 @@ int main(int argc, char const *argv[])
     uint wposi = 0;
     Coord wpos = {0};
     winSetPosCoord(wpos);
-
-    bool grabbed = false;
-
     while(1){
         const uint t = frameStart();
 
@@ -37,12 +32,6 @@ int main(int argc, char const *argv[])
             freeTexture(doggo);
             freeTexture(borko);
             return 0;
-        }
-
-        if(keyPressed(SDL_SCANCODE_GRAVE)){
-            grabbed = !grabbed;
-            printf("%s\n", grabbed ? "grabbed" : "not grabbed");
-            winSetGrab(grabbed);
         }
 
         if(keyPressed(SDL_SCANCODE_RETURN)){
@@ -88,7 +77,6 @@ int main(int argc, char const *argv[])
                 drawCircleCoord(coordAddi(pos, scale/2), scale/2);
                 drawTextureCoordResize((x&1)^(y&1) ? borko : doggo, pos, iC(scale,scale));
                 setColor(PINK);
-                // fillBorderCoordSquare(pos, scale, -1);
                 drawSquareCoord(pos, scale);
             }
         }

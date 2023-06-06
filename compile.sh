@@ -1,5 +1,8 @@
 #!/bin/sh
 clear
+set -ex
+output="main.out"
 libraries="-lm -lSDL2 -lSDL2_ttf -lSDL2_gfx -lSDL2_image"
-flags="-Wall -Wextra -Wpedantic -g"
-gcc main.c -std=c11 $flags $libraries -o main.out
+flags="-std=c11 -Wall -Wextra -Wpedantic -Werror -g"
+# flags="-std=c11 -Wall -Wextra -Wpedantic -Werror -Ofast"
+gcc main.c  $flags $libraries -o $output
