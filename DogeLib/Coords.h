@@ -101,9 +101,16 @@ bool coordInRange(const Coord coord, const Range range)
     return inRange(coord.x, range) && inRange(coord.y, range);
 }
 
+// Clamps both x and y component of coord to >= 0 and < their respective component in len
 Coord coordClampLen(const Coord coord, const Length len)
 {
     return (const Coord){.x = clamp(coord.x, 0, len.x), .y = clamp(coord.y, 0, len.y)};
+}
+
+// Returns true if the x and y component of coord are >= 0 and < their respective component in len
+bool coordInLen(const Coord coord, const Length len)
+{
+    return coord.x >= 0 && coord.x < len.x && coord.y >= 0 && coord.y < len.y;
 }
 
 // Returns true if each part of pos1 is less than their counterpart in pos2
