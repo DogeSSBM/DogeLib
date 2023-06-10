@@ -2,6 +2,8 @@
 
 typedef FILE                File;
 typedef time_t              Time;
+typedef size_t              st;
+typedef ptrdiff_t           dt;
 
 typedef long int            lint;
 typedef unsigned char       uchar;
