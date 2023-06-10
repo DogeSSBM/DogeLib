@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_H
-#define GRAPHICS_H
+#ifndef DOGELIB_GRAPHICS_H
+#define DOGELIB_GRAPHICS_H
 
 #define DEFAULT_WINDOW_XLEN    800
 #define DEFAULT_WINDOW_YLEN    600
@@ -578,4 +578,4 @@ void gfx_init(void)
     clear();
 }
 
-#endif /* end of include guard: GRAPHICS_H */
+#endif /* end of include guard: DOGELIB_GRAPHICS_H */

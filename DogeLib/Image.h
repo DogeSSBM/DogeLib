@@ -1,5 +1,5 @@
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef DOGELIB_IMAGE_H
+#define DOGELIB_IMAGE_H
 
 void img_quit(void)
 {
@@ -174,4 +174,4 @@ Length drawTextureCenteredCoordResize(Texture *texture, const Coord pos, const L
     return drawTextureCenteredResize(texture, pos.x, pos.y, len.x, len.y);
 }
 
-#endif /* end of include guard: IMAGE_H */
+#endif /* end of include guard: DOGELIB_IMAGE_H */

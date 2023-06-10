@@ -1,5 +1,5 @@
-#ifndef INPUT_H
-#define INPUT_H
+#ifndef DOGELIB_INPUT_H
+#define DOGELIB_INPUT_H
 
 struct{
     u8 key[SDL_NUM_SCANCODES];
@@ -105,4 +105,4 @@ void input_init(void)
     mouse.prev.pos = coordDivi(getWindowLen(), 2);
 }
 
-#endif /* end of include guard: INPUT_H */
+#endif /* end of include guard: DOGELIB_INPUT_H */

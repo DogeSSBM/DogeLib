@@ -1,5 +1,5 @@
-#ifndef TIMING_H
-#define TIMING_H
+#ifndef DOGELIB_TIMING_H
+#define DOGELIB_TIMING_H
 
 #define TPS		1000
 #define FPS		60
@@ -23,4 +23,4 @@ uint getTimeIn(const uint sec)
 	return TPS*sec+getTicks();
 }
 
-#endif /* end of include guard: TIMING_H */
+#endif /* end of include guard: DOGELIB_TIMING_H */

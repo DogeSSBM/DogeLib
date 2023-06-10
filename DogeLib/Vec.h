@@ -1,5 +1,5 @@
-#ifndef VEC_H
-#define VEC_H
+#ifndef DOGELIB_VEC_H
+#define DOGELIB_VEC_H
 
 float cfToRad(const Coordf coord)
 {
@@ -180,4 +180,4 @@ Coordf cfRotateDeg(const Coordf vec, const float d)
     return cfRotateRad(vec, degToRad(d));
 }
 
-#endif /* end of include guard: VEC_H */
+#endif /* end of include guard: DOGELIB_VEC_H */

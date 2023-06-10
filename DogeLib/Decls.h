@@ -1,5 +1,5 @@
-#ifndef DECLS_H
-#define DECLS_H
+#ifndef DOGELIB_DECLS_H
+#define DOGELIB_DECLS_H
 
 // Coords.h
 Direction dirROR(const Direction dir);
@@ -331,4 +331,4 @@ Coord getDisplayIndexOffset(const uint i);
 uint getDisplayNum(void);
 Length getDisplayTotalLen(void);
 
-#endif /* end of include guard: DECLS_H */
+#endif /* end of include guard: DOGELIB_DECLS_H */

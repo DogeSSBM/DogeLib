@@ -1,5 +1,5 @@
-#ifndef PANIC_H
-#define PANIC_H
+#ifndef DOGELIB_PANIC_H
+#define DOGELIB_PANIC_H
 
 void panic_helper(const char *func, const char *file, const int line, const char * format, ...)
 {
@@ -97,4 +97,4 @@ void assertLogExprMsgHelper(const char *func, const char *file, const int line, 
 }
 #define assertLogExprMsg(expr, ...) assertLogExprMsgHelper(__func__, __FILE__, __LINE__, expr, #expr, __VA_ARGS__)
 
-#endif /* end of include guard: PANIC_H */
+#endif /* end of include guard: DOGELIB_PANIC_H */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOGELIB_TYPES_H
+#define DOGELIB_TYPES_H
 
 typedef FILE                File;
 typedef time_t              Time;
@@ -221,3 +222,5 @@ float uboundf(const float n, const float u)
 {
     return n>u?u:n;
 }
+
+#endif /* end of include guard: DOGELIB_TYPES_H */

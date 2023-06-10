@@ -1,5 +1,5 @@
-#ifndef COORDS_H
-#define COORDS_H
+#ifndef DOGELIB_COORDS_H
+#define DOGELIB_COORDS_H
 
 Direction dirROR(const Direction dir)
 {
@@ -301,4 +301,4 @@ Rect rectOffset(const Rect rect, const Offset off)
     return (Rect){.x = pos.x, .y = pos.y, .w = rect.w, .h = rect.h};
 }
 
-#endif /* end of include guard: COORDS_H */
+#endif /* end of include guard: DOGELIB_COORDS_H */

@@ -1,5 +1,5 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef DOGELIB_WINDOW_H
+#define DOGELIB_WINDOW_H
 
 void winSetPos(const int x, const int y)
 {
@@ -31,4 +31,4 @@ bool winIsGrabbed(void)
     return SDL_GetWindowGrab(gfx.window);
 }
 
-#endif /* end of include guard: WINDOW_H */
+#endif /* end of include guard: DOGELIB_WINDOW_H */

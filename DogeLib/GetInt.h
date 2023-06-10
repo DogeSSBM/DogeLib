@@ -1,5 +1,5 @@
-#ifndef GETINT_H
-#define GETINT_H
+#ifndef DOGELIB_GETINT_H
+#define DOGELIB_GETINT_H
 
 int strToInt(const char *str)
 {
@@ -27,7 +27,7 @@ uint digits(int n)
 
 //  123
 // ""
-// 
+//
 // char* intToStr(int n, char *str)
 // {
 //     if(!str)
@@ -87,4 +87,4 @@ int getInt(void)
     return strToInt(buffer);
 }
 
-#endif /* end of include guard: GETINT_H */
+#endif /* end of include guard: DOGELIB_GETINT_H */
