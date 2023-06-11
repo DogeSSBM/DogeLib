@@ -73,7 +73,6 @@ void logExprHelper(const char *func, const char *file, const int line, const cha
 }
 #define logExpr(format, ...)  logExprHelper(__func__, __FILE__, __LINE__, format, #__VA_ARGS__, __VA_ARGS__)
 
-
 void assertExprMsgHelper(const char *func, const char *file, const int line, const bool val, const char *expr, const char *format, ...)
 {
     if(!val){
