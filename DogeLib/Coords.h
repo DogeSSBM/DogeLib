@@ -156,6 +156,11 @@ Coord coordInv(const Coord coord)
     return (const Coord){.x = -coord.x, .y = -coord.y};
 }
 
+Coord coordAbs(const Coord coord)
+{
+    return (const Coord){.x = iabs(coord.x), .y = iabs(coord.y)};
+}
+
 Coord coordAddi(const Coord coord1, const int num)
 {
     return (const Coord){.x = coord1.x+num, .y = coord1.y+num};

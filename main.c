@@ -2,6 +2,7 @@
 
 int main(void)
 {
+    logExpr("%i, %i", ipow(2, 2), ipow(3, 3));
     init();
 
     Texture *doggo = loadTexture("./Doggo16x16.png");

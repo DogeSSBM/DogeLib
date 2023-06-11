@@ -163,6 +163,16 @@ int iabs(const int i)
     return i > 0 ? i : -i;
 }
 
+int ipow(int num, int pow)
+{
+    assertExpr(pow >= 0);
+    if(pow == 0)
+        return 1;
+    while(--pow)
+        num *= num;
+    return num;
+}
+
 int posSign(const int n)
 {
     return n > 0 ? n : -n;

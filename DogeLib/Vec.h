@@ -41,6 +41,16 @@ Coord CfC(const Coordf coordf)
     return (const Coord){.x = (int)coordf.x, .y = (int)coordf.y};
 }
 
+float cfMax(const Coordf pos)
+{
+    return pos.x>pos.y?pos.x:pos.y;
+}
+
+float cfMin(const Coordf pos)
+{
+    return pos.x<pos.y?pos.x:pos.y;
+}
+
 float fclamp(const float n, const float min, const float max)
 {
     if(n < min)
