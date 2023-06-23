@@ -2,9 +2,8 @@
 
 int main(void)
 {
-    logExpr("%i, %i", ipow(2, 2), ipow(3, 3));
     init();
-
+    
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
     const Scancode keydir[4] = {
@@ -19,7 +18,6 @@ int main(void)
     uint scale = coordMin(coordDiv((window = getWindowLen()), len));
     setTextColor(GREEN);
     Texture *nametag = NULL;
-
     uint wposi = 0;
     Coord wpos = {0};
     winSetPosCoord(wpos);

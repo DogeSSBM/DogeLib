@@ -66,6 +66,11 @@ bool coordSame(const Coord pos1, const Coord pos2)
     return pos1.x == pos2.x && pos1.y == pos2.y;
 }
 
+Coord coordAbs(const Coord pos)
+{
+    return (const Coord){.x=pos.x<0?-pos.x:pos.x, .y=pos.y<0?-pos.y:pos.y};
+}
+
 int clamp(const int n, const int min, const int max)
 {
     if(n < min)
@@ -154,11 +159,6 @@ Coord CoordMul(const Coord coord1, const Coord coord2)
 Coord coordInv(const Coord coord)
 {
     return (const Coord){.x = -coord.x, .y = -coord.y};
-}
-
-Coord coordAbs(const Coord coord)
-{
-    return (const Coord){.x = iabs(coord.x), .y = iabs(coord.y)};
 }
 
 Coord coordAddi(const Coord coord1, const int num)

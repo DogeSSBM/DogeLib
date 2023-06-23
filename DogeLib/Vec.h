@@ -41,12 +41,12 @@ Coord CfC(const Coordf coordf)
     return (const Coord){.x = (int)coordf.x, .y = (int)coordf.y};
 }
 
-float cfMax(const Coordf pos)
+float cfMost(const Coordf pos)
 {
     return pos.x>pos.y?pos.x:pos.y;
 }
 
-float cfMin(const Coordf pos)
+float cfLeast(const Coordf pos)
 {
     return pos.x<pos.y?pos.x:pos.y;
 }
@@ -143,6 +143,46 @@ Coordf cfAbs(const Coordf coord)
 {
     return (const Coordf){.x = fabs(coord.x), .y = fabs(coord.y)};
 }
+
+float cfMax(const Coordf pos)
+{
+    return fmost(pos.x, pos.y);
+}
+
+bool cfSame(const Coordf a, const Coordf b)
+{
+    return a.x == b.x && a.y == b.y;
+}
+
+Coordf cfMod(const Coordf pos, const float mod)
+{
+    return (const Coordf){
+        .x = fmod(pos.x, mod),
+        .y = fmod(pos.y, mod)
+    };
+}
+
+Coordf cfSub(const Coordf a, const Coordf b)
+{
+    return (const Coordf){
+        .x = a.x-b.x,
+        .y = a.y-b.y
+    };
+}
+
+Coordf cfAddf(const Coordf pos, const float f)
+{
+    return (const Coordf){
+        .x=pos.x+f,
+        .y=pos.y+f
+    };
+}
+
+Coordf cfSnap(const Coordf pos, const float scale)
+{
+    return cfSub(pos, cfMod(pos, scale));
+}
+
 
 float cfCfToRad(const Coordf pos1, const Coordf pos2)
 {

@@ -144,6 +144,11 @@ typedef union{
     };
 }Coordf, Vectorf, Rangef, Lengthf, Offsetf;
 
+Coordf fC(const float x, const float y)
+{
+    return (const Coordf){.x=x, .y=y};
+}
+
 typedef enum{DIR_U = 0, DIR_R, DIR_D, DIR_L}Direction;
 
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
@@ -171,6 +176,11 @@ int ipow(int num, int pow)
     while(--pow)
         num *= num;
     return num;
+}
+
+float fmost(const float a, const float b)
+{
+    return a > b ? a : b;
 }
 
 int posSign(const int n)
