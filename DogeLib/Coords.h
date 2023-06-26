@@ -171,16 +171,6 @@ Coord coordSub(const Coord coord1, const Coord coord2)
     return (const Offset){.x = coord1.x-coord2.x, .y = coord1.y-coord2.y};
 }
 
-float coordfDist(const Coordf coord1, const Coordf coord2)
-{
-    return sqrtf(powf(coord2.x-coord1.x,2.0f)+powf(coord2.y-coord1.y,2.0f));
-}
-
-Coordf coordfDiv(const Coordf coord, const float num)
-{
-    return (const Coordf){.x = coord.x/num, .y = coord.y/num};
-}
-
 Coord coordMod(const Coord coord1, const Coord coord2)
 {
     return (const Coord){.x = coord1.x%coord2.x, .y = coord1.y%coord2.y};
@@ -189,11 +179,6 @@ Coord coordMod(const Coord coord1, const Coord coord2)
 Coord coordModi(const Coord coord, const int num)
 {
     return (const Coord){.x = coord.x%num, .y = coord.y%num};
-}
-
-Coordf coordfNormalize(const Coordf coord)
-{
-    return coordfDiv(coord, coordfDist((const Coordf){.x = 0.0f, .y = 0.0f}, coord));
 }
 
 Coord coordMid(const Coord coord1, const Coord coord2)
@@ -247,11 +232,6 @@ Coord coordShift(const Coord coord, const Direction dir, const int units)
 Coord coordAdd(const Coord coord, const Offset off)
 {
     return (const Coord){.x = coord.x+off.x, .y = coord.y+off.y};
-}
-
-Coordf cfAdd(const Coordf coord, const Offsetf off)
-{
-    return (Coordf){.x = coord.x+off.x, .y = coord.y+off.y};
 }
 
 // offsets the coord by 1/2 the length

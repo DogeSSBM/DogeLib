@@ -25,21 +25,6 @@ uint digits(int n)
     return d;
 }
 
-//  123
-// ""
-//
-// char* intToStr(int n, char *str)
-// {
-//     if(!str)
-//         panic("Cannot store int into a NULL str!");
-//     const uint l = strlen(str);
-//     const uint d = digits(n);
-//     for(int i = 0; n; i++){
-//
-//     }
-//     return n;
-// }
-
 int shiftR(const int num)
 {
     return num / 10;

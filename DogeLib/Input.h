@@ -99,10 +99,72 @@ Length mouseMovement(void)
     return coordSub(mouse.pos, mouse.prev.pos);
 }
 
+bool keyCtrlState(void)
+{
+    return keyState(SDL_SCANCODE_LCTRL) || keyState(SDL_SCANCODE_RCTRL);
+}
+
+bool keyShiftState(void)
+{
+    return keyState(SDL_SCANCODE_LSHIFT) || keyState(SDL_SCANCODE_RSHIFT);
+}
+
+bool keyComboPressed(const Scancode modkey, const Scancode key)
+{
+    return keyPressed(key) && keyState(modkey);
+}
+
+bool checkCtrlKey(const Scancode key)
+{
+    return keyPressed(key) && keyCtrlState();
+}
+
 void input_init(void)
 {
     mouse.pos = coordDivi(getWindowLen(), 2);
     mouse.prev.pos = coordDivi(getWindowLen(), 2);
+}
+
+Offset wasdKeyStateOffset(void)
+{
+    return (const Offset){
+        .x = keyState(SDL_SCANCODE_D) - keyState(SDL_SCANCODE_A),
+        .y = keyState(SDL_SCANCODE_S) - keyState(SDL_SCANCODE_W)
+    };
+}
+
+Offset arrowKeyStateOffset(void)
+{
+    return (const Offset){
+        .x = keyState(SDL_SCANCODE_RIGHT) - keyState(SDL_SCANCODE_LEFT),
+        .y = keyState(SDL_SCANCODE_DOWN) - keyState(SDL_SCANCODE_UP)
+    };
+}
+
+Offset dirKeyStateOffset(void)
+{
+    return coordLeast(coordAdd(wasdKeyStateOffset(), arrowKeyStateOffset()), iC(1,1));
+}
+
+Offset wasdKeyPressedOffset(void)
+{
+    return (const Offset){
+        .x = keyPressed(SDL_SCANCODE_D) - keyPressed(SDL_SCANCODE_A),
+        .y = keyPressed(SDL_SCANCODE_S) - keyPressed(SDL_SCANCODE_W)
+    };
+}
+
+Offset arrowKeyPressedOffset(void)
+{
+    return (const Offset){
+        .x = keyPressed(SDL_SCANCODE_RIGHT) - keyPressed(SDL_SCANCODE_LEFT),
+        .y = keyPressed(SDL_SCANCODE_DOWN) - keyPressed(SDL_SCANCODE_UP)
+    };
+}
+
+Offset dirKeyPressedOffset(void)
+{
+    return coordLeast(coordAdd(wasdKeyPressedOffset(), arrowKeyPressedOffset()), iC(1,1));
 }
 
 #endif /* end of include guard: DOGELIB_INPUT_H */

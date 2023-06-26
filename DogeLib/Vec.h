@@ -75,6 +75,11 @@ float fwrap(const float n, const float min, const float max)
     return n;
 }
 
+Coordf cfAdd(const Coordf coord, const Offsetf off)
+{
+    return (Coordf){.x = coord.x+off.x, .y = coord.y+off.y};
+}
+
 Coordf cfMul(const Coordf coord1, const Coordf coord2)
 {
     return (Coordf){.x = coord1.x*coord2.x, .y = coord1.y*coord2.y};
@@ -183,7 +188,6 @@ Coordf cfSnap(const Coordf pos, const float scale)
     return cfSub(pos, cfMod(pos, scale));
 }
 
-
 float cfCfToRad(const Coordf pos1, const Coordf pos2)
 {
     return cfToRad(cfTranslate(pos2, cfNeg(pos1)));
@@ -228,6 +232,27 @@ Coordf cfRotateRad(const Coordf vec, const float n)
 Coordf cfRotateDeg(const Coordf vec, const float d)
 {
     return cfRotateRad(vec, degToRad(d));
+}
+
+bool lineIntersection(const Coordf p0, const Coordf p1, const Coordf p2, const Coordf p3, Coordf *at)
+{
+    const Coordf s1 = {.x = p1.x - p0.x, .y = p1.y - p0.y};
+    const Coordf s2 = {.x = p3.x - p2.x, .y = p3.y - p2.y};
+
+
+    const float d = -s2.x * s1.y + s1.x * s2.y;
+
+    const float s = d!=0 ? (-s1.y * (p0.x - p2.x) + s1.x * (p0.y - p2.y)) / d : 1000000.0f;
+    const float t = d!=0 ? ( s2.x * (p0.y - p2.y) - s2.y * (p0.x - p2.x)) / d : 1000000.0f;
+
+    if (s >= 0 && s <= 1 && t >= 0 && t <= 1){
+        if(at){
+            at->x = p0.x + (t * s1.x);
+            at->y = p0.y + (t * s1.y);
+        }
+        return true;
+    }
+    return false;
 }
 
 #endif /* end of include guard: DOGELIB_VEC_H */

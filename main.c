@@ -3,62 +3,27 @@
 int main(void)
 {
     init();
-    
+
     Texture *doggo = loadTexture("./Doggo16x16.png");
     Texture *borko = loadTexture("./Borko16x16.png");
-    const Scancode keydir[4] = {
-        SDL_SCANCODE_UP,
-        SDL_SCANCODE_RIGHT,
-        SDL_SCANCODE_DOWN,
-        SDL_SCANCODE_LEFT,
-    };
     Length window = {0};
     Length len = {.x=8,.y=6};
     Coord origin = {0};
     uint scale = coordMin(coordDiv((window = getWindowLen()), len));
     setTextColor(GREEN);
     Texture *nametag = NULL;
-    uint wposi = 0;
-    Coord wpos = {0};
-    winSetPosCoord(wpos);
+
     while(1){
         const uint t = frameStart();
 
-        if(
-            keyPressed(SDL_SCANCODE_ESCAPE) ||
-            (keyState(SDL_SCANCODE_LCTRL) && keyPressed(SDL_SCANCODE_Q))
-        ){
+        if(keyPressed(SDL_SCANCODE_ESCAPE) || (keyState(SDL_SCANCODE_LCTRL) && keyPressed(SDL_SCANCODE_Q))){
             freeTexture(doggo);
             freeTexture(borko);
             return 0;
         }
 
-        if(keyPressed(SDL_SCANCODE_RETURN)){
-            wposi = (wposi+1)%4;
-            const Length wlen = getWindowLen();
-            const Length dlen = getWinDisplayLen();
-            if(wposi == 0 || wposi == 3)
-                wpos.x = 0;
-            if(wposi == 1 || wposi == 2)
-                wpos.x = dlen.x-wlen.x;
-            if(wposi <= 1)
-                wpos.y = 0;
-            if(wposi > 1)
-                wpos.y = dlen.y-wlen.y;
-
-            winSetPosCoord(wpos);
-        }
-
         if(mouseBtnState(MOUSE_L) || mouseBtnState(MOUSE_R))
             origin = coordAdd(origin, mouseMovement());
-
-        if(keyPressed(SDL_SCANCODE_SPACE)){
-            origin = (const Coord){0};
-            scale = coordMin(coordDiv((window = getWindowLen()), len));
-        }
-        for(Direction d = 0; d < 4; d++)
-            if(keyPressed(keydir[d]))
-                len = coordMost(iC(1,1), coordShift(len, d, 1));
 
         const int change = mouseScrolledY();
         if(change || !nametag){
@@ -67,6 +32,16 @@ int main(void)
             setTextSize(scale/5);
             nametag = textTexture("Doggo");
         }
+
+        if(keyPressed(SDL_SCANCODE_SPACE)){
+            origin = (const Coord){0};
+            scale = coordMin(coordDiv((window = getWindowLen()), len));
+            freeTexture(nametag);
+            setTextSize(scale/5);
+            nametag = textTexture("Doggo");
+        }
+
+        len = coordMost(iC(1,1), coordAdd(len, dirKeyPressedOffset()));
 
         for(int x = 0; x < len.x; x++){
             for(int y = 0; y < len.y; y++){
