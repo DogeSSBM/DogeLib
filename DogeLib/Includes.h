@@ -21,6 +21,7 @@
 
 #include "Panic.h"
 #include "Types.h"
+#include "Scancodes.h"
 #include "Decls.h"
 #include "Coords.h"
 #include "Vec.h"

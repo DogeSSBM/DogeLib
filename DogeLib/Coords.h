@@ -61,6 +61,16 @@ Coord coordMost(const Coord pos1, const Coord pos2)
     return (const Coord){.x = imax(pos1.x, pos2.x), .y = imax(pos1.y, pos2.y)};
 }
 
+Coord coordMaxi(const Coord pos, const int i)
+{
+    return (const Coord){.x=imax(pos.x, i), .y=imax(pos.y, i)};
+}
+
+Coord coordMini(const Coord pos, const int i)
+{
+    return (const Coord){.x=imin(pos.x, i), .y=imin(pos.y, i)};
+}
+
 bool coordSame(const Coord pos1, const Coord pos2)
 {
     return pos1.x == pos2.x && pos1.y == pos2.y;
@@ -244,6 +254,12 @@ Coord coordCenter(const Coord coord, const Length len)
 Coord coordUncenter(const Coord coord, const Length len)
 {
     return coordAdd(coord, coordDivi(len, -2));
+}
+
+// scales and offsets pos
+Coord coordOffScale(const Coord pos, const Offset off, const int scale)
+{
+    return coordAdd(coordMuli(pos, scale), off);
 }
 
 // returns rect at pos with length len

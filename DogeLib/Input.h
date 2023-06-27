@@ -101,12 +101,12 @@ Length mouseMovement(void)
 
 bool keyCtrlState(void)
 {
-    return keyState(SDL_SCANCODE_LCTRL) || keyState(SDL_SCANCODE_RCTRL);
+    return keyState(SC_LCTRL) || keyState(SC_RCTRL);
 }
 
 bool keyShiftState(void)
 {
-    return keyState(SDL_SCANCODE_LSHIFT) || keyState(SDL_SCANCODE_RSHIFT);
+    return keyState(SC_LSHIFT) || keyState(SC_RSHIFT);
 }
 
 bool keyComboPressed(const Scancode modkey, const Scancode key)
@@ -128,16 +128,16 @@ void input_init(void)
 Offset wasdKeyStateOffset(void)
 {
     return (const Offset){
-        .x = keyState(SDL_SCANCODE_D) - keyState(SDL_SCANCODE_A),
-        .y = keyState(SDL_SCANCODE_S) - keyState(SDL_SCANCODE_W)
+        .x = keyState(SC_D) - keyState(SC_A),
+        .y = keyState(SC_S) - keyState(SC_W)
     };
 }
 
 Offset arrowKeyStateOffset(void)
 {
     return (const Offset){
-        .x = keyState(SDL_SCANCODE_RIGHT) - keyState(SDL_SCANCODE_LEFT),
-        .y = keyState(SDL_SCANCODE_DOWN) - keyState(SDL_SCANCODE_UP)
+        .x = keyState(SC_RIGHT) - keyState(SC_LEFT),
+        .y = keyState(SC_DOWN) - keyState(SC_UP)
     };
 }
 
@@ -149,16 +149,16 @@ Offset dirKeyStateOffset(void)
 Offset wasdKeyPressedOffset(void)
 {
     return (const Offset){
-        .x = keyPressed(SDL_SCANCODE_D) - keyPressed(SDL_SCANCODE_A),
-        .y = keyPressed(SDL_SCANCODE_S) - keyPressed(SDL_SCANCODE_W)
+        .x = keyPressed(SC_D) - keyPressed(SC_A),
+        .y = keyPressed(SC_S) - keyPressed(SC_W)
     };
 }
 
 Offset arrowKeyPressedOffset(void)
 {
     return (const Offset){
-        .x = keyPressed(SDL_SCANCODE_RIGHT) - keyPressed(SDL_SCANCODE_LEFT),
-        .y = keyPressed(SDL_SCANCODE_DOWN) - keyPressed(SDL_SCANCODE_UP)
+        .x = keyPressed(SC_RIGHT) - keyPressed(SC_LEFT),
+        .y = keyPressed(SC_DOWN) - keyPressed(SC_UP)
     };
 }
 

@@ -101,6 +101,12 @@ Coord iC(const int x, const int y)
 }
 
 static inline
+Coord iiC(const int i)
+{
+    return (const Coord){.x = i, .y = i};
+}
+
+static inline
 Coord irC(const Rect rect)
 {
     return iC(rect.x, rect.y);
@@ -181,6 +187,11 @@ int ipow(int num, int pow)
 float fmost(const float a, const float b)
 {
     return a > b ? a : b;
+}
+
+float fleast(const float a, const float b)
+{
+    return a < b ? a : b;
 }
 
 int posSign(const int n)

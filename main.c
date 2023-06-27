@@ -4,19 +4,10 @@ int main(void)
 {
     init();
 
-    Texture *doggo = loadTexture("./Doggo16x16.png");
-    Texture *borko = loadTexture("./Borko16x16.png");
-    Length window = {0};
-    Length len = {.x=8,.y=6};
-    Coord origin = {0};
-    uint scale = coordMin(coordDiv((window = getWindowLen()), len));
-    setTextColor(GREEN);
-    Texture *nametag = NULL;
-
     while(1){
         const uint t = frameStart();
 
-        if(keyPressed(SDL_SCANCODE_ESCAPE) || (keyState(SDL_SCANCODE_LCTRL) && keyPressed(SDL_SCANCODE_Q))){
+        if(keyPressed(SC_ESCAPE) || checkCtrlKey(SC_Q)){
             freeTexture(doggo);
             freeTexture(borko);
             return 0;
@@ -26,30 +17,27 @@ int main(void)
             origin = coordAdd(origin, mouseMovement());
 
         const int change = mouseScrolledY();
-        if(change || !nametag){
-            scale = imax(1, scale + change);
+        if(keyPressed(SC_SPACE) || change || !nametag){
+            if(keyPressed(SC_SPACE))
+                origin = coordUncenter(
+                    getWindowMid(),
+                    coordMuli(len, (scale = coordMin(coordDiv((window = getWindowLen()), len))))
+                );
+            else
+                scale = imax(1, scale + change);
             freeTexture(nametag);
             setTextSize(scale/5);
             nametag = textTexture("Doggo");
         }
-
-        if(keyPressed(SDL_SCANCODE_SPACE)){
-            origin = (const Coord){0};
-            scale = coordMin(coordDiv((window = getWindowLen()), len));
-            freeTexture(nametag);
-            setTextSize(scale/5);
-            nametag = textTexture("Doggo");
-        }
-
-        len = coordMost(iC(1,1), coordAdd(len, dirKeyPressedOffset()));
+        len = coordMaxi(coordAdd(len, dirKeyPressedOffset()), 1);
 
         for(int x = 0; x < len.x; x++){
             for(int y = 0; y < len.y; y++){
-                const Coord pos = coordAdd(coordMuli((const Coord){.x=x,.y=y}, scale), origin);
+                const Coord pos = coordOffScale(iC(x,y), origin, scale);
                 drawTextureCoord(nametag, pos);
                 setColor(GREY1);
                 drawCircleCoord(coordAddi(pos, scale/2), scale/2);
-                drawTextureCoordResize((x&1)^(y&1) ? borko : doggo, pos, iC(scale,scale));
+                drawTextureCoordResize((x&1)^(y&1) ? borko : doggo, pos, iiC(scale));
                 setColor(PINK);
                 drawSquareCoord(pos, scale);
             }

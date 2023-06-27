@@ -41,14 +41,24 @@ Coord CfC(const Coordf coordf)
     return (const Coord){.x = (int)coordf.x, .y = (int)coordf.y};
 }
 
-float cfMost(const Coordf pos)
+Coordf cfMost(const Coordf pos1, const Coordf pos2)
 {
-    return pos.x>pos.y?pos.x:pos.y;
+    return (const Coordf){.x=fmost(pos1.x, pos2.x), .y=fmost(pos1.y, pos2.y)};
 }
 
-float cfLeast(const Coordf pos)
+Coordf cfLeast(const Coordf pos1, const Coordf pos2)
 {
-    return pos.x<pos.y?pos.x:pos.y;
+    return (const Coordf){.x=fleast(pos1.x, pos2.x), .y=fleast(pos1.y, pos2.y)};
+}
+
+Coordf cfMaxf(const Coordf pos, const float f)
+{
+    return (const Coordf){.x=fmost(pos.x, f), .y=fmost(pos.y, f)};
+}
+
+Coordf cfMinf(const Coordf pos, const float f)
+{
+    return (const Coordf){.x=fleast(pos.x, f), .y=fleast(pos.y, f)};
 }
 
 float fclamp(const float n, const float min, const float max)
@@ -152,6 +162,11 @@ Coordf cfAbs(const Coordf coord)
 float cfMax(const Coordf pos)
 {
     return fmost(pos.x, pos.y);
+}
+
+float cfMin(const Coordf pos)
+{
+    return fleast(pos.x, pos.y);
 }
 
 bool cfSame(const Coordf a, const Coordf b)
