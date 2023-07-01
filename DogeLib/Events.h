@@ -26,9 +26,6 @@ void events(const uint endOfFrame)
                 mouse.wheel.x += event.wheel.x;
                 mouse.wheel.y += event.wheel.y;
                 break;
-            // case SDL_WINDOWEVENT_SIZE_CHANGED:
-            // case SDL_WINDOWEVENT:
-                // break;
             default:
                 break;
             }

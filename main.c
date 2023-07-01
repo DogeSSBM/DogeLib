@@ -4,6 +4,15 @@ int main(void)
 {
     init();
 
+    Texture *doggo = loadTexture("./Doggo16x16.png");
+    Texture *borko = loadTexture("./Borko16x16.png");
+    Length window = getWindowLen();
+    Length len = {.x=8,.y=6};
+    Coord origin = {0};
+    uint scale = coordMin(coordDiv(window, len));
+    setTextColor(GREEN);
+    Texture *nametag = NULL;
+
     while(1){
         const uint t = frameStart();
 
