@@ -174,11 +174,19 @@ bool cfSame(const Coordf a, const Coordf b)
     return a.x == b.x && a.y == b.y;
 }
 
-Coordf cfMod(const Coordf pos, const float mod)
+Coordf cfModf(const Coordf pos, const float mod)
 {
     return (const Coordf){
         .x = fmod(pos.x, mod),
         .y = fmod(pos.y, mod)
+    };
+}
+
+Coordf cfMod(const Coordf a, const Coordf b)
+{
+    return (const Coordf){
+        .x = fmod(a.x, b.x),
+        .y = fmod(a.y, b.y)
     };
 }
 
@@ -200,7 +208,12 @@ Coordf cfAddf(const Coordf pos, const float f)
 
 Coordf cfSnap(const Coordf pos, const float scale)
 {
-    return cfSub(pos, cfMod(pos, scale));
+    return cfSub(pos, cfModf(pos, scale));
+}
+
+Coordf cfSnapMid(const Coordf pos, const float scale)
+{
+    return cfSnap(cfAddf(pos, scale/2), scale);
 }
 
 float cfCfToRad(const Coordf pos1, const Coordf pos2)
