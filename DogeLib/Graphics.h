@@ -345,9 +345,11 @@ void fillCircleCoord(const Coord pos, const int radius)
 void drawLineThick(const int x1, const int y1, const int x2, const int y2, const int r)
 {
     drawLine(x1, y1, x2, y2);
-    fillCircle(x1, y1, r);
-    fillCircle(x2, y2, r);
-    for(int i = 0; i <= r+1; i++)
+    if(r > 1){
+        fillCircle(x1, y1, r-1);
+        fillCircle(x2, y2, r-1);
+    }
+    for(int i = 0; i <= r; i++)
         for(Direction d = 0; d < 4; d++)
             drawLineCoords(
                 coordShift((const Coord){.x = x1, .y = y1}, d, i),
@@ -358,9 +360,11 @@ void drawLineThick(const int x1, const int y1, const int x2, const int y2, const
 void drawLineThickCoords(const Coord a, const Coord b, const int r)
 {
     drawLineCoords(a, b);
-    fillCircleCoord(a, r);
-    fillCircleCoord(b, r);
-    for(int i = 0; i <= r+1; i++)
+    if(r > 1){
+        fillCircleCoord(a, r-1);
+        fillCircleCoord(b, r-1);
+    }
+    for(int i = 0; i <= r; i++)
         for(Direction d = 0; d < 4; d++)
             drawLineCoords(
                 coordShift(a, d, i),
