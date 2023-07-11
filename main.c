@@ -9,9 +9,11 @@ int main(void)
     Length len = {.x=8,.y=6};
     uint scale = coordMin(coordDiv(window, len));
     Coord origin = coordUncenter(getWindowMid(), coordMuli(len, scale));
+    setColor(MAGENTA);
     setTextColor(GREEN);
     setTextSize(scale/5);
     Texture *nametag = textTexture("Doggo");
+    Coord mdown = {0};
 
     while(1){
         const uint t = frameStart();
@@ -23,8 +25,13 @@ int main(void)
             return 0;
         }
 
-        if(mouseBtnState(MOUSE_L) || mouseBtnState(MOUSE_R))
+        if(mouseBtnPressed(MOUSE_L) || mouseBtnPressed(MOUSE_R))
+            mdown = mouse.pos;
+
+        if(mouseBtnState(MOUSE_L) || mouseBtnState(MOUSE_R)){
             origin = coordAdd(origin, mouseMovement());
+            drawLineThickCoords(mdown, mouse.pos, 6);
+        }
 
         if(mouseScrolledY() || keyPressed(SC_SPACE)){
             if(keyPressed(SC_SPACE))
