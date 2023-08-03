@@ -262,6 +262,13 @@ Coord coordOffScale(const Coord pos, const Offset off, const int scale)
     return coordAdd(coordMuli(pos, scale), off);
 }
 
+// takes pos, gets its position in terms of percentage of oldLen side lengths
+// returns a new position offset by the same percentage of newLen's sides
+Coord resizeTransform(const Length oldLen, const Length newLen, const Coord pos)
+{
+    return CfC(cfMul(CCf(newLen), cfDiv(CCf(pos), CCf(oldLen))));
+}
+
 // returns rect at pos with length len
 Rect rectify(const Coord pos, const Length len)
 {

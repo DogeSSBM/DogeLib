@@ -6,6 +6,11 @@ struct{
     u8 prev[SDL_NUM_SCANCODES];
 }keys = {0};
 
+bool inputTypeState(const InputType in)
+{
+    return in == I_PRESSED || in == I_HELD;
+}
+
 bool keyState(const Scancode key)
 {
     return keys.key[key];
@@ -29,6 +34,17 @@ bool keyChanged(const Scancode key)
 bool keyReleased(const Scancode key)
 {
     return !keys.key[key] && keys.prev[key];
+}
+
+InputType keyInputType(const Scancode key)
+{
+    if(keyPressed(key))
+        return I_PRESSED;
+    if(keyReleased(key))
+        return I_RELEASED;
+    if(keyHeld(key))
+        return I_HELD;
+    return I_NOOP;
 }
 
 struct{
@@ -67,6 +83,17 @@ bool mouseBtnReleased(const u32 mouseBtn)
 bool mouseBtnChanged(const u32 mouseBtn)
 {
     return (mouse.state&mouseBtn) != (mouse.prev.state&mouseBtn);
+}
+
+InputType mouseBtnInputType(const u32 mouseBtn)
+{
+    if(mouseBtnPressed(mouseBtn))
+        return I_PRESSED;
+    if(mouseBtnReleased(mouseBtn))
+        return I_RELEASED;
+    if(mouseBtnHeld(mouseBtn))
+        return I_HELD;
+    return I_NOOP;
 }
 
 int mouseScrolledX(void)

@@ -68,6 +68,8 @@ typedef enum{
     WINDOWED = 0
 }WindowMode;
 
+typedef enum{I_PRESSED, I_RELEASED, I_HELD, I_NOOP}InputType;
+
 typedef union{
     int arr[2];
     struct{

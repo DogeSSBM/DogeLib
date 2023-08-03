@@ -533,7 +533,9 @@ void gfx_init(void)
     gfx.restoreLen.x = DEFAULT_WINDOW_XLEN;
     gfx.restoreLen.y = DEFAULT_WINDOW_YLEN;
     setWindowResizable(true);
+    gfx.winLen.x = DEFAULT_WINDOW_XLEN;
     gfx.prvLen.x = DEFAULT_WINDOW_XLEN;
+    gfx.winLen.y = DEFAULT_WINDOW_YLEN;
     gfx.prvLen.y = DEFAULT_WINDOW_YLEN;
 
     clear();

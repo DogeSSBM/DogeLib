@@ -216,6 +216,13 @@ Coordf cfSnapMid(const Coordf pos, const float scale)
     return cfSnap(cfAddf(pos, scale/2), scale);
 }
 
+// takes pos, gets its position in terms of percentage of oldLen
+// returns a new position offset by the same percentage of newLen's sides
+Coordf resizeTransformf(const Lengthf oldLen, const Lengthf newLen, const Coordf pos)
+{
+    return cfMul(newLen, cfDiv(pos, oldLen));
+}
+
 float cfCfToRad(const Coordf pos1, const Coordf pos2)
 {
     return cfToRad(cfTranslate(pos2, cfNeg(pos1)));

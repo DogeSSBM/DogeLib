@@ -18,7 +18,13 @@ bool getWindowResizable(void)
 
 void setWindowLen(const Length len)
 {
+    gfx.prvLen = gfx.winLen;
     SDL_SetWindowSize(gfx.window, len.x, len.y);
+}
+
+Length getWindowPrvLen(void)
+{
+    return gfx.prvLen;
 }
 
 Length getWindowLen(void)
@@ -61,11 +67,6 @@ Length restoreWindow(void)
     if(getWindowResizable())
     SDL_SetWindowSize(gfx.window, gfx.restoreLen.x, gfx.restoreLen.y);
     return gfx.restoreLen;
-}
-
-void setWindowSize(const uint x, const uint y)
-{
-    SDL_SetWindowSize(gfx.window, x, y);
 }
 
 void winSetPos(const int x, const int y)
