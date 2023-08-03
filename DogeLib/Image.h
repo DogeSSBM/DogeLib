@@ -24,10 +24,11 @@ void freeImg(Img *image)
         SDL_FreeSurface(image);
 }
 
-void freeTexture(Texture *t)
+Texture* textureFree(Texture *t)
 {
     if(t)
         SDL_DestroyTexture(t);
+    return NULL;
 }
 
 Img* loadImg(const char *imgFile)

@@ -10,6 +10,11 @@ u8* colorIndex(Color *c, const int i)
     return &(c->b);
 }
 
+bool colorSame(const Color a, const Color b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b;
+}
+
 const Color WHITE   = {0xFF, 0xFF, 0xFF, 0xFF};
 const Color PINK    = {0xFF, 0xC0, 0xCB, 0xFF};
 const Color CYAN    = {0x00, 0xFF, 0xFF, 0xFF};

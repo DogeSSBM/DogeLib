@@ -34,9 +34,9 @@ State initState(void)
 State updateState(State state)
 {
     if(keyPressed(SC_ESCAPE) || checkCtrlKey(SC_Q)){
-        freeTexture(state.doggo);
-        freeTexture(state.borko);
-        freeTexture(state.nametag);
+        textureFree(state.doggo);
+        textureFree(state.borko);
+        textureFree(state.nametag);
         exit(EXIT_SUCCESS);
     }
     state.lin = mouseBtnInputType(MOUSE_L);
@@ -56,7 +56,7 @@ State updateState(State state)
         );
     }
     if(reload){
-        freeTexture(state.nametag);
+        textureFree(state.nametag);
         setTextSize(state.scale/5);
         state.nametag = textTexture("Doggo");
     }
