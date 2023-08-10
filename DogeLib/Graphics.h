@@ -5,7 +5,7 @@
 #define DEFAULT_WINDOW_YLEN    600
 
 struct{
-    SDL_Window* window;
+    Window* window;
     SDL_Renderer* renderer;
     TTF_Font* font;
     uint fontSize;

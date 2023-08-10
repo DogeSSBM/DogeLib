@@ -99,4 +99,9 @@ bool winIsGrabbed(void)
     return SDL_GetWindowGrab(gfx.window);
 }
 
+Window* winGetFocused(void)
+{
+    return SDL_GetMouseFocus();
+}
+
 #endif /* end of include guard: DOGELIB_WINDOW_H */

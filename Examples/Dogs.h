@@ -73,7 +73,8 @@ void drawState(const State state)
             drawTextureCoordResize((x^y)&1 ? state.borko : state.doggo, pos, iiC(state.scale));
         }
     }
-    drawTextureCenteredCoordResize(state.doggo, mouse.pos, iC(state.lin?128:64, state.lin?128:64));
+    if(gfx.window == winGetFocused())
+        drawTextureCenteredCoordResize(state.doggo, mouse.pos, iC(inputTypeState(state.lin)?128:64, inputTypeState(state.rin)?128:64));
     if(inputTypeState(state.lin) || inputTypeState(state.rin))
         drawLineThickCoords(state.mdown, mouse.pos, 6);
 }
