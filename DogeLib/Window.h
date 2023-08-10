@@ -104,4 +104,9 @@ Window* winGetFocused(void)
     return SDL_GetMouseFocus();
 }
 
+bool winIsFocused(void)
+{
+    return winGetFocused() == gfx.window;
+}
+
 #endif /* end of include guard: DOGELIB_WINDOW_H */
