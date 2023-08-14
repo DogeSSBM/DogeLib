@@ -42,10 +42,10 @@ void events(const uint endOfFrame)
                 if(!itxt.it)
                     break;
                 assertExpr(event.text.text);
-                const uint textLen = strlen(event.text.text);
-                printf("(%u): %s\n", textLen, event.text.text);
+                const st textLen = strlen(event.text.text);
+                printf("(%zu): %s\n", textLen, event.text.text);
                 memcpy(itxt.it->buf+itxt.it->bufPos, event.text.text, textLen);
-                itxt.it->bufPos =+ textLen;
+                itxt.it->bufPos += textLen;
                 printf("text: %s\n", itxt.it->text);
                 break;
             case SDL_TEXTEDITING:
