@@ -31,6 +31,12 @@ void events(const uint endOfFrame)
                 mouse.wheel.x += event.wheel.x;
                 mouse.wheel.y += event.wheel.y;
                 break;
+            case SDL_KEYDOWN:
+                if(inTextIsEnabled() && event.key.keysym.sym == SC_BACKSPACE && itxt.it->textLen > 0){
+                    itxt.it->textLen--;
+                    itxt.it->text[itxt.it->textLen] = '\0';
+                }
+                break;
             case SDL_TEXTINPUT:
                 printf("SDL_TEXTINPUT\n");
                 if(!itxt.it)
