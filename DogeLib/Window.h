@@ -109,4 +109,16 @@ bool winIsFocused(void)
     return winGetFocused() == gfx.window;
 }
 
+float winGetOpacity(void)
+{
+    float value = 0.0f;
+    SDL_GetWindowOpacity(gfx.window, &value);
+    return value;
+}
+
+void winSetOpacity(const float value)
+{
+    SDL_SetWindowOpacity(gfx.window, value);
+}
+
 #endif /* end of include guard: DOGELIB_WINDOW_H */
