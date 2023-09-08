@@ -5,20 +5,22 @@ int example(void)
 {
     init();
 
-    Texture *txtr = loadTexture("./Doggo16x16.png");
-    Coord pos = getWindowMid();
-
-    printf("Yay!\n");
     while(1){
         const uint t = frameStart();
 
-        pos = coordAdd(pos, coordMuli(wasdKeyStateOffset(), coordMin(getWindowLen()) / 128));
-        drawTextureCenteredCoordResize(txtr, pos, iiC(coordMin(getWindowLen()) / 12));
+        const Coord middle = getWindowMid();
 
-        if(keyPressed(SC_ESCAPE) || checkCtrlKey(SC_Q)){
-            textureFree(txtr);
-            exit(EXIT_SUCCESS);
-        }
+        if(keyPressed(SC_ESCAPE))
+            return 0;
+
+        setColor(RED);
+        fillCircle(middle.x- 200, middle.y, 32);
+
+        setColor(BLUE);
+        fillCircle(middle.x+ 200, middle.y, 32);
+
+        setColor(WHITE);
+        fillCircleCoord(mouse.pos, 32);
 
         frameEnd(t);
     }
