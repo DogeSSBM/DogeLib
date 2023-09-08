@@ -1,7 +1,9 @@
 #include "DogeLib/Includes.h"
 // uncomment one of the below example files and call example() in the main function for a demonstration of DogeLib
 // #include "Examples/Dogs.h"
-#include "Examples/Barebones.h"
+// #include "Examples/Server.h"
+#include "Examples/Client.h"
+// #include "Examples/Barebones.h"
 // #include "Examples/TransparentWindow.h"
 // #include "Examples/TextInput.h"
 

@@ -2,13 +2,66 @@
 #define DOGELIB_INPUT_H
 
 struct{
+    bool textInputState;
+    bool textInputChange;
     u8 key[SDL_NUM_SCANCODES];
     u8 prev[SDL_NUM_SCANCODES];
+    char *textInput;
+    st textInputSize;
+    st textInputPos;
+    boolFunc textInputDone;
 }keys = {0};
 
-bool inputTypeState(const InputType in)
+bool textInputState(void)
 {
-    return in == I_PRESSED || in == I_HELD;
+    return keys.textInputState;
+}
+
+bool textInputEnded(void)
+{
+    return !keys.textInputState && keys.textInputChange;
+}
+
+void textInputAppendText(char *text)
+{
+    const st maxlen = keys.textInputSize - keys.textInputPos;
+    const st textlen = strlen(text);
+    const st appendlen = imin(maxlen, textlen);
+    if(appendlen < textlen)
+        printf("Discarding text input: \"%s\"\n", text+appendlen);
+    if(appendlen <= 0)
+        return;
+    memcpy(keys.textInput+keys.textInputPos, text, appendlen);
+    keys.textInputPos += appendlen;
+}
+
+void textInputStop(void)
+{
+    // if(!keys.textInputState)
+    //     return;
+    printf("Text input stop\n");
+    SDL_StopTextInput();
+    keys.textInputState = false;
+    keys.textInputChange = true;
+    keys.textInput = NULL;
+    keys.textInputSize = 0;
+    keys.textInputPos = 0;
+}
+
+bool defaultTextInputDone(void)
+{
+    return keyState(SC_ESCAPE);
+}
+
+void textInputStart(char *buf, const st bufsize, boolFunc textInputDone)
+{
+    printf("Text input start\n");
+    SDL_StartTextInput();
+    keys.textInputState = true;
+    keys.textInput = buf;
+    keys.textInputSize = bufsize;
+    keys.textInputPos = strlen(buf);
+    keys.textInputDone = textInputDone == NULL ? defaultTextInputDone : textInputDone;
 }
 
 bool keyState(const Scancode key)
@@ -18,7 +71,7 @@ bool keyState(const Scancode key)
 
 bool keyPressed(const Scancode key)
 {
-    return keys.key[key] && !keys.prev[key];
+    return !keys.textInputState && (keys.key[key] && !keys.prev[key]);
 }
 
 bool keyHeld(const Scancode key)
@@ -36,15 +89,11 @@ bool keyReleased(const Scancode key)
     return !keys.key[key] && keys.prev[key];
 }
 
-InputType keyInputType(const Scancode key)
+bool isTextKey(const char *keyName)
 {
-    if(keyPressed(key))
-        return I_PRESSED;
-    if(keyReleased(key))
-        return I_RELEASED;
-    if(keyHeld(key))
-        return I_HELD;
-    return I_NOOP;
+    if(strlen(keyName) != 1)
+        return false;
+    return keyName[0] >= ' ' && keyName[0] <= '~';
 }
 
 struct{
@@ -59,6 +108,11 @@ struct{
         Coord wheel;
     }prev;
 }mouse = {0};
+
+Coord mousePos(void)
+{
+    return mouse.pos;
+}
 
 bool mouseBtnPressed(const u32 mouseBtn)
 {
@@ -83,17 +137,6 @@ bool mouseBtnReleased(const u32 mouseBtn)
 bool mouseBtnChanged(const u32 mouseBtn)
 {
     return (mouse.state&mouseBtn) != (mouse.prev.state&mouseBtn);
-}
-
-InputType mouseBtnInputType(const u32 mouseBtn)
-{
-    if(mouseBtnPressed(mouseBtn))
-        return I_PRESSED;
-    if(mouseBtnReleased(mouseBtn))
-        return I_RELEASED;
-    if(mouseBtnHeld(mouseBtn))
-        return I_HELD;
-    return I_NOOP;
 }
 
 int mouseScrolledX(void)

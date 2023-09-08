@@ -309,7 +309,8 @@ Window* winGetFocused(void);
 bool winIsFocused(void);
 
 
-// InputText.h
-
+// Net.h
+void net_init(void);
+void net_quit(void);
 
 #endif /* end of include guard: DOGELIB_DECLS_H */
