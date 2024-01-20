@@ -1,13 +1,22 @@
 #include "DogeLib/Includes.h"
-// uncomment one of the below example files and call example() in the main function for a demonstration of DogeLib
-// #include "Examples/Dogs.h"
-#include "Examples/Barebones.h"
-// #include "Examples/TransparentWindow.h"
-// #include "Examples/TextInput.h"
-
 
 int main(void)
 {
-    example();
+    init();
+    setTextColor(RED);
+    setColor(CYAN);
+    Coord p = getWindowMid();
+    while(1){
+        const uint t = frameStart();
+
+        if(keyPressed(SC_ESCAPE))
+            return 0;
+
+        p = coordAdd(p, coordMuli(wasdKeyStateOffset(), 4));
+        fillCircleCoord(mouse.pos, 32);
+        drawTextCenteredCoord("Hello", p);
+
+        frameEnd(t);
+    }
     return 0;
 }
