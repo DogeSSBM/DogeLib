@@ -511,7 +511,7 @@ void gfx_init(void)
 {
     if(SDL_Init(SDL_INIT_VIDEO)<0){
         printf("SDL borked! Error: %s\n", SDL_GetError());
-        exit(0);
+        exit(EXIT_FAILURE);
     }
 
     gfx.window = SDL_CreateWindow(

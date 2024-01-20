@@ -18,6 +18,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_net.h>
 
 #include "Panic.h"
 #include "Types.h"
@@ -39,5 +40,6 @@
 #include "Poly.h"
 #include "Display.h"
 #include "Window.h"
+#include "Net.h"
 
 #endif /* end of include guard: DOGELIB_INCLUDES_H */
