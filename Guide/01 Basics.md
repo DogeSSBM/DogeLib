@@ -27,3 +27,12 @@ int main(void)
     return 0;
 }
 ```
+Lets go through this line by line -
+```c
+#include "DogeLib/Includes.h"
+```
+This simply includes DogeLib.
+```c
+int main(void)
+```
+This declares our main function which is our program entry point.
