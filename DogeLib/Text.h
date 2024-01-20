@@ -1,18 +1,6 @@
 #ifndef DOGELIB_TEXT_H
 #define DOGELIB_TEXT_H
 
-bool strEndsWith(const char *str, const char *end)
-{
-    if(str == NULL || end == NULL)
-        return false;
-    const uint lenEnd = strlen(end);
-    const uint lenStr = strlen(str);
-    const char *pos = strstr(str, end);
-    if(lenEnd > lenStr || strlen(pos) != strlen(end))
-        return false;
-    return true;
-}
-
 Img* textImg(const char *text)
 {
     return TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
@@ -50,7 +38,7 @@ Length drawTextCenteredCoord(const char *text, const Coord pos)
     return drawTextCentered(text, pos.x, pos.y);
 }
 
-Length getTextLength(const char *text)
+Length textLength(const char *text)
 {
     Length len = {0};
     TTF_SizeText(gfx.font, text, &len.x, &len.y);
@@ -98,7 +86,7 @@ Rect* getTextListRect(const char **textList, Rect *const rect, const Coord start
 
     const Length step = coordDivi(coordSub(stop, start), num>1?num-1:1);
     for(uint i = 0; i < num; i++){
-        const Length len = getTextLength(textList[i]);
+        const Length len = textLength(textList[i]);
         const Coord pos = coordSub(
             coordAdd(start, coordMuli(step, i)),
             coordDivi(len,2)
@@ -118,7 +106,7 @@ Rect* getTextListRectCentered(const char **textList, Rect *const rect, const Coo
 
     const Length step = coordDivi(coordSub(stop, start), num+1);
     for(uint i = 1; i < num+1; i++){
-        const Length len = getTextLength(textList[i-1]);
+        const Length len = textLength(textList[i-1]);
         const Coord pos = coordSub(
             coordAdd(start, coordMuli(step, i)),
             coordDivi(len,2)

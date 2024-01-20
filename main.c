@@ -4,8 +4,8 @@ int main(void)
 {
     init();
     setTextColor(RED);
-    setColor(CYAN);
     Coord p = getWindowMid();
+    const char *text = "Hello";
     while(1){
         const uint t = frameStart();
 
@@ -13,8 +13,11 @@ int main(void)
             return 0;
 
         p = coordAdd(p, coordMuli(wasdKeyStateOffset(), 4));
+        setColor(CYAN);
         fillCircleCoord(mouse.pos, 32);
-        drawTextCenteredCoord("Hello", p);
+        setColor(MAGENTA);
+        fillBorderCenteredCoord(p, textLength(text), 8);
+        drawTextCenteredCoord(text, p);
 
         frameEnd(t);
     }

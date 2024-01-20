@@ -155,6 +155,7 @@ typedef union{
     };
 }Coordf, Vectorf, Rangef, Lengthf, Offsetf;
 
+static inline
 Coordf fC(const float x, const float y)
 {
     return (const Coordf){.x=x, .y=y};
@@ -164,21 +165,25 @@ typedef enum{DIR_U = 0, DIR_R, DIR_D, DIR_L}Direction;
 
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
 
+static inline
 int imax(const int a, const int b)
 {
     return a > b ? a : b;
 }
 
+static inline
 int imin(const int a, const int b)
 {
     return a < b ? a : b;
 }
 
+static inline
 int iabs(const int i)
 {
     return i > 0 ? i : -i;
 }
 
+static inline
 int ipow(int num, int pow)
 {
     assertExpr(pow >= 0);
@@ -189,71 +194,85 @@ int ipow(int num, int pow)
     return num;
 }
 
+static inline
 float fmost(const float a, const float b)
 {
     return a > b ? a : b;
 }
 
+static inline
 float fleast(const float a, const float b)
 {
     return a < b ? a : b;
 }
 
+static inline
 int posSign(const int n)
 {
     return n > 0 ? n : -n;
 }
 
+static inline
 int negSign(const int n)
 {
     return n < 0 ? n : -n;
 }
 
+static inline
 float posSignf(const float n)
 {
     return n > 0.0f ? n : -n;
 }
 
+static inline
 float negSignf(const float n)
 {
     return n < 0.0f ? n : -n;
 }
 
+static inline
 int matchSign(const int s, const int n)
 {
     return s > 0 ? posSign(n) : negSign(n);
 }
 
+static inline
 float matchSignf(const float s, const float n)
 {
     return s > 0.0 ? posSignf(n) : negSignf(n);
 }
 
+static inline
 int invSign(const int s, const int n)
 {
     return s < 0 ? posSign(n) : negSign(n);
 }
 
+static inline
 float invSignf(const float s, const float n)
 {
     return s < 0.0 ? posSignf(n) : negSignf(n);
 }
 
+static inline
 int lbound(const int n, const int l)
 {
     return n<l?l:n;
 }
 
+static inline
 int ubound(const int n, const int u)
 {
     return n>u?u:n;
 }
 
+static inline
 float lboundf(const float n, const float l)
 {
     return n<l?l:n;
 }
 
+static inline
 float uboundf(const float n, const float u)
 {
     return n>u?u:n;
