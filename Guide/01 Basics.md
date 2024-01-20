@@ -32,6 +32,7 @@ Lets go through this line by line -
 #include "DogeLib/Includes.h"
 ```
 This simply includes DogeLib.
+------
 ```c
 int main(void)
 ```
