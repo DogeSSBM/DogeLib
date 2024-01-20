@@ -37,3 +37,18 @@ The contents of the directory should be as follows:
 ls
 Borko16x16.png  compile.sh  DogeLib  Doggo16x16.png  Examples  Guide  LICENSE  main.c  run.sh
 ```
+To compile your DogeLib project, simply run the compile script:
+```sh
+./compile.sh
+```
+To run the program, simply execute main.out:
+```sh
+./main.out
+```
+Alternatively, you can perform the previous 2 steps all at once by executing
+run.sh:
+```sh
+./run.sh
+```
+This will compile the program, and if the compilation succeeds it will run the
+program.
