@@ -37,6 +37,7 @@ ___
 int main(void)
 ```
 This declares our main function which is our program entry point.
+___
 ```c
 init();
 ```
@@ -46,41 +47,49 @@ This function initializes DogeLib. Initialization includes -
 * Image functionality
 * Text input handling
 * Window creation
+___
 ```c
 setTextColor(RED);
 ```
 This sets our text drawing color to red.
+___
 ```c
 setColor(CYAN);
 ```
 This sets our drawing color to cyan.
+___
 ```c
 Coord p = getWindowMid();
 ```
 This creates a coordinate (which is just a struct with 2 integers, x and y).
 It initializes the values of x and y to the middle of the window. In DogeLib
 the top left of the window is 0,0.
+___
 ```c
 while(1){
 ```
 This is our main loop. Every frame executes the body of this loop.
+___
 ```c
 const uint t = frameStart();
 ```
 `frameStart()` clears the window to the default color (which is now black), it
 also returns the number of milliseconds since the program began. We record this
 value in the variable `t` for use later.
+___
 ```c
 if(keyPressed(SC_ESCAPE))
     return 0;
 ```
 We check to see if the escape key is pressed, and if so, return from main,
 exiting the program.
+___
 ```c
 p = coordAdd(p, coordMuli(wasdKeyStateOffset(), 4));
 ```
 We update the value of `p` here, lets break this down function by function
 starting with the inner most function and working our way out.
+___
 ```c
 wasdKeyStateOffset()
 ```
@@ -93,12 +102,14 @@ For example, the value returned would be:
 (-1,  1) if A and S are being held,
 ( 0, -1) if W is being held,
 ( 1,  1) if D and S are being held.
+___
 ```c
 coordMuli()
 ```
 (Short for coordinate multiply integer)
 This function takes 2 arguments: a `Coord` or `Offset`, and an integer. Both
 components of the `Coord` will be multiplied by the integer.
+___
 ```c
 coordAdd()
 ```
@@ -108,12 +119,14 @@ This function takes 2 coordinates and multiplies their respective components.
 Putting it all together, we are updating the value of `p` to whatever it's
 current value is, plus, the offset value of the state of the W, A, S, and D
 keys multiplied by 4.
+___
 ```c
 fillCircleCoord(mouse.pos, 32);
 ```
 (Short for fill circle at a coordinate)
 This fills in a circle whose color will be the current drawing color (which is
 cyan at the moment), of a given radius (32 in this example).
+___
 ```c
 drawTextCenteredCoord("Hello", p);
 ```
@@ -122,11 +135,13 @@ This draws the text "Hello" such that it is centered on the coordinate `p`. The
 text size will be whatever the current text draw size is (32 by default). The
 color of the text will be whatever the current text drawing color is (it is
 currently red).
+___
 ```c
 frameEnd(t);
 ```
 This function should be called at the end of our main loop. It renders
 everything to the window, and then handles inputs and frame timing.
+___
 ```c
 return 0;
 ```
