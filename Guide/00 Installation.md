@@ -35,3 +35,5 @@ git clone git@github.com:DogeSSBM/DogeLib.git .
 The contents of the directory should be as follows:
 ```sh
 ls
+Borko16x16.png  compile.sh  DogeLib  Doggo16x16.png  Examples  Guide  LICENSE  main.c  run.sh
+```
