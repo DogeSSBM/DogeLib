@@ -35,7 +35,6 @@ static inline Coord coordMid(const Coord, const Coord);
 static inline uint coordDistSq(const Coord, const Coord);
 static inline Coord coordDivi(const Coord, const int);
 static inline Coord coordDiv(const Coord, const Coord);
-static inline Coord coordClamp(const Coord, const Range, const Range);
 static inline Coord coordShift(const Coord, const Direction, const int);
 static inline Coord coordAdd(const Coord, const Offset);
 static inline Coord coordCenter(const Coord, const Length);

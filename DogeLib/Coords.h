@@ -387,7 +387,7 @@ int coordInRectArr(const Coord coord, Rect *const rect, const int num)
 static inline
 Rect rectOffset(const Rect rect, const Offset off)
 {
-    return (Rect){.x = pos.x+off.x, .y = pos.y+off.y, .w = rect.w, .h = rect.h};
+    return (Rect){.x = rect.x+off.x, .y = rect.y+off.y, .w = rect.w, .h = rect.h};
 }
 
 #endif /* end of include guard: DOGELIB_COORDS_H */
