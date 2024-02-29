@@ -3,19 +3,30 @@
 int main(void)
 {
     init();
-    setTextColor(RED);
     Coord p = getWindowMid();
-    const char *text = "Hello";
+    char text[512] = "Hello";
+    setColor(CYAN);
+
     while(1){
         const uint t = frameStart();
 
         if(keyPressed(SC_ESCAPE))
             return 0;
 
-        p = coordAdd(p, coordMuli(wasdKeyStateOffset(), 4));
-        setColor(CYAN);
-        fillCircleCoord(mouse.pos, 32);
-        setColor(MAGENTA);
+        if(mouseBtnReleased(MOUSE_L)){
+            if(coordInRect(mousePos(), textCenteredRect(p, text)))
+                textInputStart(text, 512, NULL);
+            else
+                textInputStop();
+        }
+
+        if(textInputState()){
+            setTextColor(MAGENTA);
+        }else{
+            setTextColor(CYAN);
+            p = coordAdd(p, coordMuli(wasdKeyStateOffset(), 4));
+        }
+
         fillBorderCenteredCoord(p, textLength(text), 8);
         drawTextCenteredCoord(text, p);
 

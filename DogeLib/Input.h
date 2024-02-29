@@ -50,7 +50,7 @@ void textInputStop(void)
 
 bool defaultTextInputDone(void)
 {
-    return keyState(SC_ESCAPE);
+    return keyCtrlState() && keyState(SC_RETURN);
 }
 
 void textInputStart(char *buf, const st bufsize, boolFunc textInputDone)

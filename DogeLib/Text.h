@@ -45,6 +45,25 @@ Length textLength(const char *text)
     return len;
 }
 
+// returns the top left coord of text given its center pos
+Coord textCenteredCoord(const Coord center, const char *text)
+{
+    return coordSub(center, coordDivi(textLength(text), 2));
+}
+
+// returns rect given pos and text
+Rect textRect(const Coord pos, const char *text)
+{
+    return rectify(pos, textLength(text));
+}
+
+// returns rect with pos as top left coord of text given its center pos
+Rect textCenteredRect(const Coord center, const char *text)
+{
+    const Length len = textLength(text);
+    return rectify(coordSub(center, coordDivi(len, 2)), len);
+}
+
 int getTextXLen(const char *text)
 {
     Length len = {0};
