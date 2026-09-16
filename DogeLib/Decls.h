@@ -262,7 +262,7 @@ Offset dirKeyPressedOffset(void);
 void events(const uint);
 
 // File.h
-uint fileLen(const char*);
+size_t fileLen(const char*);
 char* fileReadText(const char*);
 
 // DogeUtil.h
