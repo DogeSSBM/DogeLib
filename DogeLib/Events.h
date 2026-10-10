@@ -3,12 +3,14 @@
 
 void events(const uint endOfFrame)
 {
-    i32 ticksLeft = imax(1, endOfFrame - getTicks());
+    const uint eventsStart = getTicks();
+    i32 ticksLeft = imax(1, endOfFrame - eventsStart);
     mouse.prev.wheel = mouse.wheel;
     mouse.wheel = (const Coord){.x = 0, .y = 0};
     bool e = false;
     gfx.winFlags = SDL_GetWindowFlags(gfx.window);
     gfx.prvLen = gfx.winLen;
+    keys.lastUpdateTime = endOfFrame;
     do{
         Event event;
         if(ticksLeft > 0)
@@ -29,6 +31,11 @@ void events(const uint endOfFrame)
                         keys.textInput[keys.textInputPos] = '\0';
                     }
                 }
+                if(!keys.prev[event.key.keysym.scancode])
+                    keys.pressTime[event.key.keysym.scancode] = eventsStart;
+                break;
+            case SDL_KEYUP:
+                keys.releaseTime[event.key.keysym.scancode] = eventsStart;
                 break;
             case SDL_TEXTINPUT:
                 assertExpr(keys.textInputState);
@@ -47,6 +54,10 @@ void events(const uint endOfFrame)
     gfx.winLen = getWindowLen();
     memcpy(keys.prev, keys.key, SDL_NUM_SCANCODES);
     memcpy(keys.key, SDL_GetKeyboardState(NULL), SDL_NUM_SCANCODES);
+    // for(size_t i = 0; i < SDL_NUM_SCANCODES; i++){
+    //     if(keys.key[i])
+    //         keys.
+    // }
     mouse.prev.state = mouse.state;
     mouse.prev.pos = mouse.pos;
     mouse.prev.vec = mouse.vec;

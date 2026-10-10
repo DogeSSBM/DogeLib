@@ -412,7 +412,7 @@ void fillSquareCoordResize(const Coord pos, const int len, const int resize)
     );
 }
 
-// fills a border at (x, y) with length (xlen, ylen) and thickness b
+// fills a border at (x, y) with length (xlen, ylen) with thickness b
 void fillBorder(const int x, const int y, const int xlen, const int ylen, const int b)
 {
     fillRect(x-b,           y-b,            xlen+2*b,   b);
@@ -421,7 +421,7 @@ void fillBorder(const int x, const int y, const int xlen, const int ylen, const 
     fillRect(x+xlen,        y,              b,          ylen);
 }
 
-// fills a border at pos with length len and thickness b
+// fills a border at pos with length len with thickness b
 void fillBorderCoord(const Coord pos, const Length len, const int b)
 {
     fillRect(pos.x-b,       pos.y-b,        len.x+2*b,  b);
@@ -430,7 +430,16 @@ void fillBorderCoord(const Coord pos, const Length len, const int b)
     fillRect(pos.x+len.x,   pos.y,          b,          len.y);
 }
 
-// fills a border centered at (x, y) with length (xlen, ylen) and thickness b
+// fills a border around rect with thickness b
+void fillBorderRect(const Rect rect, const int b)
+{
+    fillRect(rect.x-b,       rect.y-b,        rect.w+2*b,  b);
+    fillRect(rect.x-b,       rect.y+rect.h,    rect.w+2*b,  b);
+    fillRect(rect.x-b,       rect.y,          b,          rect.h);
+    fillRect(rect.x+rect.w,   rect.y,          b,          rect.h);
+}
+
+// fills a border centered at (x, y) with length (xlen, ylen) with thickness b
 void fillBorderCentered(const int x, const int y, const int xlen, const int ylen, const int b)
 {
     const int px = x - xlen/2;
@@ -441,7 +450,7 @@ void fillBorderCentered(const int x, const int y, const int xlen, const int ylen
     fillRect(px+xlen,        py,              b,          ylen);
 }
 
-// fills a border centered at pos with length len and thickness b
+// fills a border centered at pos with length len with thickness b
 void fillBorderCenteredCoord(const Coord pos, const Length len, const int b)
 {
     const int px = pos.x - len.x/2;
@@ -452,7 +461,7 @@ void fillBorderCenteredCoord(const Coord pos, const Length len, const int b)
     fillRect(px+len.x,   py,          b,          len.y);
 }
 
-// fills a square border at pos with length len and thickness b
+// fills a square border at pos with length len with thickness b
 void fillBorderCoordSquare(const Coord pos, const int len, const int b)
 {
     fillRect(pos.x-b,       pos.y-b,        len+2*b,    b);
@@ -753,7 +762,7 @@ void gfx_init(void)
     atexit(gfx_quit);
 
     gfx.defaultColor = BLACK;
-    gfx.outlined = true;
+    // gfx.outlined = true;
     SDL_SetRenderDrawBlendMode(gfx.renderer, BLEND_NONE);
     gfx.restoreLen.x = DEFAULT_WINDOW_XLEN;
     gfx.restoreLen.y = DEFAULT_WINDOW_YLEN;

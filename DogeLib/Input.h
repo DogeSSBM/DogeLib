@@ -6,17 +6,22 @@ struct{
     bool textInputChange;
     u8 key[SDL_NUM_SCANCODES];
     u8 prev[SDL_NUM_SCANCODES];
+    uint pressTime[SDL_NUM_SCANCODES];
+    uint releaseTime[SDL_NUM_SCANCODES];
+    uint lastUpdateTime;
     char *textInput;
     st textInputSize;
     st textInputPos;
     boolFunc textInputDone;
 }keys = {0};
 
+// returns true if currently inputting text
 bool textInputState(void)
 {
     return keys.textInputState;
 }
 
+// returns true when text input ends
 bool textInputEnded(void)
 {
     return !keys.textInputState && keys.textInputChange;
@@ -89,11 +94,31 @@ bool keyReleased(const Scancode key)
     return !keys.key[key] && keys.prev[key];
 }
 
+uint keyPressTime(const Scancode key)
+{
+    return keys.pressTime[key];
+}
+
+uint keyReleaseTime(const Scancode key)
+{
+    return keys.releaseTime[key];
+}
+
+uint keyHeldTime(const Scancode key)
+{
+    return keys.key[key] ? keys.lastUpdateTime - keys.pressTime[key] : 0;
+}
+
 bool isTextKey(const char *keyName)
 {
     if(strlen(keyName) != 1)
         return false;
     return keyName[0] >= ' ' && keyName[0] <= '~';
+}
+
+const char* keyName(const Scancode key)
+{
+    return SDL_GetScancodeName(key);
 }
 
 struct{
@@ -196,8 +221,9 @@ bool checkCtrlKey(const Scancode key)
 
 void input_init(void)
 {
-    mouse.pos = coordDivi(getWindowLen(), 2);
-    mouse.prev.pos = coordDivi(getWindowLen(), 2);
+    // mouse.pos = coordDivi(getWindowLen(), 2);
+    // mouse.prev.pos = coordDivi(getWindowLen(), 2);
+
 }
 
 Offset wasdKeyStateOffset(void)

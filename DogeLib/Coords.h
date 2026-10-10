@@ -357,6 +357,15 @@ Rect rectCenter(Rect r)
     return rectify(coordCenter(irC(r), len), len);
 }
 
+// returns midpoint of rect
+Coord rectMid(const Rect r)
+{
+    return (const Coord){
+        .x = r.x + r.w / 2,
+        .y = r.y + r.h / 2
+    };
+}
+
 // returns rect pos offset by len of rect
 static inline
 Length unrectify(const Rect rect)
@@ -364,7 +373,7 @@ Length unrectify(const Rect rect)
     return coordAdd(irC(rect), irL(rect));
 }
 
-// Returns true if pos is in rect
+// returns true if pos is in rect
 static inline
 bool coordInRect(const Coord pos, const Rect rect)
 {
