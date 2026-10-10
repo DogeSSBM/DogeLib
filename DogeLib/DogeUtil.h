@@ -27,7 +27,7 @@ void init(void)
     net_init();
     text_init();
     input_init();
-    inTextStop();
+    SDL_StopTextInput();
 }
 
 #endif /* end of include guard: DOGELIB_DOGEUTIL_H */

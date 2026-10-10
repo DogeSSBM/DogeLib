@@ -517,7 +517,7 @@ Length drawTextureCenteredResize(Texture *texture, const int x, const int y, con
 // resizes a texture to len and draws it centered at pos
 Length drawTextureCenteredCoordResize(Texture *texture, const Coord pos, const Length len);
 
-// Input.h
+// Input.h --------------------------------------------------------------------
 // returns true if currently inputting text
 bool textInputState(void);
 // returns true when text input ends
