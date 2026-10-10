@@ -601,9 +601,11 @@ Offset dirKeyPressedOffset(void);
 // handles events
 void events(const uint endOfFrame);
 
-// File.h
-size_t fileLen(const char*);
-char* fileReadText(const char*);
+// File.h ---------------------------------------------------------------------
+// returns the number of chars in file
+size_t fileLen(const char *filePath)
+// returns string containing contents of file
+char* fileReadText(const char *filePath)
 
 // DogeUtil.h
 void clearTerminal(void);
