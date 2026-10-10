@@ -608,9 +608,13 @@ size_t fileLen(const char *filePath);
 char* fileReadText(const char *filePath);
 
 // DogeUtil.h
+// clears the terminal
 void clearTerminal(void);
-float randRange(float, float);
-void* recalloc(void *, const st, const st);
+// returns a random number between a and b
+float randRange(float a, float b);
+// reallocs and zeros data to new size
+void* recalloc(void *data, const st newsize);
+// inits everything
 void init(void);
 
 // Poly.h

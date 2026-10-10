@@ -1,24 +1,27 @@
 #ifndef DOGELIB_DOGEUTIL_H
 #define DOGELIB_DOGEUTIL_H
 
+// clears the terminal
 void clearTerminal(void)
 {
     printf(__extension__"\e[1;1H\e[2J");
 }
 
+// returns a random number between a and b
 float randRange(float a, float b)
 {
     return ((b-a)*((float)rand()/RAND_MAX))+a;
 }
 
-void* recalloc(void *data, const st oldsize, const st newsize)
+// reallocs and zeros data to new size
+void* recalloc(void *data, const st newsize)
 {
     data = realloc(data, newsize);
-    if(newsize > oldsize)
-        memset((char*)data+oldsize, 0, newsize-oldsize);
+    memset((char*)data, 0, newsize);
     return data;
 }
 
+// inits everything
 void init(void)
 {
     srand(time(NULL));
