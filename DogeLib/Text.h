@@ -1,16 +1,19 @@
 #ifndef DOGELIB_TEXT_H
 #define DOGELIB_TEXT_H
 
+// renders text to image
 Img* textImg(const char *text)
 {
     return TTF_RenderText_Solid(gfx.font, text, gfx.fontColor);
 }
 
+// renders text to texture
 Texture* textTexture(const char *text)
 {
     return imgTexture(textImg(text));
 }
 
+// draws text at x y position
 Length drawText(const char *text, const int x, const int y)
 {
     Texture *t = textTexture(text);
@@ -20,11 +23,13 @@ Length drawText(const char *text, const int x, const int y)
     return iC(r.w, r.h);
 }
 
+// draws text at pos
 Length drawTextCoord(const char *text, const Coord pos)
 {
     return drawText(text, pos.x, pos.y);
 }
 
+// draws text centered on pos x y
 Length drawTextCentered(const char *text, const int x, const int y)
 {
     Texture *t = textTexture(text);
@@ -33,11 +38,13 @@ Length drawTextCentered(const char *text, const int x, const int y)
     return len;
 }
 
+// draws text centered on pos
 Length drawTextCenteredCoord(const char *text, const Coord pos)
 {
     return drawTextCentered(text, pos.x, pos.y);
 }
 
+// returns the length of text if it were to be rendered
 Length textLength(const char *text)
 {
     Length len = {0};
@@ -64,6 +71,7 @@ Rect textCenteredRect(const Coord center, const char *text)
     return rectify(coordSub(center, coordDivi(len, 2)), len);
 }
 
+// returns the x component of the length of the text if it were to be rendered
 int getTextXLen(const char *text)
 {
     Length len = {0};
@@ -71,6 +79,7 @@ int getTextXLen(const char *text)
     return len.x;
 }
 
+// returns the y component of the length of the text if it were to be rendered
 int getTextYLen(const char *text)
 {
     Length len = {0};
@@ -78,7 +87,8 @@ int getTextYLen(const char *text)
     return len.y;
 }
 
-Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, const uint num)
+// spaces coords evenly between start and stop
+Coord* spanListCoords(Coord *coords, const Coord start, const Coord stop, const uint num)
 {
     if(num == 0 || coords == NULL)
         return coords;
@@ -88,7 +98,8 @@ Coord* spanTextListCoords(Coord *coords, const Coord start, const Coord stop, co
     return coords;
 }
 
-Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord stop, const uint num)
+// spaces coords evenly centered between start and stop
+Coord* spanListCoordsCentered(Coord *coords, const Coord start, const Coord stop, const uint num)
 {
     if(num == 0 || coords == NULL)
         return coords;
@@ -98,6 +109,7 @@ Coord* spanTextListCoordsCentered(Coord *coords, const Coord start, const Coord 
     return coords;
 }
 
+// gets rectangles of multiple texts spaced evenly between start and stop
 Rect* getTextListRect(const char **textList, Rect *const rect, const Coord start, const Coord stop, const uint num)
 {
     if(num == 0 || rect == NULL)
@@ -118,6 +130,7 @@ Rect* getTextListRect(const char **textList, Rect *const rect, const Coord start
     return rect;
 }
 
+// gets rectangles of multiple texts spaced evenly centered between start and stop
 Rect* getTextListRectCentered(const char **textList, Rect *const rect, const Coord start, const Coord stop, const uint num)
 {
     if(num == 0 || rect == NULL)
@@ -138,6 +151,7 @@ Rect* getTextListRectCentered(const char **textList, Rect *const rect, const Coo
     return rect;
 }
 
+// returns the index of the first rectangle that coord is in otherwise returns -1
 int coordInRectList(const Coord coord, Rect *const rect, const int num)
 {
     if(num < 1)
@@ -148,13 +162,14 @@ int coordInRectList(const Coord coord, Rect *const rect, const int num)
     return -1;
 }
 
+// returns the index of the first text rectangle that coord is in otherwise returns -1
 int coordInTextList(const Coord coord, const Coord start, const Coord stop, const uint num, const char **textList)
 {
     Rect r[num];
     return coordInRectArr(coord, getTextListRect(textList, r, start, stop, num), num);
 }
 
-// draws a collection of strings evenly spaced between 2 points
+// draws a collection of strings spaced evenly between 2 points
 void spanTextList(const char **textList, const Coord start, const Coord stop, const uint num)
 {
     if(num == 0)
@@ -165,6 +180,7 @@ void spanTextList(const char **textList, const Coord start, const Coord stop, co
     }
 }
 
+// draws a collection of strings spaced evenly centered between 2 points
 void spanTextListCentered(const char **textList, const Coord start, const Coord stop, const uint num)
 {
     if(num == 0)
@@ -175,6 +191,7 @@ void spanTextListCentered(const char **textList, const Coord start, const Coord 
     }
 }
 
+// sets the size of text to be rendered
 void setTextSize(const uint size)
 {
     if(size == gfx.fontSize)
@@ -185,21 +202,25 @@ void setTextSize(const uint size)
     gfx.font = TTF_OpenFont("DogeLib/FiraCode.ttf", gfx.fontSize);
 }
 
+// gets the current size of text to be rendered
 int getTextSize(void)
 {
     return gfx.fontSize;
 }
 
+// sets the color of text to be rendered
 void setTextColor(const Color c)
 {
     gfx.fontColor = c;
 }
 
+// gets the current color of text to be rendered
 Color getTextColor(void)
 {
     return gfx.fontColor;
 }
 
+// cleans up text stuff
 void text_quit(void)
 {
     if(gfx.font != NULL){
@@ -208,6 +229,7 @@ void text_quit(void)
     TTF_Quit();
 }
 
+// initializes text stuff
 void text_init(void)
 {
     if(TTF_Init()){

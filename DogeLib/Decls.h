@@ -423,29 +423,58 @@ void gfx_quit(void);
 // initializes gfx stuff
 void gfx_init(void);
 
-// Text.h
-Img* textImg(const char*);
-Texture* textTexture(const char*);
-Length drawText(const char*, const int, const int);
-Length drawTextCoord(const char*, const Coord);
-Length drawTextCentered(const char*, const int, const int);
-Length drawTextCenteredCoord(const char*, const Coord);
-Length getTextLength(const char*);
-int getTextXLen(const char*);
-int getTextYLen(const char*);
-Coord* spanTextListCoords(Coord*, const Coord, const Coord, const uint);
-Coord* spanTextListCoordsCentered(Coord*, const Coord, const Coord, const uint);
-Rect* getTextListRect(const char**, Rect* const, const Coord, const Coord, const uint);
-Rect* getTextListRectCentered(const char**, Rect* const, const Coord, const Coord, const uint);
-int coordInRectList(const Coord, Rect* const, const int);
-int coordInTextList(const Coord, const Coord, const Coord, const uint, const char**);
-void spanTextList(const char**, const Coord, const Coord, const uint);
-void spanTextListCentered(const char**, const Coord, const Coord, const uint);
-void setTextSize(const uint);
+// Text.h ---------------------------------------------------------------------
+// renders text to image
+Img* textImg(const char *text);
+// renders text to texture
+Texture* textTexture(const char *text);
+// draws text at x y position
+Length drawText(const char *text, const int x, const int y);
+// draws text at pos
+Length drawTextCoord(const char *text, const Coord pos);
+// draws text centered on pos x y
+Length drawTextCentered(const char *text, const int x, const int y);
+// draws text centered on pos
+Length drawTextCenteredCoord(const char *text, const Coord pos);
+// returns the length of text if it were to be rendered
+Length textLength(const char *text);
+// returns the top left coord of text given its center pos
+Coord textCenteredCoord(const Coord center, const char *text);
+// returns rect given pos and text
+Rect textRect(const Coord pos, const char *text);
+// returns rect with pos as top left coord of text given its center pos
+Rect textCenteredRect(const Coord center, const char *text);
+// returns the x component of the length of the text if it were to be rendered
+int getTextXLen(const char *text);
+// returns the y component of the length of the text if it were to be rendered
+int getTextYLen(const char *text);
+// spaces coords evenly between start and stop
+Coord* spanListCoords(Coord *coords, const Coord start, const Coord stop, const uint num);
+// spaces coords evenly centered between start and stop
+Coord* spanListCoordsCentered(Coord *coords, const Coord start, const Coord stop, const uint num);
+// gets rectangles of multiple texts spaced evenly between start and stop
+Rect* getTextListRect(const char **textList, Rect *const rect, const Coord start, const Coord stop, const uint num);
+// gets rectangles of multiple texts spaced evenly centered between start and stop
+Rect* getTextListRectCentered(const char **textList, Rect *const rect, const Coord start, const Coord stop, const uint num);
+// returns the index of the first rectangle that coord is in otherwise returns -1
+int coordInRectList(const Coord coord, Rect *const rect, const int num);
+// returns the index of the first text rectangle that coord is in otherwise returns -1
+int coordInTextList(const Coord coord, const Coord start, const Coord stop, const uint num, const char **textList);
+// draws a collection of strings spaced evenly between 2 points
+void spanTextList(const char **textList, const Coord start, const Coord stop, const uint num);
+// draws a collection of strings spaced evenly centered between 2 points
+void spanTextListCentered(const char **textList, const Coord start, const Coord stop, const uint num);
+// sets the size of text to be rendered
+void setTextSize(const uint size);
+// gets the current size of text to be rendered
 int getTextSize(void);
-void setTextColor(const Color);
+// sets the color of text to be rendered
+void setTextColor(const Color c);
+// gets the current color of text to be rendered
 Color getTextColor(void);
+// cleans up text stuff
 void text_quit(void);
+// initializes text stuff
 void text_init(void);
 
 // Image.h
