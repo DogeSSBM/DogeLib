@@ -277,15 +277,6 @@ Coordf cfRotateDeg(const Coordf vec, const float d);
 // returns true if line [p0, p1] intersects with line [p2, p3], sets intersection point to at if not NULL
 bool lineIntersection(const Coordf p0, const Coordf p1, const Coordf p2, const Coordf p3, Coordf *at);
 
-// GetInt.h
-int strToInt(const char*);
-uint digits(int);
-int shiftR(const int);
-int getR(const int);
-char intToChar(const int);
-void intToStr(int, char*);
-int getInt(void);
-
 // Colors.h
 bool colorSame(const Color, const Color );
 u8* colorIndex(Color*, const int);
