@@ -627,15 +627,24 @@ Rect polyBbRect(const Poly p);
 // returns the corners of a bounding box rectangle around a poly
 CoordPair polyBbMinMax(const Poly p);
 
-// Display.h
+// Display.h ------------------------------------------------------------------
+// gets the index of the display the window is on
 int getWinDisplayIndex(void);
+// gets the display rectangle the window is on
 Rect getWinDisplayRect(void);
+// gets the display length the window is on
 Length getWinDisplayLen(void);
-Length getDisplayIndexLen(const uint);
-Rect getDisplayIndexRect(const uint);
+// gets the length of the display at index i
+Length getDisplayIndexLen(const uint i);
+// gets the display rectange at index i
+Rect getDisplayIndexRect(const uint i);
+// gets the offset of the display the window is on
 Coord getWinDisplayOffset(void);
-Coord getDisplayIndexOffset(const uint);
+// gets the offset of the display at index i
+Coord getDisplayIndexOffset(const uint i);
+// gets the number of displays
 uint getDisplayNum(void);
+// gets the length of all displays together
 Length getDisplayTotalLen(void);
 
 // Window.h

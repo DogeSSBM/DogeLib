@@ -1,11 +1,13 @@
 #ifndef DOGELIB_DISPLAY_H
 #define DOGELIB_DISPLAY_H
 
+// gets the index of the display the window is on
 int getWinDisplayIndex(void)
 {
     return SDL_GetWindowDisplayIndex(gfx.window);
 }
 
+// gets the display rectangle the window is on
 Rect getWinDisplayRect(void)
 {
     Rect rect = {0};
@@ -13,6 +15,7 @@ Rect getWinDisplayRect(void)
     return rect;
 }
 
+// gets the display length the window is on
 Length getWinDisplayLen(void)
 {
     Rect rect = {0};
@@ -20,6 +23,7 @@ Length getWinDisplayLen(void)
     return irL(rect);
 }
 
+// gets the length of the display at index i
 Length getDisplayIndexLen(const uint i)
 {
     Rect rect = {0};
@@ -27,6 +31,7 @@ Length getDisplayIndexLen(const uint i)
     return irL(rect);
 }
 
+// gets the display rectange at index i
 Rect getDisplayIndexRect(const uint i)
 {
     Rect rect = {0};
@@ -34,6 +39,7 @@ Rect getDisplayIndexRect(const uint i)
     return rect;
 }
 
+// gets the offset of the display the window is on
 Coord getWinDisplayOffset(void)
 {
     Rect rect = {0};
@@ -41,6 +47,7 @@ Coord getWinDisplayOffset(void)
     return irC(rect);
 }
 
+// gets the offset of the display at index i
 Coord getDisplayIndexOffset(const uint i)
 {
     Rect rect = {0};
@@ -48,6 +55,7 @@ Coord getDisplayIndexOffset(const uint i)
     return irC(rect);
 }
 
+// gets the number of displays
 uint getDisplayNum(void)
 {
     const int ret = SDL_GetNumVideoDisplays();
@@ -55,6 +63,7 @@ uint getDisplayNum(void)
     return ret;
 }
 
+// gets the length of all displays together
 Length getDisplayTotalLen(void)
 {
     const uint numDisplay = getDisplayNum();
