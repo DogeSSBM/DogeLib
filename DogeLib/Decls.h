@@ -647,27 +647,49 @@ uint getDisplayNum(void);
 // gets the length of all displays together
 Length getDisplayTotalLen(void);
 
-// Window.h
-void setWindowMode(const WindowMode);
-void setWindowResizable(const bool);
+// Window.h -------------------------------------------------------------------
+// sets window mode fullscreen / borderless / windowed
+void setWindowMode(const WindowMode mode);
+// sets if window is resizable
+void setWindowResizable(const bool resizable);
+// gets if window is resizable
 bool getWindowResizable(void);
-void setWindowLen(const Length);
+// sets length of window
+void setWindowLen(const Length len);
+// gets length of window on previous frame
 Length getWindowPrvLen(void);
+// gets length of window
 Length getWindowLen(void);
+// returns if window was resized
 bool windowResized(void);
-Length getWindowMid(void);
-bool coordInWindow(const Coord);
+// gets midpoint of window
+Coord getWindowMid(void);
+// returns if a display coord is within window
+bool coordInWindow(const Coord pos);
+// maximizes window then returns its length
 Length maximizeWindow(void);
+// restored window to the size it was before maximizing
 Length restoreWindow(void);
-void winSetPos(const int, const int);
-void winSetPosCoord(const Coord);
+// moves window to x y display pos
+void winSetPos(const int x, const int y);
+// moves window to coord display pos
+void winSetPosCoord(const Coord pos);
+// returns if window is maximized
 bool winIsMaximized(void);
+// returns if window is minimized
 bool winIsMinimized(void);
-void winSetGrab(const bool);
+// confines mouse to window
+void winSetGrab(const bool isGrabbed);
+// returns if mouse is confined to window
 bool winIsGrabbed(void);
+// gets the window currently with focus
 Window* winGetFocused(void);
+// returns if window is focused
 bool winIsFocused(void);
-
+// gets opacity of window
+float winGetOpacity(void);
+// sets opacity of window
+void winSetOpacity(const float value);
 
 // Net.h
 void net_init(void);
