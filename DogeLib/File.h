@@ -1,6 +1,7 @@
 #ifndef FILE_H
 #define FILE_H
 
+// returns the number of chars in file
 size_t fileLen(const char *filePath)
 {
     if(!filePath)
@@ -16,6 +17,7 @@ size_t fileLen(const char *filePath)
     return len;
 }
 
+// returns string containing contents of file
 char* fileReadText(const char *filePath)
 {
     const size_t len = fileLen(filePath);
