@@ -597,8 +597,9 @@ Offset arrowKeyPressedOffset(void);
 // returns an offset based on if W A S D or arrow keys were just pressed
 Offset dirKeyPressedOffset(void);
 
-// Events.h
-void events(const uint);
+// Events.h -------------------------------------------------------------------
+// handles events
+void events(const uint endOfFrame);
 
 // File.h
 size_t fileLen(const char*);

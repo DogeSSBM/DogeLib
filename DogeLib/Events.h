@@ -1,6 +1,7 @@
 #ifndef DOGELIB_EVENTS_H
 #define DOGELIB_EVENTS_H
 
+// handles events
 void events(const uint endOfFrame)
 {
     const uint eventsStart = getTicks();
