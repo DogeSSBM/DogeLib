@@ -692,7 +692,9 @@ float winGetOpacity(void);
 void winSetOpacity(const float value);
 
 // Net.h
-void net_init(void);
+// cleans up net stuff
 void net_quit(void);
+// initializes net stuff
+void net_init(void);
 
 #endif /* end of include guard: DOGELIB_DECLS_H */
