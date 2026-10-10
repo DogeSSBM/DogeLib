@@ -277,78 +277,150 @@ Coordf cfRotateDeg(const Coordf vec, const float d);
 // returns true if line [p0, p1] intersects with line [p2, p3], sets intersection point to at if not NULL
 bool lineIntersection(const Coordf p0, const Coordf p1, const Coordf p2, const Coordf p3, Coordf *at);
 
-// Colors.h
+// Colors.h -------------------------------------------------------------------
+// returns true if the colors are the same
 bool colorSame(const Color, const Color );
-u8* colorIndex(Color*, const int);
 
-// Timing.h
-static inline uint getTicks(void);
+// Timing.h -------------------------------------------------------------------
+// returns the number of miliseconds that have elapsed since starting the program
+uint getTicks(void);
 
 // Graphics.h
-void setBlend(const BlendMode);
-void drawPixel(const int, const int);
-void drawPixelCoord(const Coord);
-void drawLine(const int, const int, const int, const int);
-void drawLineCoords(const Coord, const Coord);
-void drawHLine(const int, const int, const int);
-void drawVLine(const int, const int, const int);
-void drawRect(const int, const int, const int, const int);
-void drawRectCoords(const Coord, const Coord);
-void drawRectCorners(const int, const int, const int, const int);
-void drawRectCentered(const int, const int, const int, const int);
-void drawRectCenteredCorners(const int, const int, const int, const int);
-void drawRectCenteredCoords(const Coord, const Coord);
-void fillRect(const int, const int, const int, const int);
-void fillRectCorners(const int, const int, const int, const int);
-void fillRectCentered(const int, const int, const int, const int);
-void fillRectCenteredCorners(const int, const int, const int, const int);
-void fillRectCoords(const Coord, const Coord);
-void fillRectCenteredCoords(const Coord, const Coord);
-void drawRectCoordLength(const Coord, const Length);
-void drawRectCenteredCoordLength(const Coord, const Length);
-void fillRectCoordLength(const Coord, const Length);
-void fillRectCenteredCoordLength(const Coord , const Length);
-void drawRectRect(const Rect);
-void drawRectCenteredRect(const Rect);
-void fillRectRect(const Rect);
-void fillRectCenteredRect(const Rect);
-void drawSquare(const int, const int, const int);
-void drawSquareCoord(const Coord , const int);
-void drawSquareCentered(const int, const int, const int);
-void drawSquareCenteredCoord(const Coord, const int);
-void fillSquare(const int, const int, const int);
-void fillSquareCoord(const Coord, const int);
-void fillSquareCentered(const int, const int y, const int);
-void fillSquareCenteredCoord(const Coord, const int);
-void fillSquareResize(const int, const int, const int, const int);
-void fillSquareCoordResize(const Coord , const int, const int);
-void fillBorder(const int, const int, const int, const int, const int);
-void fillBorderCoord(const Coord, const Length, const int);
-void fillBorderCoordSquare(const Coord, const int, const int);
-void drawCircle(const int, const int, const int);
-void fillCircle(const int, const int, const int);
-void drawCircleCoord(const Coord, const int);
-void fillCircleCoord(const Coord, const int);
-void drawLineThick(const int, const int, const int, const int, const int);
-void drawLineThickCoords(const Coord, const Coord, const int);
+// sets the drawing blend mode
+void setBlend(const BlendMode mode);
+// draws a pixel at (x, y)
+void drawPixel(const int x, const int y);
+// draws pixel at pos
+void drawPixelCoord(const Coord pos);
+// draws line from (x1, y1) to (x2, y2)
+void drawLine(const int x1, const int y1, const int x2, const int y2);
+// draws line from a to b
+void drawLineCoords(const Coord a, const Coord b);
+// draws a horizontal line at (x, y) of length len
+void drawHLine(const int x, const int y, const int len);
+// draws a vertical line at (x, y) of length len
+void drawVLine(const int x, const int y, const int len);
+// draws a rect at (x, y) of length (xlen, ylen)
+void drawRect(const int x, const int y, const int xlen, const int ylen);
+// draws a rect at with corners
+void drawRectCoords(const Coord a, const Coord b);
+// draws a rect with top left corner and bottom right corners
+void drawRectCorners(const int x1, const int y1, const int x2, const int y2);
+// draws a rect with its center at (x, y) of length (xlen, ylen)
+void drawRectCentered(const int x, const int y, const int xlen, const int ylen);
+// draws a rect centered at corners
+void drawRectCenteredCorners(const int x1, const int y1, const int x2, const int y2);
+// draws a rect centered at corners
+void drawRectCenteredCoords(const Coord a, const Coord b);
+// fills a rect at (x, y) with length (xlen, ylen)
+void fillRect(const int x, const int y, const int xlen, const int ylen);
+// fills a rect with top left corner and bottom right corners
+void fillRectCorners(const int x1, const int y1, const int x2, const int y2);
+// fills a rect with its center at (x, y) of length (xlen, ylen)
+void fillRectCentered(const int x, const int y, const int xlen, const int ylen);
+// fills a rect centered at corners
+void fillRectCenteredCorners(const int x1, const int y1, const int x2, const int y2);
+// fills a rect with corners
+void fillRectCoords(const Coord a, const Coord b);
+// fills a rect centered at corners
+void fillRectCenteredCoords(const Coord a, const Coord b);
+// draws a rect at pos with length len
+void drawRectCoordLength(const Coord pos, const Length len);
+// fills a rect with its center at pos of length len
+void drawRectCenteredCoordLength(const Coord pos, const Length len);
+// fills a rect at pos of length len
+void fillRectCoordLength(const Coord pos, const Length len);
+// fills a rect centered at pos of length len
+void fillRectCenteredCoordLength(const Coord pos, const Length len);
+// draws a rect
+void drawRectRect(const Rect rect);
+// draws a rect centered on its x and y components
+void drawRectCenteredRect(const Rect rect);
+// fills a rect
+void fillRectRect(const Rect rect);
+// fills a rect centered on its x and y components
+void fillRectCenteredRect(const Rect rect);
+// draws a square at (x, y) with length len
+void drawSquare(const int x, const int y, const int len);
+// draws a square at pos with length len
+void drawSquareCoord(const Coord pos, const int len);
+// draws a square centered on (x, y) with length len
+void drawSquareCentered(const int x, const int y, const int len);
+// draws a square centered at pos with length len
+void drawSquareCenteredCoord(const Coord pos, const int len);
+// fills a square at (x, y) with length len
+void fillSquare(const int x, const int y, const int len);
+// fills a square at pos with length len
+void fillSquareCoord(const Coord pos, const int len);
+// fills a square centered on (x, y) with length len
+void fillSquareCentered(const int x, const int y, const int len);
+// fills a square centered at pos with length len
+void fillSquareCenteredCoord(const Coord pos, const int len);
+// fills a square at x and y resized by resize
+void fillSquareResize(const int x, const int y, const int len, const int resize);
+// fills a square at pos resized by resize
+void fillSquareCoordResize(const Coord pos, const int len, const int resize);
+// fills a border at (x, y) with length (xlen, ylen) with thickness b
+void fillBorder(const int x, const int y, const int xlen, const int ylen, const int b);
+// fills a border at pos with length len with thickness b
+void fillBorderCoord(const Coord pos, const Length len, const int b);
+// fills a border around rect with thickness b
+void fillBorderRect(const Rect rect, const int b);
+// fills a border centered at (x, y) with length (xlen, ylen) with thickness b
+void fillBorderCentered(const int x, const int y, const int xlen, const int ylen, const int b);
+// fills a border centered at pos with length len with thickness b
+void fillBorderCenteredCoord(const Coord pos, const Length len, const int b);
+// fills a square border at pos with length len with thickness b
+void fillBorderCoordSquare(const Coord pos, const int len, const int b);
+// draws a circle centered at (x, y) with radius r
+void drawCircle(const int x, const int y, const int r);
+// fills a circle centered at (x, y) with radius r
+void fillCircle(const int x, const int y, const int r);
+// draws a circle centered at pos with radius r
+void drawCircleCoord(const Coord pos, const int r);
+// fills a circle centered at pos with radius r
+void fillCircleCoord(const Coord pos, const int r);
+// draws a thick line with rounded edges from (x1, y1) to (x2, y2) with radius r
+void drawLineThick(const int x1, const int y1, const int x2, const int y2, const int r);
+// draws a thick line with rounded edges from a to b with radius r
+void drawLineThickCoords(const Coord a, const Coord b, const int r);
+// gets current drawing color
 Color getColor(void);
-void setColor(const Color);
-u32 colorToU32(const Color);
-Color u32ToColor(const u32);
-void drawTri(const Coord, const Coord, const Coord);
-void fillTri(const Coord, const Coord, const Coord);
-void drawPoly(Coord *, const uint);
-void fillPoly(Coord *, const uint);
-void bezier(const Coord *, const uint, const uint);
-void setRGB(const u8, const u8, const u8);
-void setRGBA(const u8, const u8, const u8, const u8);
+// sets drawing color
+void setColor(const Color c);
+// returns c as a u32
+u32 colorToU32(const Color c);
+// returns u as a Color
+Color u32ToColor(const u32 u);
+// draws a tri
+void drawTri(const Coord pos1, const Coord pos2, const Coord pos3);
+// fills a tri
+void fillTri(const Coord pos1, const Coord pos2, const Coord pos3);
+// draws a poly
+void drawPoly(Coord *pos, const uint num);
+// fills a poly
+void fillPoly(Coord *pos, const uint num);
+// draws a bezier curve
+void bezier(const Coord *pos, const uint numc, const uint nums);
+// sets red green and blue components of drawing color
+void setRGB(const u8 r, const u8 g, const u8 b);
+// sets red green blue and alpha components of drawing color
+void setRGBA(const u8 r, const u8 g, const u8 b, const u8 a);
+// fills screen with current drawing color
 void fillScreen(void);
+// fills screen with defaultColor
 void clear(void);
+// outlines the window
 void outlineWindow(void);
+// renders everything to window
 void draw(void);
+// clears window and returns current time
 uint frameStart(void);
-void frameEnd(const uint);
+// renders window and handles events and frame timing
+void frameEnd(const uint t);
+// cleans up gfx stuff
 void gfx_quit(void);
+// initializes gfx stuff
 void gfx_init(void);
 
 // Text.h

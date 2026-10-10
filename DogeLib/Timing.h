@@ -5,7 +5,7 @@
 #define FPS     60
 #define TPF     (TPS/FPS)
 
-static inline
+// returns the number of miliseconds that have elapsed since starting the program
 uint getTicks(void)
 {
     return SDL_GetTicks();

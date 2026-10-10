@@ -1,15 +1,7 @@
 #ifndef DOGELIB_COLORS_H
 #define DOGELIB_COLORS_H
 
-u8* colorIndex(Color *c, const int i)
-{
-    if(iabs(i)%3 == 0)
-        return &(c->r);
-    if(iabs(i)%3 == 1)
-        return &(c->g);
-    return &(c->b);
-}
-
+// returns true if the colors are the same
 bool colorSame(const Color a, const Color b)
 {
     return a.r == b.r && a.g == b.g && a.b == b.b;
