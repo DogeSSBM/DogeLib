@@ -248,7 +248,7 @@ Length mouseMovement(void);
 void setRelativeMouse(const bool);
 bool keyCtrlState(void);
 bool keyShiftState(void);
-bool keyComboPressed(const Scancode, const Scancode);
+bool keyComboState(const Scancode, const Scancode);
 bool checkCtrlKey(const Scancode);
 void input_init(void);
 Offset wasdKeyStateOffset(void);

@@ -39,7 +39,15 @@ void events(const uint endOfFrame)
                 break;
             case SDL_TEXTINPUT:
                 assertExpr(keys.textInputState);
-                textInputAppendText(event.text.text);
+                const st maxlen = keys.textInputSize - keys.textInputPos;
+                const st textlen = strlen(event.text.text);
+                const st appendlen = imin(maxlen, textlen);
+                if(appendlen < textlen)
+                    printf("Discarding text input: \"%s\"\n", event.text.text+appendlen);
+                if(appendlen <= 0)
+                    return;
+                memcpy(keys.textInput+keys.textInputPos, event.text.text, appendlen);
+                keys.textInputPos += appendlen;
                 break;
             case SDL_MOUSEWHEEL:
                 mouse.wheel.x += event.wheel.x;

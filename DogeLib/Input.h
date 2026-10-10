@@ -27,23 +27,9 @@ bool textInputEnded(void)
     return !keys.textInputState && keys.textInputChange;
 }
 
-void textInputAppendText(char *text)
-{
-    const st maxlen = keys.textInputSize - keys.textInputPos;
-    const st textlen = strlen(text);
-    const st appendlen = imin(maxlen, textlen);
-    if(appendlen < textlen)
-        printf("Discarding text input: \"%s\"\n", text+appendlen);
-    if(appendlen <= 0)
-        return;
-    memcpy(keys.textInput+keys.textInputPos, text, appendlen);
-    keys.textInputPos += appendlen;
-}
-
+// stop inputting text
 void textInputStop(void)
 {
-    // if(!keys.textInputState)
-    //     return;
     printf("Text input stop\n");
     SDL_StopTextInput();
     keys.textInputState = false;
@@ -53,11 +39,13 @@ void textInputStop(void)
     keys.textInputPos = 0;
 }
 
+// a default function for when to stop text input
 bool defaultTextInputDone(void)
 {
     return keyCtrlState() && keyState(SC_RETURN);
 }
 
+// begin inputting text
 void textInputStart(char *buf, const st bufsize, boolFunc textInputDone)
 {
     printf("Text input start\n");
@@ -69,53 +57,55 @@ void textInputStart(char *buf, const st bufsize, boolFunc textInputDone)
     keys.textInputDone = textInputDone == NULL ? defaultTextInputDone : textInputDone;
 }
 
+// returns the current press state of the key
 bool keyState(const Scancode key)
 {
     return keys.key[key];
 }
 
+// returns true if the key was just pressed
 bool keyPressed(const Scancode key)
 {
     return !keys.textInputState && (keys.key[key] && !keys.prev[key]);
 }
 
+// returns true if the key was pressed last frame and is still pressed
 bool keyHeld(const Scancode key)
 {
     return keys.key[key] && keys.prev[key];
 }
 
+// returns true if the key was pressed or released
 bool keyChanged(const Scancode key)
 {
     return keys.key[key] != keys.prev[key];
 }
 
+// returns true if the key was released
 bool keyReleased(const Scancode key)
 {
     return !keys.key[key] && keys.prev[key];
 }
 
+// returns time at which the key was last pressed
 uint keyPressTime(const Scancode key)
 {
     return keys.pressTime[key];
 }
 
+// returns time at which the key was last released
 uint keyReleaseTime(const Scancode key)
 {
     return keys.releaseTime[key];
 }
 
+// returns the amount of time the key has been held
 uint keyHeldTime(const Scancode key)
 {
     return keys.key[key] ? keys.lastUpdateTime - keys.pressTime[key] : 0;
 }
 
-bool isTextKey(const char *keyName)
-{
-    if(strlen(keyName) != 1)
-        return false;
-    return keyName[0] >= ' ' && keyName[0] <= '~';
-}
-
+// returns a pointer to the name for the scancode or an empty string
 const char* keyName(const Scancode key)
 {
     return SDL_GetScancodeName(key);
@@ -134,98 +124,121 @@ struct{
     }prev;
 }mouse = {0};
 
+// returns the current position of the mouse
 Coord mousePos(void)
 {
     return mouse.pos;
 }
 
+// returns true if mouseBtn was just pressed
 bool mouseBtnPressed(const u32 mouseBtn)
 {
     return mouse.state&mouseBtn && !(mouse.prev.state&mouseBtn);
 }
 
+// returns the current press state of mouseBtn
 bool mouseBtnState(const u32 mouseBtn)
 {
     return mouse.state&mouseBtn;
 }
 
+// returns true if mouseBtn was pressed last frame and is still pressed
 bool mouseBtnHeld(const u32 mouseBtn)
 {
     return mouse.state&mouseBtn && mouse.prev.state&mouseBtn;
 }
 
+// returns true if mouseBtn was just released
 bool mouseBtnReleased(const u32 mouseBtn)
 {
     return !(mouse.state&mouseBtn) && mouse.prev.state&mouseBtn;
 }
 
+// returns true if the press state if mouseBtn changed
 bool mouseBtnChanged(const u32 mouseBtn)
 {
     return (mouse.state&mouseBtn) != (mouse.prev.state&mouseBtn);
 }
 
+// returns the direction the mouse wheel was scrolled left or right
 int mouseScrolledX(void)
 {
     return mouse.wheel.x;
 }
 
+// returns the direction the mouse wheel was scrolled up or down
 int mouseScrolledY(void)
 {
     return mouse.wheel.y;
 }
 
+// returns true if mouse if currently moving
 bool mouseMoving(void)
 {
     return !coordSame(mouse.vec, (const Coord){0}) && !coordSame(mouse.prev.vec, (const Coord){0});
 }
 
+// returns true if mouse just began moving
 bool mouseMoveStart(void)
 {
     return !coordSame(mouse.vec, (const Coord){0}) && coordSame(mouse.prev.vec, (const Coord){0});
 }
 
+// returns true if mouse just stopped moving
 bool mouseMoveStop(void)
 {
     return !mouseMoving() && !coordSame(mouse.prev.vec, (const Coord){0});
 }
 
-Length mouseMovement(void)
+// returns the distance the mouse has moved since last frame
+Offset mouseMovement(void)
 {
     return coordSub(mouse.pos, mouse.prev.pos);
 }
 
+// sets the relative mode of the mouse
 void setRelativeMouse(const bool state)
 {
     SDL_SetRelativeMouseMode(state);
 }
 
+// returns true if any of the Ctrl keys are pressed
 bool keyCtrlState(void)
 {
     return keyState(SC_LCTRL) || keyState(SC_RCTRL);
 }
 
+// returns true if any of the Shift keys are pressed
 bool keyShiftState(void)
 {
     return keyState(SC_LSHIFT) || keyState(SC_RSHIFT);
 }
 
-bool keyComboPressed(const Scancode modkey, const Scancode key)
+// returns true if both keys are pressed
+bool keyComboState(const Scancode modkey, const Scancode key)
 {
-    return keyPressed(key) && keyState(modkey);
+    return keyPressed(modkey) && keyState(key);
 }
 
+// returns true if modkey is pressed and key was just pressed
+bool keyComboPressed(const Scancode modkey, const Scancode key)
+{
+    return keyPressed(modkey) && keyPressed(key);
+}
+
+// returns true if Ctrl is pressed and key was just pressed
 bool checkCtrlKey(const Scancode key)
 {
     return keyPressed(key) && keyCtrlState();
 }
 
+// inits input stuff
 void input_init(void)
 {
-    // mouse.pos = coordDivi(getWindowLen(), 2);
-    // mouse.prev.pos = coordDivi(getWindowLen(), 2);
 
 }
 
+// returns an offset based on the state of the W A S and D keys
 Offset wasdKeyStateOffset(void)
 {
     return (const Offset){
@@ -234,6 +247,7 @@ Offset wasdKeyStateOffset(void)
     };
 }
 
+// returns an offset based on the state of the arrow keys
 Offset arrowKeyStateOffset(void)
 {
     return (const Offset){
@@ -242,11 +256,13 @@ Offset arrowKeyStateOffset(void)
     };
 }
 
+// returns an offset based on the state of the W A S and D keys or the arrow keys
 Offset dirKeyStateOffset(void)
 {
     return coordLeast(coordAdd(wasdKeyStateOffset(), arrowKeyStateOffset()), iC(1,1));
 }
 
+// returns an offset based on if W A S or D was just pressed
 Offset wasdKeyPressedOffset(void)
 {
     return (const Offset){
@@ -255,6 +271,7 @@ Offset wasdKeyPressedOffset(void)
     };
 }
 
+// returns an offset based on if arrow keys were just pressed
 Offset arrowKeyPressedOffset(void)
 {
     return (const Offset){
@@ -263,6 +280,7 @@ Offset arrowKeyPressedOffset(void)
     };
 }
 
+// returns an offset based on if W A S D or arrow keys were just pressed
 Offset dirKeyPressedOffset(void)
 {
     return coordLeast(coordAdd(wasdKeyPressedOffset(), arrowKeyPressedOffset()), iC(1,1));

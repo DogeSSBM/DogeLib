@@ -47,7 +47,7 @@ int main(void)
         if(!textInputState())
             p = coordAdd(p, coordMuli(dirKeyStateOffset(), 4));
         setTextColor(textInputState() ? MAGENTA : CYAN);
-        
+
         setColor(GREY);
         fillBorderCenteredCoord(p, textLength(text), imax(1, scale / 12));
         drawTextCenteredCoord(text, p);
