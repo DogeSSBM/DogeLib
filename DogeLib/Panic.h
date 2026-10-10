@@ -1,6 +1,7 @@
 #ifndef DOGELIB_PANIC_H
 #define DOGELIB_PANIC_H
 
+// helper function for panic macro
 void panicHelper(const char *func, const char *file, const int line, const char * format, ...)
 {
     fprintf(stderr, "Panic -\n");
@@ -17,6 +18,7 @@ void panicHelper(const char *func, const char *file, const int line, const char 
 }
 #define panic(...)  panicHelper(__func__, __FILE__, __LINE__, __VA_ARGS__)
 
+// helper function for notNull macro
 void notNullHelper(const char *func, const char *file, const int line, void *ptr)
 {
     if(ptr == NULL){
@@ -29,6 +31,7 @@ void notNullHelper(const char *func, const char *file, const int line, void *ptr
 }
 #define notNull(ptr)  notNullHelper(__func__, __FILE__, __LINE__, ptr)
 
+// helper function for assertExprHelper macro
 void assertExprHelper(const char *func, const char *file, const int line, const bool val, const char *expr)
 {
     if(!val){
@@ -42,6 +45,7 @@ void assertExprHelper(const char *func, const char *file, const int line, const 
 }
 #define assertExpr(expr)  assertExprHelper(__func__, __FILE__, __LINE__, expr, #expr)
 
+// helper function for assertLogExprHelper macro
 void assertLogExprHelper(const char *func, const char *file, const int line, const bool val, const char *expr)
 {
     if(val){
@@ -57,6 +61,7 @@ void assertLogExprHelper(const char *func, const char *file, const int line, con
 }
 #define assertLogExpr(expr) assertLogExprHelper(__func__, __FILE__, __LINE__, expr, #expr)
 
+// helper function for logMsgHelper macro
 void logMsgHelper(const char *func, const char *file, const int line, const char * format, const char *exprs,...)
 {
     fprintf(stderr, "Log -\n");
@@ -73,6 +78,7 @@ void logMsgHelper(const char *func, const char *file, const int line, const char
 }
 #define logMsg(format, ...)  logMsgHelper(__func__, __FILE__, __LINE__, format, #__VA_ARGS__, __VA_ARGS__)
 
+// helper function for logExprHelper macro
 void logExprHelper(const char * format, const char *exprs,...)
 {
     fprintf(stderr, "{%s} -> {", exprs);
@@ -84,6 +90,7 @@ void logExprHelper(const char * format, const char *exprs,...)
 }
 #define logExpr(format, ...)  logExprHelper(format, #__VA_ARGS__, __VA_ARGS__)
 
+// helper function for assertExprMsgHelper macro
 void assertExprMsgHelper(const char *func, const char *file, const int line, const bool val, const char *expr, const char *format, ...)
 {
     if(!val){
@@ -103,6 +110,7 @@ void assertExprMsgHelper(const char *func, const char *file, const int line, con
 }
 #define assertExprMsg(expr, ...)  assertExprMsgHelper(__func__, __FILE__, __LINE__, expr, #expr, __VA_ARGS__)
 
+// helper function for assertLogExprMsgHelper macro
 void assertLogExprMsgHelper(const char *func, const char *file, const int line, const bool val, const char *expr, const char *format, ...)
 {
     if(val){

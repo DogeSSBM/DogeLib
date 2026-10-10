@@ -6,9 +6,10 @@ int main(void)
     Coord p = getWindowMid();
     char text[512] = "Hello";
     const Scancode wasd[4] = {SC_W, SC_A, SC_S, SC_D};
+
     while(1){
-        const int scale = coordMin(getWindowLen()) / 8;
         const uint t = frameStart();
+        const int scale = coordMin(getWindowLen()) / 8;
 
         if(keyPressed(SC_ESCAPE))
             return 0;

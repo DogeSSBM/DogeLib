@@ -63,7 +63,7 @@ typedef SDL_Window          Window;
 #define MW_U                (1u<<2)
 #define MW_L                (1u<<3)
 
-#define PI                  M_PI
+#define PI                  ((float)M_PI)
 
 typedef enum{
     FULLSCREEN = SDL_WINDOW_FULLSCREEN,
@@ -99,26 +99,26 @@ typedef struct{
     Coord *vertex;
 }Poly;
 
-static inline
+// returns a Coord with positions x and y
 Coord iC(const int x, const int y)
 {
     return (const Coord){.x = x, .y = y};
 }
 
-static inline
+// returns a Coord with x and y both equal to i
 Coord iiC(const int i)
 {
     return (const Coord){.x = i, .y = i};
 }
 
-static inline
+// returns the corner position of rect
 Coord irC(const Rect rect)
 {
     return iC(rect.x, rect.y);
 }
 
-static inline
-Coord irL(const Rect rect)
+// returns the length of rect
+Length irL(const Rect rect)
 {
     return iC(rect.w, rect.h);
 }
@@ -155,38 +155,43 @@ typedef union{
     };
 }Coordf, Vectorf, Rangef, Lengthf, Offsetf;
 
-static inline
+// returns a float Coord with positions x and y
 Coordf fC(const float x, const float y)
 {
     return (const Coordf){.x=x, .y=y};
+}
+
+// returns a Coord with x and y both equal to i
+Coordf ffC(const float i)
+{
+    return (const Coordf){.x = i, .y = i};
 }
 
 typedef enum{DIR_U = 0, DIR_R, DIR_D, DIR_L}Direction;
 
 const char DirectionChar[4] = {'U', 'R', 'D', 'L'};
 
-static inline
+// returns the max of the ints
 int imax(const int a, const int b)
 {
     return a > b ? a : b;
 }
 
-static inline
+// returns the min of the ints
 int imin(const int a, const int b)
 {
     return a < b ? a : b;
 }
 
-static inline
+// returns the absolute value of i
 int iabs(const int i)
 {
     return i > 0 ? i : -i;
 }
 
-static inline
+// exponentiation function for integers
 int ipow(int num, int pow)
 {
-    assertExpr(pow >= 0);
     if(pow == 0)
         return 1;
     while(--pow)
@@ -194,85 +199,91 @@ int ipow(int num, int pow)
     return num;
 }
 
-static inline
+// returns the max of the floats
 float fmost(const float a, const float b)
 {
     return a > b ? a : b;
 }
 
-static inline
+// returns the min of the floats
 float fleast(const float a, const float b)
 {
     return a < b ? a : b;
 }
 
-static inline
+// makes n positive
 int posSign(const int n)
 {
     return n > 0 ? n : -n;
 }
 
-static inline
+// makes n negative
 int negSign(const int n)
 {
     return n < 0 ? n : -n;
 }
 
-static inline
+// makes n positive
 float posSignf(const float n)
 {
     return n > 0.0f ? n : -n;
 }
 
-static inline
+// makes n negative
 float negSignf(const float n)
 {
     return n < 0.0f ? n : -n;
 }
 
-static inline
+// matches the sign of n to s
 int matchSign(const int s, const int n)
 {
     return s > 0 ? posSign(n) : negSign(n);
 }
 
-static inline
+// returns true if s and n have the same sign
+bool sameSign(const int s, const int n)
+{
+    return (s < 0 && n < 0) || (s >= 0 && n >= 0);
+}
+
+// matches the sign of n to s
 float matchSignf(const float s, const float n)
 {
     return s > 0.0 ? posSignf(n) : negSignf(n);
 }
 
-static inline
+// matches the sign of n to the inverse sign of s
 int invSign(const int s, const int n)
 {
     return s < 0 ? posSign(n) : negSign(n);
 }
 
-static inline
+// matches the sign of n to the inverse sign of s
 float invSignf(const float s, const float n)
 {
     return s < 0.0 ? posSignf(n) : negSignf(n);
 }
 
-static inline
+// returns n with l being its lower bound
 int lbound(const int n, const int l)
 {
     return n<l?l:n;
 }
 
-static inline
+// returns n with l being its upper bound
 int ubound(const int n, const int u)
 {
     return n>u?u:n;
 }
 
-static inline
+// returns n with l being its lower bound
 float lboundf(const float n, const float l)
 {
     return n<l?l:n;
 }
 
-static inline
+// returns n with l being its upper bound
 float uboundf(const float n, const float u)
 {
     return n>u?u:n;
