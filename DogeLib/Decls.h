@@ -477,26 +477,45 @@ void text_quit(void);
 // initializes text stuff
 void text_init(void);
 
-// Image.h
+// Image.h --------------------------------------------------------------------
+// cleans up img stuff
 void img_quit(void);
+// initializes img stuff
 void img_init(void);
-void freeImg(Img*);
-Texture* textureFree(Texture*);
-Img* loadImg(const char*);
-Texture* imgTexture(Img*);
-Texture* loadTexture(const char*);
-void drawImg(Img*);
-void loadDrawImg(const char*);
-Length textureLen(Texture*);
-Rect textureRect(Texture*, const Coord);
-Length drawTexture(Texture*, const int, const int);
-Length drawTextureCoord(Texture*, const Coord);
-Length drawTextureCentered(Texture*, const int, const int);
-Length drawTextureCenteredCoord(Texture*, const Coord);
-Length drawTextureResize(Texture*, const int, const int, const int, const int);
-Length drawTextureCoordResize(Texture*, const Coord, const Length);
-Length drawTextureCenteredResize(Texture*, const int, const int, const int, const int);
-Length drawTextureCenteredCoordResize(Texture*, const Coord, const Length);
+// frees a Img
+void freeImg(Img *image);
+// frees a Texture
+Texture* textureFree(Texture *t);
+// loads an Img from a file
+Img* loadImg(const char *file);
+// creates a Texture from an Img
+Texture* imgTexture(Img *img);
+// loads a Texture from a file
+Texture* loadTexture(const char *file);
+// draws an Img
+void drawImg(Img *image);
+// loads an Img from a file and draws it immidiately
+void loadDrawImg(const char *file);
+// gets the Length of Texture
+Length textureLen(Texture *texture);
+// returns a bounding Rect of the texture at pos
+Rect textureRect(Texture *texture, const Coord pos);
+// draws a texture at x y
+Length drawTexture(Texture *texture, const int x, const int y);
+// draws a texture at pos
+Length drawTextureCoord(Texture *texture, const Coord pos);
+// draws a texture centered at x y
+Length drawTextureCentered(Texture *texture, const int x, const int y);
+// draws a texture centered at pos
+Length drawTextureCenteredCoord(Texture *texture, const Coord pos);
+// resizes a texture to xlen ylen and draws it at x y
+Length drawTextureResize(Texture *texture, const int x, const int y, const int xlen, const int ylen);
+// resizes a texture to len and draws it at pos
+Length drawTextureCoordResize(Texture *texture, const Coord pos, const Length len);
+// resizes a texture to xlen ylen and draws it centered at x y
+Length drawTextureCenteredResize(Texture *texture, const int x, const int y, const int xlen, const int ylen);
+// resizes a texture to len and draws it centered at pos
+Length drawTextureCenteredCoordResize(Texture *texture, const Coord pos, const Length len);
 
 // Input.h
 // returns true if currently inputting text
