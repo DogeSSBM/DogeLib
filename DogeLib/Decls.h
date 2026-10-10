@@ -617,11 +617,15 @@ void* recalloc(void *data, const st newsize);
 // inits everything
 void init(void);
 
-// Poly.h
-Poly polyCreate(const uint, ...);
-void polyDestroy(const Poly);
-Rect polyBbRect(const Poly);
-CoordPair polyBbMinMax(const Poly);
+// Poly.h ---------------------------------------------------------------------
+// creates a polygon
+Poly polyCreate(const uint numVertex, ...);
+// frees a poly
+void polyFree(const Poly p);
+// returns a bounding box rectangle around a poly
+Rect polyBbRect(const Poly p);
+// returns the corners of a bounding box rectangle around a poly
+CoordPair polyBbMinMax(const Poly p);
 
 // Display.h
 int getWinDisplayIndex(void);

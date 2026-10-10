@@ -1,6 +1,7 @@
 #ifndef DOGELIB_POLY_H
 #define DOGELIB_POLY_H
 
+// creates a polygon
 Poly polyCreate(const uint numVertex, ...)
 {
     va_list vlist;
@@ -16,12 +17,14 @@ Poly polyCreate(const uint numVertex, ...)
     return p;
 }
 
-void polyDestroy(const Poly p)
+// frees a poly
+void polyFree(const Poly p)
 {
     if(p.vertex != NULL)
         free(p.vertex);
 }
 
+// returns a bounding box rectangle around a poly
 Rect polyBbRect(const Poly p)
 {
     Coord min = {.x = I32MAX, .y = I32MAX};
@@ -33,6 +36,7 @@ Rect polyBbRect(const Poly p)
     return (Rect){.x = min.x, .y = min.y, .w = max.x-min.x, .h = max.y-min.y};
 }
 
+// returns the corners of a bounding box rectangle around a poly
 CoordPair polyBbMinMax(const Poly p)
 {
     CoordPair ret = {
