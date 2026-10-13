@@ -24,10 +24,20 @@ void assertLogExprMsgHelper(const char *func, const char *file, const int line, 
 Coord iC(const int x, const int y);
 // returns a Coord with x and y both equal to i
 Coord iiC(const int i);
+// returns a rect at position x, y and length xlen, ylen
+Rect iR(const int x, const int y, const int xlen, const int ylen);
 // returns the corner position of rect
 Coord irC(const Rect rect);
 // returns the length of rect
 Length irL(const Rect rect);
+// returns a rect at position pos and length len
+Rect ccR(const Coord pos, const Length len);
+// returns a rect at position pos and length xlen, ylen
+Rect ciR(const Coord pos, const int xlen, const int ylen);
+// returns a square rect at position pos and length len
+Rect ciiS(const Coord pos, const int len);
+// returns a square rect at position x, y and length len
+Rect iiS(const int x, const int y, const int len);
 // returns a float Coord with positions x and y
 Coordf fC(const float x, const float y);
 // returns a Coord with x and y both equal to i

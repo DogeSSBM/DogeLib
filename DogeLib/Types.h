@@ -111,6 +111,12 @@ Coord iiC(const int i)
     return (const Coord){.x = i, .y = i};
 }
 
+// returns a rect at position x, y and length xlen, ylen
+Rect iR(const int x, const int y, const int xlen, const int ylen)
+{
+    return (const Rect){.x = x, .y = y, .w = xlen, .h = ylen};
+}
+
 // returns the corner position of rect
 Coord irC(const Rect rect)
 {
@@ -122,6 +128,31 @@ Length irL(const Rect rect)
 {
     return iC(rect.w, rect.h);
 }
+
+// returns a rect at position pos and length len
+Rect ccR(const Coord pos, const Length len)
+{
+    return (const Rect){.x = pos.x, .y = pos.y, .w = len.x, .h = len.y};
+}
+
+// returns a rect at position pos and length xlen, ylen
+Rect ciR(const Coord pos, const int xlen, const int ylen)
+{
+    return (const Rect){.x = pos.x, .y = pos.y, .w = xlen, .h = ylen};
+}
+
+// returns a square rect at position pos and length len
+Rect ciiS(const Coord pos, const int len)
+{
+    return (const Rect){.x = pos.x, .y = pos.y, .w = len, .h = len};
+}
+
+// returns a square rect at position x, y and length len
+Rect iiS(const int x, const int y, const int len)
+{
+    return (const Rect){.x = x, .y = y, .w = len, .h = len};
+}
+
 
 typedef union{
     Coord arr[2];
