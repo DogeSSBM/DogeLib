@@ -102,7 +102,9 @@ uint keyReleaseTime(const Scancode key)
 // returns the amount of time the key has been held
 uint keyHeldTime(const Scancode key)
 {
-    return keys.key[key] ? keys.lastUpdateTime - keys.pressTime[key] : 0;
+    if(keys.key[key])
+        return keys.lastUpdateTime > keys.pressTime[key] ? keys.lastUpdateTime - keys.pressTime[key] : 0;
+    return 0;
 }
 
 // returns a pointer to the name for the scancode or an empty string
