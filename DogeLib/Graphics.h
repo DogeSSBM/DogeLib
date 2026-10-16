@@ -709,6 +709,18 @@ void outlineWindow(void)
     setColor(c);
 }
 
+// sets window title
+void setWindowTitle(const char *title)
+{
+    SDL_SetWindowTitle(gfx.window, title);
+}
+
+// gets window title
+const char* getWindowTitle(void)
+{
+    return SDL_GetWindowTitle(gfx.window);
+}
+
 // renders everything to window
 void draw(void)
 {
